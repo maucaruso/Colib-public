@@ -14,7 +14,20 @@
                 <a title="Mídias" href="/midias"><span><img src="/img/svg/clapperboard.svg" alt="Mídias"></span>Mídias</a>
             </li>
             <li class="item painel-usuario">
-                <a title="Minha Conta" href="/usuario/login"><span><img src="/img/svg/social.svg" alt="Minha Conta"></span>Minha Conta</a>
+                {{#if user}}
+                    {{#each user}}
+                        {{#if access}}
+                            {{#if_eq 2 access}}
+                                <a title="Minha Conta" href="/admin/library"><span><img src="/img/svg/social.svg" alt="Minha Conta"></span>Minha Conta</a>
+                            {{else}}
+                                <a title="Minha Conta" href="/usuario/{{nickname}}/painel"><span><img src="/img/svg/social.svg" alt="Minha Conta"></span>Minha Conta</a>
+                            {{/if_eq}}
+                        {{/if}}
+                    {{/each}}
+                {{else}}
+                    <a title="Minha Conta" href="/usuario/login"><span><img src="/img/svg/social.svg" alt="Minha Conta"></span>Minha Conta</a>
+                {{/if}}
+                
             </li>
         </ul>
     </nav>

@@ -1,0 +1,62 @@
+<div id="middle">
+    <div class="header-menu">
+        <a class="btn-new style-button" href="/admin/articles/">Voltar aos meus Artigos</a>
+        <form class="seach">
+            <input type="text" class="search-input style-input" placeholder="Pesquisar">
+            <button class="search-button"><img src="/img/svg/loupe.svg" alt="Pesquisar"></button>
+        </form>
+    </div>
+
+    {{>msg}}
+
+    <div class="content full">
+        <h2>Editar artigo</h2>
+        <form class="delete-form" action="/admin/articles/delete" method="POST">
+            <input type="hidden" name="id" value="{{post._id}}">
+            <button type="submit" class="style-button-delete">Excluir artigo</button>
+        </form>
+        <div class="form-add article">
+            <form action="/admin/articles/edit" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="id" value="{{post._id}}">
+                <div class="left">
+                    <div id="content-post"></div>
+                    <textarea class="style-input" type="text" id="content" name="content" placeholder="Conteúdo">{{post.content}}</textarea>
+                </div>
+                <div class="right">
+                    <input class="style-input" type="text" id="title" name="title" placeholder="Título do artigo" value="{{post.title}}" required>
+                    <div class="input-wrapper">
+                        <input class="style-input" type="text" id="hashtags" name="hashtags" placeholder="Hashtags" value="{{post.hashtags}}">
+                        <small>Ex: #Historia, #Filosofia, #Economia.</small>
+                    </div>
+                    <div class="cover style-input {{#if post.thumbnail}}registered{{/if}}">
+                        {{#if post.thumbnail}}
+                            <div class="thumbnail">
+                                <img src="{{post.thumbnail}}">
+                            </div>
+                        {{/if}}
+                        <label>Capa do artigo</label>
+                        <input type="file" id="cover" name="cover" placeholder="Thumbnail do artigo" accept="image/*">
+                        <small>Formatos aceitos: jpg, png</small>
+                    </div> 
+                    <button class="style-button">Editar artigo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<link href="/css/quilljs.1.3.6.css" rel="stylesheet">
+
+<script src="/js/quilljs.1.3.6.js"></script>
+
+<script>
+    var quill = new Quill('#content-post', {
+    theme: 'snow',
+    placeholder: 'Escreva aqui seu artigo',
+    });
+
+    var string = "{{post.content}}",
+    results = document.querySelector(".ql-editor");
+    results.innerHTML = string;
+    results.innerHTML = results.textContent;
+</script>

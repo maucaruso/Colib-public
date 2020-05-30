@@ -1,0 +1,54 @@
+<div id="middle">
+    <div class="header-menu">
+        <a class="btn-new style-button" href="/admin/library/">Voltar à minha Biblioteca</a>
+        <form class="seach">
+            <input type="text" class="search-input style-input" placeholder="Pesquisar">
+            <button class="search-button"><img src="/img/svg/loupe.svg" alt="Pesquisar"></button>
+        </form>
+    </div>
+
+    {{>msg}}
+
+    <div class="content full">
+        <h2>Enviar livro</h2>
+        <div class="form-add library">
+            <form action="/admin/library/add" method="POST" enctype="multipart/form-data">
+                <div class="left">
+                    <input class="style-input" type="text" id="name" name="name" placeholder="Nome do livro*" required>
+                    <input class="style-input" type="text" id="author" name="author" placeholder="Autor*" required>
+                    <div class="input-wrapper">
+                        <input class="style-input" type="text" id="hashtags" name="hashtags" placeholder="Hashtags">
+                        <small>Palavras relacionadas ao tema do livro separadas por vírgula ou espaço. Ex: #Historia, #Filosofia, #Economia.</small>
+                    </div>
+                    <textarea class="style-input" type="text" id="description" name="description" placeholder="Descrição do livro*" required></textarea>
+                </div>
+                <div class="right">
+                    <div class="alert-upload">Para que o livro esteja disponível na plataforma em todos formatos, é necessário enviar todos os arquivos.</div>
+                    <div class="cover style-input">
+                        <label>Capa do Livro</label>
+                        <input type="file" id="cover" name="cover" placeholder="Capa do livro" accept="image/*">
+                        <small>Formatos aceitos: jpg, png</small>
+                    </div> 
+                    <div class="books">
+                        <div class="file style-input">
+                            <label>Selecionar Livro em PDF</label>
+                            <input type="file" id="file" class="file-input" name="file_pdf" accept="application/pdf">
+                            <small>Formatos aceitos: pdf</small>
+                        </div>
+                        <div class="file style-input">
+                            <label>Selecionar Livro em Epub</label>
+                            <input type="file" id="file" class="file-input" name="file_epub" accept=".epub">
+                            <small>Formatos aceitos: epub</small>
+                        </div>
+                        <div class="file style-input">
+                            <label>Selecionar Livro em Mobi</label>
+                            <input type="file" id="file" class="file-input" name="file_mobi" accept=".mobi">
+                            <small>Formatos aceitos: mobi</small>
+                        </div>
+                    </div>
+                </div>
+                <button class="style-button" type="submit">Cadastrar livro</button>
+            </form>
+        </div>
+    </div>
+</div>

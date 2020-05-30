@@ -20,10 +20,10 @@ const User = new Schema({
         type: String,
         required: true
     },
-    acess: {
+    access: {
         type: String,
         required: true,
-        default: 0 
+        default: 1
     },
     date: {
         type: Date,

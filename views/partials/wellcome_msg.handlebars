@@ -1,0 +1,18 @@
+{{#if user}}
+    {{#each user}}
+        {{#if access}}
+            <div class="user">
+                {{#if_eq 2 access}}
+                    <a class="hello" title="Minha Conta" href="/admin/library"><span></span>Olá, {{nickname}}!</a>
+                    <a class="style-button" title="Minha Conta" href="/admin/library"><span></span>Minha conta</a>
+                {{else}}
+                    <a class="hello" title="Minha Conta" href="/usuario/{{nickname}}/painel"><span></span>Olá, {{nickname}}!</a>
+                    <a class="style-button" title="Minha Conta" href="/usuario/{{nickname}}/painel"><span></span>Minha conta</a>
+                {{/if_eq}}
+                <a class="style-button" title="Sair" href="/usuario/logout"><span></span>Sair</a>
+            </div>
+        {{/if}}
+    {{/each}}
+{{else}}
+    <a class="btn-new style-button" href="/usuario/login">Faça Login ou Cadastre</a> 
+{{/if}}

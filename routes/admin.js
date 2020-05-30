@@ -13,6 +13,8 @@ const filterHashtags = require('../controller/filterHashtags');
 const returnSlug = require('../controller/returnSlug');
 const returnMetaDescription = require('../controller/returnMetaDescription');
 const filterFileName =  require('../controller/filterFileName');
+const {isAdmin} = require('../helpers/isAdmin.js');
+
 // Multer - Upload de arquivos
     const path = require('path');
     const multer = require('multer');
@@ -46,21 +48,21 @@ const filterFileName =  require('../controller/filterFileName');
     const upload = multer({storage});
     
 // Home
-    router.get('/', (req, res) => {
+    router.get('/', isAdmin, (req, res) => {
         res.render('admin/index'); 
     });
 // Biblioteca
-    router.get('/library', (req, res) => {
+    router.get('/library', isAdmin, (req, res) => {
         Book.find().sort({date: 'desc'}).then((books) => {
             res.render('admin/library', {books: books.map(book => book.toJSON())}); 
         }).catch((err) =>{
             req.flash('error_msg', 'Houve um erro ao listar os livros, por favor, tente novamente.'); 
         }); 
     });
-    router.get('/library/new-file', (req, res) => {
+    router.get('/library/new-file', isAdmin, (req, res) => {
         res.render('admin/library-add');  
     });
-    router.post('/library/add',upload.any('files'),(req, res) => { 
+    router.post('/library/add', isAdmin, upload.any('files'),(req, res) => { 
         // Verificando quais arquivos foram enviados
         var filesToValidade = [];
         var pdf = returnFile(req.files, 'pdf');
@@ -101,7 +103,7 @@ const filterFileName =  require('../controller/filterFileName');
         }
     });
 
-    router.get('/library/edit/:id', (req, res) => {
+    router.get('/library/edit/:id', isAdmin, (req, res) => {
         Book.findOne({_id:req.params.id}).lean().then((book) => {
             res.render('admin/library-edit', {book: book}); 
         }).catch((err) => {
@@ -111,7 +113,7 @@ const filterFileName =  require('../controller/filterFileName');
         
     }); 
 
-    router.post('/library/edit', upload.any('files'), (req, res) => {
+    router.post('/library/edit', isAdmin, upload.any('files'), (req, res) => {
 
         var filesToValidade = [];
         var pdf = returnFile(req.files, 'pdf');
@@ -167,7 +169,7 @@ const filterFileName =  require('../controller/filterFileName');
     });
 
     
-    router.post('/library/delete', (req, res) => {
+    router.post('/library/delete', isAdmin, (req, res) => {
         Book.findOne({_id:req.body.id}).then((book) => {
             // deletando arquivos de uploads
             deleteFile(book.cover); 
@@ -187,7 +189,7 @@ const filterFileName =  require('../controller/filterFileName');
         });
     });
 // Posts
-    router.get('/articles', (req, res) => { 
+    router.get('/articles', isAdmin, (req, res) => { 
         Post.find().then((posts) => {
             res.render('admin/articles', {posts: posts.map(post => post.toJSON())}); 
         }).catch((err) =>{
@@ -195,11 +197,11 @@ const filterFileName =  require('../controller/filterFileName');
         });  
     });
 
-    router.get('/articles/new-article', (req, res) => {
+    router.get('/articles/new-article', isAdmin, (req, res) => {
         res.render('admin/articles-add');  
     });
 
-    router.post('/articles/add',upload.any('files'), (req, res) => {
+    router.post('/articles/add', isAdmin, upload.any('files'), (req, res) => {
         var thumbnail = returnFile(req.files, 'img', 'thumbnails'); 
         var slug = returnSlug(req.body.title);
         var metadescription = returnMetaDescription(req.body.content);
@@ -229,7 +231,7 @@ const filterFileName =  require('../controller/filterFileName');
         }
     });
 
-    router.get('/article/edit/:id', (req, res) => {
+    router.get('/article/edit/:id', isAdmin, (req, res) => {
         Post.findOne({_id:req.params.id}).lean().then((post) => {
             res.render('admin/articles-edit', {post: post}); 
         }).catch((err) => {
@@ -239,7 +241,7 @@ const filterFileName =  require('../controller/filterFileName');
         
     }); 
 
-    router.post('/articles/edit',upload.any('files'), (req, res) => {
+    router.post('/articles/edit', isAdmin, upload.any('files'), (req, res) => {
         var thumbnail = returnFile(req.files, 'img', 'thumbnails'); 
         var slug = returnSlug(req.body.title);
         var metadescription = returnMetaDescription(req.body.content);
@@ -275,7 +277,7 @@ const filterFileName =  require('../controller/filterFileName');
         }
     });
 
-    router.post('/articles/delete', (req, res) => {
+    router.post('/articles/delete', isAdmin, (req, res) => {
         Post.findOne({_id:req.body.id}).then((post) => {
             // deletando arquivos de uploads
             deleteFile(post.thumbnail); 
@@ -292,11 +294,11 @@ const filterFileName =  require('../controller/filterFileName');
         });
     });
 // Mídias
-    router.get('/medias', (req, res) => {
+    router.get('/medias', isAdmin, (req, res) => {
         res.render('admin/medias'); 
     });
 // Configurações
-    router.get('/settings', (req, res) => {
+    router.get('/settings', isAdmin, (req, res) => {
         res.render('admin/settings'); 
     });
 

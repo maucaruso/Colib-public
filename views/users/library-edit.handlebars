@@ -1,0 +1,63 @@
+<div id="middle">
+    <div class="header-menu">
+        <a class="btn-new style-button" href="/admin/library/">Voltar à minha Biblioteca</a>
+        <form class="seach">
+            <input type="text" class="search-input style-input" placeholder="Pesquisar">
+            <button class="search-button"><img src="/img/svg/loupe.svg" alt="Pesquisar"></button>
+        </form>
+    </div>
+
+    {{>msg}}
+
+    <div class="content library full">
+        <h2>Editar livro</h2>
+        <form class="delete-form" action="/admin/library/delete" method="POST">
+            <input type="hidden" name="id" value="{{book._id}}">
+            <button type="submit" class="style-button-delete">Excluir livro</button>
+        </form>
+        <div class="form-add library">
+            <form action="/admin/library/edit" method="POST" enctype="multipart/form-data">
+                <input type="hidden" id="id" name="id" value="{{book._id}}">
+                <input type="hidden" id="id" name="saved_cover" value="{{book.cover}}">
+                <input type="hidden" id="id" name="saved_pdf" value="{{book.file_pdf}}">
+                <input type="hidden" id="id" name="saved_epub" value="{{book.file_epub}}">
+                <input type="hidden" id="id" name="saved_mobi" value="{{book.file_mobi}}">
+                <div class="left">
+                    <input class="style-input" type="text" id="name" name="name" placeholder="Nome do livro*" value="{{book.name}}" required>
+                    <input class="style-input" type="text" id="author" name="author" placeholder="Autor*" value="{{book.author}}" required>
+                    <div class="input-wrapper">
+                        <input class="style-input" type="text" id="hashtags" name="hashtags" placeholder="Hashtags" value="{{book.hashtags}}">
+                        <small>Palavras relacionadas ao tema do livro separadas por vírgula ou espaço. Ex: #Historia, #Filosofia, #Economia.</small>
+                    </div>
+                    <textarea class="style-input" type="text" id="description" name="description" placeholder="Descrição do livro*" required>{{book.description}}</textarea>
+                </div>
+                <div class="right">
+                    <div class="alert-upload">Para que o livro esteja disponível na plataforma em todos formatos, é necessário enviar todos os arquivos.</div>
+                    <div class="cover style-input {{#if book.cover}}registered{{/if}} edit"> 
+                        <label>Capa do Livro</label>
+                        <input type="file" id="cover" name="cover" placeholder="Capa do livro" accept="image/*" value="{{book.cover}}">
+                        <small>Formatos aceitos: jpg, png</small>
+                    </div> 
+                    <div class="books">
+                        <div class="file style-input {{#if book.file_pdf}}registered{{/if}} edit">
+                            <label>Selecionar PDF</label>
+                            <input type="file" id="file_1" class="file-input" name="file_1" accept="application/pdf" value="{{book.file_pdf}}">
+                            <small>Formatos aceitos: pdf</small>
+                        </div>
+                        <div class="file style-input {{#if book.file_epub}}registered{{/if}} edit">
+                            <label>Selecionar Epub</label>
+                            <input type="file" id="file_2" class="file-input" name="file_2" accept=".epub" value="{{book.file_epub}}">
+                            <small>Formatos aceitos: epub</small>
+                        </div>
+                        <div class="file style-input {{#if book.file_mobi}}registered{{/if}} edit">
+                            <label>Selecionar Mobi</label>
+                            <input type="file" id="file_3" class="file-input" name="file_3" accept=".mobi" value="{{book.file_mobi}}">
+                            <small>Formatos aceitos: mobi</small>
+                        </div>
+                    </div>
+                </div>
+                <button class="style-button">Editar livro</button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -2,13 +2,16 @@
     <div class="header-menu">
         <div class="register-mensage">
             <p>Seja bem vindo à maior biblioteca Libertária do Brasil! </p>
-            <a class="btn-new style-button" href="/usuario/login">Faça Login ou Cadastre</a> 
+            {{>wellcome_msg}}
         </div>
+
         <form class="seach">
             <input type="text" class="search-input style-input" placeholder="Pesquisar">
             <button class="search-button"><img src="/img/svg/loupe.svg" alt="Pesquisar"></button>
         </form>
     </div>
+
+    {{>msg}}
 
     <div class="box-cards">
         <div class="content-cards side-by-side">

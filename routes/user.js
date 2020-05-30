@@ -6,6 +6,21 @@ const User = mongoose.model('users');
 const validateRegister = require('../controller/validateRegister');
 const bctypt = require('bcryptjs');
 const passport = require('passport');
+
+require('../models/Post');
+const Post = mongoose.model('posts');
+require('../models/Book');
+const Book = mongoose.model('books');
+const validatePost = require('../controller/validatePost');
+const validateBook = require('../controller/validateBook');
+const returnFile = require('../controller/returnFile');
+const deleteFile = require('../controller/deleteFile');
+const filterHashtags = require('../controller/filterHashtags');
+const returnSlug = require('../controller/returnSlug');
+const returnMetaDescription = require('../controller/returnMetaDescription');
+const filterFileName =  require('../controller/filterFileName');
+const {isUser} = require('../helpers/isUser.js');
+
 // Login e Registro
     router.get('/login', (req, res) => {
         res.render('users/login');
@@ -17,6 +32,12 @@ const passport = require('passport');
             failureRedirect: '/usuario/login',
             failureFlash: true
         })(req, res, next);
+    });
+
+    router.get('/logout', (req, res) => {
+        req.logOut();
+        req.flash('success_msg', 'Logout realizado com sucesso!');
+        res.redirect('/');
     });
     
     router.post('/login/register', (req, res) => {
@@ -75,5 +96,6 @@ const passport = require('passport');
             });
         }
     });
+// Telas do painel de Usuário
 
 module.exports = router;

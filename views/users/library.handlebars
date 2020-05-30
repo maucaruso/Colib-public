@@ -1,9 +1,6 @@
 <div id="middle">
     <div class="header-menu">
-        <div class="register-mensage">
-            <p>Quer compartilhar suas idéias ou colaborar com nossa biblioteca?</p>
-             {{>wellcome_msg}}
-        </div>
+        <a class="btn-new style-button" href="/admin/library/new-file">Enviar Livro</a> 
         <form class="seach">
             <input type="text" class="search-input style-input" placeholder="Pesquisar">
             <button class="search-button"><img src="/img/svg/loupe.svg" alt="Pesquisar"></button>
@@ -30,11 +27,11 @@
                             <div class="more-infos-box"><span class="author">Autor: <strong>{{author}}</strong></span></div>
                             <div class="more-infos-box"><span class="category">Hashtags: <strong>{{hashtags}}</strong></span></div>
                         </div>
-                        <a href="/biblioteca/{{_id}}/{{slug}}" class="download-btn style-button">Baixar livro</a>
+                        <a href="/admin/library/edit/{{_id}}" class="download-btn style-button">Editar livro</a>
                     </div>
                 </article>
             {{else}}
-                <p>Ainda não existem livros cadastrados</p>
+                <p>Você ainda não enviou nenhum livro.</p>
             {{/each}}
         </div>
     </div>
