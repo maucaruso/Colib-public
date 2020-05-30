@@ -1,6 +1,6 @@
 <div id="middle">
     <div class="header-menu">
-        <a class="btn-new style-button" href="/admin/library/">Voltar à minha Biblioteca</a>
+        <a class="btn-new style-button" href="/user/library/">Voltar à minha Biblioteca</a>
         <form class="seach">
             <input type="text" class="search-input style-input" placeholder="Pesquisar">
             <button class="search-button"><img src="/img/svg/loupe.svg" alt="Pesquisar"></button>
@@ -11,12 +11,12 @@
 
     <div class="content library full">
         <h2>Editar livro</h2>
-        <form class="delete-form" action="/admin/library/delete" method="POST">
+        <form class="delete-form" action="/user/library/delete" method="POST">
             <input type="hidden" name="id" value="{{book._id}}">
             <button type="submit" class="style-button-delete">Excluir livro</button>
         </form>
         <div class="form-add library">
-            <form action="/admin/library/edit" method="POST" enctype="multipart/form-data">
+            <form action="/user/library/edit" method="POST" enctype="multipart/form-data">
                 <input type="hidden" id="id" name="id" value="{{book._id}}">
                 <input type="hidden" id="id" name="saved_cover" value="{{book.cover}}">
                 <input type="hidden" id="id" name="saved_pdf" value="{{book.file_pdf}}">

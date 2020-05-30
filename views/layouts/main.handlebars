@@ -9,9 +9,13 @@
     {{#if_adm}}
         <link rel="stylesheet" href="/css/style-admin.css">
     {{else}}
-        <link rel="stylesheet" href="/css/style.css">
+        {{#if_user}}
+            <link rel="stylesheet" href="/css/style-user.css">        
+        {{else}}
+            <link rel="stylesheet" href="/css/style.css">
+        {{/if_user}}
     {{/if_adm}}
-    <link rel="stylesheet" href="/css/style-user.css">
+    
     
 </head>
 <body>
@@ -20,9 +24,16 @@
         {{{body}}}
         {{>admin/footer}}
     {{else}}
-        {{>site/header}}
-        {{{body}}}
-        {{>site/footer}}
+        {{#if_user}}
+            {{>user/header}}
+            {{{body}}}
+            {{>user/footer}}    
+        {{else}}
+            {{>site/header}}
+            {{{body}}}
+            {{>site/footer}}
+        {{/if_user}}
+        
     {{/if_adm}}
 </body>
 <script src="/js/actions.js"></script>

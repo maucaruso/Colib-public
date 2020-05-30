@@ -1,6 +1,6 @@
 <div id="middle">
     <div class="header-menu">
-        <a class="btn-new style-button" href="/admin/articles/">Voltar aos meus Artigos</a>
+        <a class="btn-new style-button" href="/user/articles/">Voltar aos meus Artigos</a>
         <form class="seach">
             <input type="text" class="search-input style-input" placeholder="Pesquisar">
             <button class="search-button"><img src="/img/svg/loupe.svg" alt="Pesquisar"></button>
@@ -11,12 +11,12 @@
 
     <div class="content full">
         <h2>Editar artigo</h2>
-        <form class="delete-form" action="/admin/articles/delete" method="POST">
+        <form class="delete-form" action="/user/articles/delete" method="POST">
             <input type="hidden" name="id" value="{{post._id}}">
             <button type="submit" class="style-button-delete">Excluir artigo</button>
         </form>
         <div class="form-add article">
-            <form action="/admin/articles/edit" method="POST" enctype="multipart/form-data">
+            <form action="/user/articles/edit" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="{{post._id}}">
                 <div class="left">
                     <div id="content-post"></div>

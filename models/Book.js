@@ -38,6 +38,10 @@ const Book = new Schema({
         type: String,
         required: false
     }, 
+    user: { 
+        type: String,
+        required: true
+    }, 
     date: {
         type: Date,
         default: Date.now()

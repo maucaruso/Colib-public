@@ -1,5 +1,5 @@
 module.exports = {
-    isAdmin: function(req, res, next){
+    isUser: function(req, res, next){
         if(req.isAuthenticated() && req.user.access == 1){
             return next();
         }
