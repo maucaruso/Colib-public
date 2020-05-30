@@ -1,0 +1,47 @@
+<div id="middle">
+    <div class="header-menu">
+        <a class="btn-new style-button" href="/admin/articles/">Voltar aos meus Artigos</a>
+        <form class="seach">
+            <input type="text" class="search-input style-input" placeholder="Pesquisar">
+            <button class="search-button"><img src="/img/svg/loupe.svg" alt="Pesquisar"></button>
+        </form>
+    </div>
+
+    {{>msg}}
+
+    <div class="content full">
+        <h2>Novo artigo</h2>
+        <div class="form-add article">
+            <form action="/admin/articles/add" method="POST" enctype="multipart/form-data">
+                <div class="left">
+                    <div id="content-post"></div>
+                    <textarea class="style-input" type="text" id="content" name="content" placeholder="Conteúdo"></textarea>
+                </div>
+                <div class="right">
+                    <input class="style-input" type="text" id="title" name="title" placeholder="Título do artigo" required>
+                    <div class="input-wrapper">
+                        <input class="style-input" type="text" id="hashtags" name="hashtags" placeholder="Hashtags">
+                        <small>Ex: #Historia, #Filosofia, #Economia.</small>
+                    </div>
+                    <div class="cover style-input">
+                        <label>Capa do artigo</label>
+                        <input type="file" id="cover" name="cover" placeholder="Thumbnail do artigo" accept="image/*">
+                        <small>Formatos aceitos: jpg, png</small>
+                    </div> 
+                    <button class="style-button">Criar artigo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<link href="/css/quilljs.1.3.6.css" rel="stylesheet">
+
+<script src="/js/quilljs.1.3.6.js"></script>
+
+<script>
+  var quill = new Quill('#content-post', {
+    theme: 'snow',
+    placeholder: 'Escreva aqui seu artigo'
+  });
+</script>

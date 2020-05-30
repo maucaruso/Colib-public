@@ -1,0 +1,37 @@
+<div id="middle" class="login-route">
+    <div class="header-menu">
+        <div class="header-btns">
+            <a class="btn-new style-button" href="/">Voltar ao site</a>
+        </div>
+        <form class="seach">
+            <input type="text" class="search-input  style-input" placeholder="Pesquisar">
+            <button class="search-button"><img src="/img/svg/loupe.svg" alt="Pesquisar"></button>
+        </form>
+    </div>
+
+    {{>msg}}
+
+    <div class="content">
+        <div class="left login">
+            <form action="/usuario/login/" method="POST">
+                <h2>Já tenho conta</h2>
+                <input type="text" class="style-input" id="email" name="email" placeholder="E-mail" minlength="5" required>
+                <input type="password" class="style-input" id="password" name="password" placeholder="Senha" minlength="8" required>
+                <button class="style-button">Fazer Login</button>
+            </form>
+        </div>
+        <div class="right register">
+            <form action="/usuario/login/register" method="POST">
+                <h2>Quero criar minha conta</h2>
+                <input type="text" class="style-input" id="register_name" name="register_name" placeholder="Nome" minlength="3" required>
+                <input type="text" class="style-input" id="register_nickname" name="register_nickname" placeholder="Apelido" minlength="3" required>
+                <input type="text" class="style-input" id="register_email" name="register_email" placeholder="E-mail" minlength="5" required>
+                <input type="password" class="style-input" id="register_password" name="register_password" placeholder="Senha" minlength="8" required>
+                <input type="password" class="style-input" id="register_password_confirmation" name="register_password_confirmation" placeholder="Repita sua senha" minlength="8" required>
+                <button class="style-button">Finalizar Cadastro</button>
+            </form>
+        </div>
+    </div>
+
+    {{>ads}}
+</div>

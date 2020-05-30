@@ -1,0 +1,555 @@
+@import functions
+ 
+body
+  background: #f9f9f9
+ 
+header.painel
+  background: white
+  position: fixed
+  height: 100%
+  width: 180px
+  box-shadow: 5px 0px 8px rgba(0, 0, 0, 0.1)
+  .menu 
+    height: inherit
+    ul
+      height: inherit
+      background: white
+      li
+        height: 120px 
+        padding: 0 10px
+        box-sizing: border-box 
+        transition: .1s ease 
+        &:hover
+          background: transparent
+        + li
+          a
+            position: relative 
+            &:after
+              content: '' 
+              position: absolute
+              bottom: 0 
+              width: 100%
+              height: 1px 
+              background: black
+          &:hover
+            a:after
+              height: 3px 
+              background: yellow
+        a
+          color: #494949
+          color: black
+          width: 100%
+          height: 100%
+          float: left
+          display: flex 
+          justify-content: center
+          align-items: center      
+          flex-wrap: wrap      
+          font-weight: 600    
+          padding: 22px 0
+          box-sizing: border-box
+          span
+            width: 100%
+            text-align: center
+            img
+              width: 40px         
+        &.logo
+          background: white
+          a
+            padding: 0 
+            position: relative
+            &:before, &:after
+              content: ''
+              position: absolute
+              height: 5px
+              width: 50%
+              bottom: 0
+            &::before
+              background: yellow
+              left: 0
+            &::after
+              right: 0
+              background: black
+              
+          img
+            width: 100px
+        &.painel-usuario, &.settings
+          position: absolute
+          bottom: 0
+          width: 100% 
+          background: white
+          a
+            color: black 
+            &:after
+              display: none
+          &:hover
+            a
+              position: relative
+              &:before
+                content: ''
+                position: absolute
+                height: 5px
+                width: 50%
+                top: 0
+                display: block
+                background: black
+                left: 0
+                right: 0
+                margin: 0 auto
+                z-index: 1
+#middle
+  width: calc(100% - 180px)
+  float: right 
+  padding: 40px 
+  box-sizing: border-box 
+  .header-menu
+    background: white
+    display: flex
+    align-items: center
+    justify-content: space-between 
+    padding: 20px
+    border-radius: 0
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1)
+    .register-mensage
+      display: flex
+      align-items: center
+      p
+        margin-right: 20px
+        font-weight: 700
+    .seach
+      display: flex
+      align-items: center
+      input
+        background: white
+      .search-button
+        cursor: pointer
+        box-sizing: border-box
+        margin-left: -10px
+        width: 52px 
+        height: 52px
+        box-shadow: none
+        border: none
+        border-radius: 0
+        display: flex
+        align-items: center
+        justify-content: center
+        background: white
+        border: 1px solid black
+        img
+          width: 25px
+  .content
+    float: left
+    width: calc(100% - 340px)
+    margin-top: 40px
+    background: white
+    display: flex
+    flex-wrap: wrap
+    align-items: center
+    justify-content: space-between
+    padding: 20px
+    border-radius: 0
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1) 
+    > h2 
+      float: left
+      width: 100%
+    .form-add
+      float: left
+      width: 100%
+      margin-top: 20px
+      .alert-error
+        color: red
+        float: left
+        margin-top: 10px
+        font-weight: 600
+        + .alert-error
+          border-left: 1px solid red
+          padding-left: 10px
+          margin-left: 10px
+      .style-button
+        cursor: pointer
+        top: -4px
+        font-size: 16px
+        padding: 13px 20px
+        &:hover
+          top: -2px
+    .list-items
+      float: left
+      width: 100% 
+      margin-top: 20px
+      .list-item
+        display: flex
+        align-items: center 
+        height: 120px  
+        width: 100% 
+        border-radius: 0
+        border: 1px solid rgba(136,136,136,0.2)
+        box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1) 
+        padding: 20px
+        flex-wrap: wrap
+        justify-content: space-between
+        + .list-item
+          margin-top: 20px
+        .list-item-left
+          .list-item-name 
+            font-size: 26px
+            float: left
+            width: 100% 
+            margin-bottom: 10px
+            font-weight: 700
+            color: yellow 
+          .list-item-slug, .list-item-category
+            float: left 
+            font-size: 14px 
+            font-style: italic  
+            margin-right: 10px
+        .list-item-right
+          .list-item-date
+            text-align: right
+            float: right
+            width: 100%
+          .list-item-options
+            margin-top: 10px
+            float: right
+            a
+              color: yellow
+              letter-spacing: 1px
+              text-decoration: underline
+            form
+              display: inline-block
+              margin-left: 10px 
+            .list-item-delete
+              color: #ff2a2a
+              text-decoration: underline
+              background: none
+              border: none
+              font-size: 16px
+              cursor: pointer
+  .ads
+    width: 300px
+    float: right
+    height: 300px
+    margin-top: 40px
+    background: white
+    box-shadow: 0px 0px 8px rgba(0,0,0,0.1)
+  .form-add
+    &.article, &.library 
+      form
+        display: flex
+        flex-wrap: wrap
+        justify-content: space-between
+        width: 100%
+      input, select
+        width: calc(50% - 5px)
+        margin-block-end: 10px
+      input:not(#title)
+        width: calc(33.33% - 6.66px)
+      textarea
+        width: 100%
+        height: auto
+        margin: 0px
+        width: 100%
+        height: 400px
+        margin-bottom: 15px
+        padding: 10px
+    &.library
+      form
+        .style-input
+            width: calc(50% - 6.66px)
+        textarea#description
+          width: 100%
+          height: 200px
+          margin: 0 
+        .left
+          width: 50%
+          .style-input
+            &#name, &#author, &#hashtags
+              width: 100%
+          .input-wrapper
+            input
+              margin: 0
+            small
+              margin: 5px 0 10px
+              display: block
+        .right
+          width: 50%
+          padding-left: 20px
+          display: flex
+          justify-content: space-between
+          flex-wrap: wrap
+          position: relative
+          .alert-upload
+            float: left 
+            width: 100%
+            text-align: center
+            margin-bottom: 10px
+            font-size: 14px
+            position: absolute
+            top: -45px
+          > .cover, .books > div
+            float: left
+            width: calc(50% - 5px)
+            height: 99%
+            display: flex
+            flex-wrap: wrap
+            align-items: center 
+            justify-content: center
+            padding: 0
+            background: rgba(136,136,136,0.1)
+            position: relative
+            &:after
+              content: attr(data-file-name)
+              position: absolute
+              bottom: 40px
+              font-style: italic
+              font-weight: 600
+              font-size: 14px
+            &.cover
+              background: url(../img/svg/galery-icon.svg) center center no-repeat
+              background-size: 30%
+              &.registered.edit
+                &::before
+                  content: ''
+                  display: inline-block
+                  width: 40px
+                  height: 40px  
+                  background: url(../img/svg/library-checked.svg) center center no-repeat
+                  background-size: cover
+                  position: absolute
+                  right: 30px 
+            &:not(.registered).edit
+              &::before
+                content: ''
+                display: inline-block
+                width: 40px
+                height: 40px  
+                background: url(../img/svg/library-error.svg) center center no-repeat
+                background-size: cover
+                position: absolute
+                right: 30px 
+            &.file
+              background: url(../img/svg/file-icon.svg) center center no-repeat
+              background-size: 30%
+            &.cover, &.file
+              transition: .3s ease
+              &:hover
+                background-color: whitesmoke
+            input:not(#title)
+              margin: 0
+              width: 100%
+              height: 100%
+              position: absolute
+              left: 0
+              top: 0
+              opacity: 0
+              cursor: pointer
+            &.cover
+              margin-bottom: 10px
+            label, small
+              width: 100%
+              text-align: center
+          .books
+            width: calc(50% - 5px)
+            padding-left: 10px  
+            > div
+              width: 100%
+              height: 29%
+              margin-bottom: 5.3%
+              &::after
+                bottom: 10px
+                left: 121px
+                font-size: 14px
+              &.file
+                background-size: 20% 
+                background-position: 20px center
+                padding: 30px 0 30px 120px
+                label, small
+                  text-align: left
+                &.registered.edit
+                  &::before
+                    content: ''
+                    display: inline-block
+                    width: 40px
+                    height: 40px  
+                    background: url(../img/svg/library-checked.svg) center center no-repeat
+                    background-size: cover
+                    position: absolute
+                    right: 30px 
+                &:not(.registered).edit
+                  &::before
+                    content: ''
+                    display: inline-block
+                    width: 40px
+                    height: 40px  
+                    background: url(../img/svg/library-error.svg) center center no-repeat
+                    background-size: cover
+                    position: absolute
+                    right: 30px 
+
+        button
+          margin-top: 10px 
+.content-cards 
+  margin-top: 40px 
+  float: left
+  width: calc(100% - 340px)
+  .list-items
+    display: flex
+    flex-wrap: wrap 
+    display: grid
+    grid-template-columns: 1fr 1fr 1fr 1fr
+    column-gap: 20px
+    .list-item
+      background: white
+      margin-right: 0
+      box-shadow: 0px 0px 8px rgba(0,0,0,0.1)
+      border-radius: 0
+      text-align: center
+      width: auto
+      overflow: hidden
+      float: left
+      margin-bottom: 20px
+
+      .cover
+        height: 200px
+        display: flex
+        flex-wrap: wrap
+        justify-content: center
+        align-items: center
+        background: #efefef
+        img
+          max-width: 100%
+          width: auto
+          height: inherit
+          max-height: 100%
+          &.not-cover
+            width: 80px
+      .desc
+        padding: 20px
+        float: left
+        h2
+          height: 25px
+          margin-bottom: 10px
+          font-size: 18px
+          display: -webkit-box
+          -webkit-line-clamp: 1
+          -webkit-box-orient: vertical
+          overflow: hidden
+          text-overflow: ellipsis
+        .short-desc
+          font-size: 14px
+          display: -webkit-box
+          -webkit-line-clamp: 3
+          -webkit-box-orient: vertical
+          overflow: hidden
+          text-overflow: ellipsis
+          height: 60px
+          margin-bottom: 2px
+        .more-infos
+          width: 100%
+          float: left 
+          display: flex 
+          flex-wrap: wrap  
+          justify-content: center
+          margin-bottom: 10px
+          .more-infos-box
+            height: 51px
+            width: 50%
+            text-align: center
+            font-size: 12px
+            padding: 0 10px
+            display: flex
+            align-items: center  
+            flex-wrap: wrap 
+            justify-content: center
+            strong
+              width: 100%
+              float: left
+              display: -webkit-box
+              -webkit-line-clamp: 2
+              -webkit-box-orient: vertical
+              overflow: hidden
+              text-overflow: ellipsis
+              height: auto
+              margin-bottom: 2px
+            .category
+              strong
+                width: 110px 
+                -webkit-line-clamp: 1
+        .download-btn
+          float: left
+          width: 100%
+          text-transform: uppercase 
+          font-size: 14px
+  &.side-by-side
+    .list-items 
+      .list-item 
+        .cover
+          width: 135px
+          float: left
+        .desc
+          width: calc(100% - 135px)
+          float: left
+          text-align: left
+          padding: 15px
+          .download-btn
+            font-size: 12px
+            text-align: center
+            padding: 10px
+          h2
+            margin: 0
+            height: 43px
+            font-size: 16px
+            -webkit-line-clamp: 2
+          .short-desc
+            -webkit-line-clamp: 2
+            height: 38px
+          .more-infos 
+            .more-infos-box
+              text-align: left
+              padding: 0
+              height: auto
+              justify-content: end
+              .author
+                strong
+                  display: -webkit-box
+                  -webkit-line-clamp: 1
+                  -webkit-box-orient: vertical
+                  overflow: hidden
+                  text-overflow: ellipsis
+                  height: auto
+                  margin-bottom: 2px
+              .category
+                width: 100%
+                strong
+                  width: 100%
+                  display: -webkit-box
+                  -webkit-line-clamp: 1
+                  -webkit-box-orient: vertical
+                  overflow: hidden
+                  text-overflow: ellipsis
+                  height: auto
+                  margin-bottom: 2px
+.content.library
+  h2
+  .delete-form
+#middle
+  .content.article
+    .list-items 
+      .list-item
+        background: white
+        border: none
+
+// responsive
+@media (max-width: 1600px) and (min-width: 701px)
+  #middle 
+    .form-add.library 
+      form 
+        .left
+          width: 35%
+        .right
+          width: 65%
+          .books>div
+            height: 30% 
+            margin-bottom: 4.5% 
+  .content-cards 
+    .list-items
+      grid-template-columns: 1fr 1fr 1fr

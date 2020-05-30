@@ -1,0 +1,120 @@
+header.painel .menu ul li.logo
+    position: relative
+    img
+        margin-top: -20px
+    &::after
+        content: 'Colaboradores'
+        position: absolute
+        bottom: 28px
+        right: 0
+        left: 0
+        text-align: center
+        font-style: italic
+        font-family: 'Courgette'
+        letter-spacing: 1px
+        font-size: 16px
+        font-weight: 600
+#middle 
+    .content
+        &.full
+            width: 100%
+        .form-add.article
+            form
+                .left
+                    padding-right: 20px
+                    width: calc(100% - 350px)
+                    .ql-tooltip
+                        *
+                            color: black
+                    .ql-toolbar
+                        border: 1px solid #3a3a3a
+                        * 
+                            color: black
+                        .ql-picker-label 
+                            color: black 
+                    #content-post
+                        float: left
+                        width: 100%
+                        height: calc(100% - 42px)
+                        border: none
+                        .ql-editor
+                            border: 1px solid black
+                            border-top: none
+                            * 
+                                color: black
+                            p
+                                font-size: 16px
+                            u
+                                text-decoration: underline
+                    textarea
+                        display: none
+                        width: 100%
+
+                .right 
+                    width: 350px
+                    float: right
+                    .input-wrapper
+                        input
+                            margin: 0 0 5px
+                        small
+                            margin-bottom: 10px
+                            display: block
+                    .cover
+                        height: 200px
+                        display: flex
+                        flex-wrap: wrap
+                        justify-content: center
+                        align-items: center
+                        background: url(../img/svg/galery-icon.svg) center center no-repeat
+                        background-size: 18%
+                        cursor: pointer
+                        position: relative
+                        padding: 0
+                        transition: .3s ease
+                        &.registered
+                            label, small
+                                z-index: 1
+                            .thumbnail
+                                overflow: hidden
+                                opacity: .3
+                                width: 100%
+                                height: 100%
+                                position: absolute
+                                top: 0
+                                right: 0
+                                z-index: 0
+                                display: flex
+                                align-items: center 
+                                img
+                                    width: 100%
+                                    height: auto
+                        &:hover
+                            background-color: #3a3a3a
+                        &:after
+                            content: attr(data-file-name)
+                            position: absolute
+                            bottom: 45px
+                            font-style: italic
+                            font-weight: 600
+                            font-size: 12px
+                        label
+                            margin-bottom: 55px
+                            display: block
+                            text-align: center
+                            width: 100%
+                        input
+                            margin: 0
+                            width: 100%
+                            height: 100%
+                            position: absolute
+                            left: 0
+                            top: 0
+                            opacity: 0
+                            cursor: pointer
+                    .style-input
+                        width: 100%
+                    input:not(#title), input
+                        width: 100%
+                    .style-button
+                        width: 100%
+                        margin-top: 15px

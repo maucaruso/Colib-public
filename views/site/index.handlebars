@@ -1,0 +1,71 @@
+<div id="middle">
+    <div class="header-menu">
+        <div class="register-mensage">
+            <p>Seja bem vindo à maior biblioteca Libertária do Brasil! </p>
+            <a class="btn-new style-button" href="/usuario/login">Faça Login ou Cadastre</a> 
+        </div>
+        <form class="seach">
+            <input type="text" class="search-input style-input" placeholder="Pesquisar">
+            <button class="search-button"><img src="/img/svg/loupe.svg" alt="Pesquisar"></button>
+        </form>
+    </div>
+
+    <div class="box-cards">
+        <div class="content-cards side-by-side">
+            <h2 class="title-vitirne">Novidades na biblioteca</h2>
+            <div class="list-items">
+                {{#each books}}
+                    <article class="list-item">
+                        <div class="cover">
+                            {{#if cover}}
+                                <img src="{{cover}}" alt="{{name}}">
+                            {{else}}
+                                <img class="not-cover" src="/img/svg/galery-icon.svg" alt="{{name}}">
+                            {{/if}}
+                        </div>
+                        <div class="desc">
+                            <h2 title="{{name}}">{{name}}</h2>
+                            <div class="short-desc">{{description}}</div>
+                            <div class="more-infos">
+                                <div class="more-infos-box"><span class="author">Autor: <strong>{{author}}</strong></span></div>
+                                <div class="more-infos-box"><span class="category">Hashtags: <strong>{{hashtags}}</strong></span></div>
+                            </div>
+                            <a href="/biblioteca/{{_id}}/{{slug}}" class="download-btn style-button">Baixar livro</a>
+                        </div>
+                    </article>
+                {{else}}
+                    <p>Ainda não existem livros cadastrados</p>
+                {{/each}}
+            </div>
+        </div>
+
+        <div class="content-cards">
+            <h2 class="title-vitirne">Últimos artigos</h2>
+            <div class="list-items">
+                {{#each posts}}
+                    <article class="list-item">
+                        <div class="cover">
+                            {{#if thumbnail}}
+                                <img src="{{thumbnail}}" alt="{{title}}">
+                            {{else}}
+                                <img class="not-cover" src="/img/svg/galery-icon.svg" alt="{{title}}">
+                            {{/if}}
+                        </div>
+                        <div class="desc">
+                            <h2 title="{{title}}">{{title}}</h2>
+                            <div class="short-desc">{{description}}</div>
+                            <div class="more-infos">
+                                <div class="more-infos-box"><span class="author">Data: <strong>{{date}}</strong></span></div>
+                                <div class="more-infos-box"><span class="category">Hashtags: <strong>{{hashtags}}</strong></span></div>
+                            </div>
+                            <a href="/artigos/{{_id}}/{{slug}}" class="download-btn style-button">Visualizar artigo</a>
+                        </div>
+                    </article>
+                {{else}}
+                    <p>Ainda não existem livros cadastrados</p>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+    {{>ads}}
+</div>

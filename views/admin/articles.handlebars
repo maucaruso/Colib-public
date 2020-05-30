@@ -1,0 +1,41 @@
+<div id="middle">
+    <div class="header-menu">
+        <div class="header-btns">
+            <a class="btn-new style-button" href="/admin/articles/new-article">Criar artigo</a>
+        </div>
+        <form class="seach">
+            <input type="text" class="search-input  style-input" placeholder="Pesquisar">
+            <button class="search-button"><img src="/img/svg/loupe.svg" alt="Pesquisar"></button>
+        </form>
+    </div>
+
+    {{>msg}}
+
+    <div class="content-cards">
+        <div class="list-items">
+            {{#each posts}}
+                <article class="list-item">
+                    <div class="cover">
+                        {{#if thumbnail}}
+                            <img src="{{thumbnail}}" alt="{{title}}">
+                        {{else}}
+                            <img class="not-cover" src="/img/svg/galery-icon.svg" alt="{{title}}">
+                        {{/if}}
+                    </div>
+                    <div class="desc">
+                        <h2 title="{{title}}">{{title}}</h2>
+                        <div class="short-desc">{{description}}</div>
+                        <div class="more-infos">
+                            <div class="more-infos-box"><span class="author">Data: <strong>{{date}}</strong></span></div>
+                            <div class="more-infos-box"><span class="category">Hashtags: <strong>{{hashtags}}</strong></span></div>
+                        </div>
+                        <a href="/admin/article/edit/{{_id}}" class="download-btn style-button">Editar informações</a>
+                    </div>
+                </article>
+            {{else}}
+                <p>Você ainda não criou nenhum artigo.</p>
+            {{/each}}
+        </div>
+    </div>
+    {{>ads}}
+</div>

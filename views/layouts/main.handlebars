@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O Indivíduo</title>
+    <link rel="stylesheet" href="/css/general.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap&family=Courgette&display=swap" rel="stylesheet">
+    {{#if_adm}}
+        <link rel="stylesheet" href="/css/style-admin.css">
+    {{else}}
+        <link rel="stylesheet" href="/css/style.css">
+    {{/if_adm}}
+    <link rel="stylesheet" href="/css/style-user.css">
+    
+</head>
+<body>
+    {{#if_adm}}
+        {{>admin/header}}
+        {{{body}}}
+        {{>admin/footer}}
+    {{else}}
+        {{>site/header}}
+        {{{body}}}
+        {{>site/footer}}
+    {{/if_adm}}
+</body>
+<script src="/js/actions.js"></script>
+</html>
