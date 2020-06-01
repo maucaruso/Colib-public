@@ -1,9 +1,9 @@
 var validateRegister = function veriryRegister(data){
     var errors = [];
 
-    if(!data.register_name || typeof data.register_name == undefined || data.register_name == null || data.register_name.length < 3){
-        errors.push({text: 'Nome muito curto, por favor, tente novamente'});
-    }
+    // if(!data.register_name || typeof data.register_name == undefined || data.register_name == null || data.register_name.length < 3){
+    //     errors.push({text: 'Nome muito curto, por favor, tente novamente'});
+    // }
     if(!data.register_nickname || typeof data.register_nickname == undefined || data.register_nickname == null || data.register_nickname.length < 3){
         errors.push({text: 'Apelido muito curto, por favor, tente novamente'});
     }

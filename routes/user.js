@@ -60,7 +60,6 @@ const {isUser} = require('../helpers/isUser.js');
                         res.redirect('/user/login');
                     } else {
                         const newUser = {
-                            name: req.body.register_name,
                             nickname: req.body.register_nickname,
                             email: req.body.register_email,
                             password: req.body.register_password
@@ -217,35 +216,39 @@ const {isUser} = require('../helpers/isUser.js');
                 req.flash('error_msg', errors); 
                 res.redirect('/user/library/edit/'+req.body.id);
             } else {
-                Book.findOne({_id:req.body.id}).then((book) => {
-                    book.name = req.body.name;
-                    book.author = req.body.author;
-                    book.hashtags = tags;
-                    book.description = req.body.description; 
-                    if(cover){
-                        // Deletando arquivo antigo antes de atruibuir novo valor na base de dados
-                        deleteFile(book.cover); 
-                        book.cover = cover;
+                Book.findOne({_id:req.body.id, user:res.locals.user.nickname}).then((book) => {
+                    if(book){
+                        book.name = req.body.name;
+                        book.author = req.body.author;
+                        book.hashtags = tags;
+                        book.description = req.body.description; 
+                        if(cover){
+                            // Deletando arquivo antigo antes de atruibuir novo valor na base de dados
+                            deleteFile(book.cover); 
+                            book.cover = cover;
+                        }
+                        if(pdf){
+                            deleteFile(book.file_pdf); 
+                            book.file_pdf = pdf;
+                        }
+                        if(epub){
+                            deleteFile(book.file_epub); 
+                            book.file_epub = epub;
+                        }
+                        if(mobi){
+                            deleteFile(book.file_mobi); 
+                            book.file_mobi = mobi;
+                        }
+                        book.save().then(() => {
+                            req.flash('success_msg', 'Livro editado com sucesso!');
+                            res.redirect('/user/library/edit/'+req.body.id);
+                        }).catch((err) => {
+                            req.flash('error_msg', 'Houve um erro interno ao editar o livro');
+                            res.redirect('/user/library/edit'+req.body.id);
+                        });
+                    } else {
+                        res.redirect('/user/library');
                     }
-                    if(pdf){
-                        deleteFile(book.file_pdf); 
-                        book.file_pdf = pdf;
-                    }
-                    if(epub){
-                        deleteFile(book.file_epub); 
-                        book.file_epub = epub;
-                    }
-                    if(mobi){
-                        deleteFile(book.file_mobi); 
-                        book.file_mobi = mobi;
-                    }
-                    book.save().then(() => {
-                        req.flash('success_msg', 'Livro editado com sucesso!');
-                        res.redirect('/user/library/edit/'+req.body.id);
-                    }).catch((err) => {
-                        req.flash('error_msg', 'Houve um erro interno ao editar o livro');
-                        res.redirect('/user/library/edit'+req.body.id);
-                    });
                 }).catch((err) => {
                     req.flash('error_msg', 'Houve um erro ao editar o livro');
                     res.redirect('/user/library');
@@ -278,7 +281,7 @@ const {isUser} = require('../helpers/isUser.js');
         });
     // Posts
         router.get('/articles', isUser, (req, res) => { 
-            Post.find().then((posts) => {
+            Post.find({user: res.locals.user.nickname}).then((posts) => {
                 res.render('user/articles', {posts: posts.map(post => post.toJSON())}); 
             }).catch((err) =>{
                 req.flash('error_msg', 'Houve um erro ao listar os artigos.'); 
@@ -307,7 +310,8 @@ const {isUser} = require('../helpers/isUser.js');
                     hashtags: tags,
                     thumbnail: thumbnail,
                     description: metadescription,
-                    content: req.body.content
+                    content: req.body.content,
+                    user: res.locals.user.nickname
                 }
                 new Post(newPost).save().then(() => {
                     req.flash('success_msg', 'Artigo criado com sucesso!');
@@ -320,8 +324,12 @@ const {isUser} = require('../helpers/isUser.js');
         });
 
         router.get('/article/edit/:id', isUser, (req, res) => {
-            Post.findOne({_id:req.params.id}).lean().then((post) => {
-                res.render('user/articles-edit', {post: post}); 
+            Post.findOne({_id:req.params.id, user:res.locals.user.nickname}).lean().then((post) => {
+                if(post){
+                    res.render('user/articles-edit', {post: post}); 
+                } else {
+                    res.redirect('/user/articles');
+                } 
             }).catch((err) => {
                 req.flash('error_msg', 'Este artigo não existe');
                 res.redirect('/user/articles/');
@@ -340,24 +348,28 @@ const {isUser} = require('../helpers/isUser.js');
                 req.flash('error_msg', errors); 
                 res.redirect('/user/articles/edit/'+req.body.id);
             } else {
-                Post.findOne({_id:req.body.id}).then((post) => {
-                    post.title = req.body.title;
-                    post.slug = slug;
-                    post.hashtags = tags;
-                    if(thumbnail != null && thumbnail != undefined && thumbnail != ''){
-                        // Deletando arquivo antigo antes de atruibuir novo valor na base de dados
-                        deleteFile(post.thumbnail); 
-                        post.thumbnail = thumbnail;
+                Post.findOne({_id:req.body.id, user:res.locals.user.nickname}).then((post) => {
+                    if(post){
+                        post.title = req.body.title;
+                        post.slug = slug;
+                        post.hashtags = tags;
+                        if(thumbnail != null && thumbnail != undefined && thumbnail != ''){
+                            // Deletando arquivo antigo antes de atruibuir novo valor na base de dados
+                            deleteFile(post.thumbnail); 
+                            post.thumbnail = thumbnail;
+                        }
+                        post.description = metadescription;
+                        post.content = req.body.content;
+                        post.save().then(() => {
+                            req.flash('success_msg', 'Artigo editado com sucesso!');
+                            res.redirect('/user/articles');
+                        }).catch((err) => {
+                            req.flash('error_msg', 'Houve um erro interno ao salvar o artigo');
+                            res.redirect('/user/articles');
+                        });
+                    } else {
+                        res.redirect('/user/articles');
                     }
-                    post.description = metadescription;
-                    post.content = req.body.content;
-                    post.save().then(() => {
-                        req.flash('success_msg', 'Artigo editado com sucesso!');
-                        res.redirect('/user/articles');
-                    }).catch((err) => {
-                        req.flash('error_msg', 'Houve um erro interno ao salvar o artigo');
-                        res.redirect('/user/articles');
-                    });
                 }).catch((err) => {
                     req.flash('error_msg', 'Houve um erro ao editar o artigo');
                     res.redirect('/user/articles');
@@ -366,16 +378,20 @@ const {isUser} = require('../helpers/isUser.js');
         });
 
         router.post('/articles/delete', isUser, (req, res) => {
-            Post.findOne({_id:req.body.id}).then((post) => {
-                // deletando arquivos de uploads
-                deleteFile(post.thumbnail); 
-                Post.remove({_id: req.body.id}).then(() => {
-                    req.flash('success_msg', 'Artigo excluído com sucesso!');
-                    res.redirect('/user/articles/');
-                }).catch((err) => {
-                    req.flash('error_msg', 'Houve um erro ao excluir o artigo');
-                    res.redirect('/user/articles/');
-                }); 
+            Post.findOne({_id:req.body.id, user:res.locals.user.nickname}).then((post) => {
+                if(post){
+                    // deletando arquivos de uploads
+                    deleteFile(post.thumbnail); 
+                    Post.remove({_id: req.body.id}).then(() => {
+                        req.flash('success_msg', 'Artigo excluído com sucesso!');
+                        res.redirect('/user/articles/');
+                    }).catch((err) => {
+                        req.flash('error_msg', 'Houve um erro ao excluir o artigo');
+                        res.redirect('/user/articles/');
+                    }); 
+                } else {
+                    res.redirect('/user/articles')
+                }
             }).catch((err) => {
                 req.flash('error_msg', 'Houve um erro ao excluir o artigo');
                 res.redirect('/user/articles/');
@@ -387,7 +403,9 @@ const {isUser} = require('../helpers/isUser.js');
         });
     // Configurações
         router.get('/settings', isUser, (req, res) => {
-            res.render('user/settings'); 
+            User.findOne({_id:res.locals.user._id, nickname:res.locals.user.nickname}).then((user) => {
+                res.render('user/settings', {user: user}); 
+            });
         });
 
 

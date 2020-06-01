@@ -1,3 +1,30 @@
 <div id="middle">
-    
+    <div class="header-menu">
+        <a class="btn-new style-button" href="/user/library">Voltar à Biblioteca</a> 
+        <form class="seach">
+            <input type="text" class="search-input style-input" placeholder="Pesquisar">
+            <button class="search-button"><img src="/img/svg/loupe.svg" alt="Pesquisar"></button>
+        </form>
+    </div>
+
+    {{>msg}}
+
+    <div class="content settings">
+       <h2>Editar meus dados</h2>
+        <form action="/user/settings/edit" method="POST">
+            <div class="left">
+                <div class="profile-picture style-input">
+                    <label>Foto do perfil</label>
+                    <input type="file" id="profile_picture" name="profile_picture" placeholder="Thumbnail do artigo" accept="image/*">
+                </div> 
+            </div>
+            <div class="right">
+                <input type="password" class="style-input" id="register_password" name="register_password" placeholder="Digite sua senha antiga" minlength="8" required>
+                <input type="password" class="style-input" id="register_password" name="register_password" placeholder="Digite sua nova senha" minlength="8" required>
+                <input type="password" class="style-input" id="register_password_confirmation" name="register_password_confirmation" placeholder="Repita sua nova senha" minlength="8" required>
+                <button class="style-button">Editar cadastro</button>
+            </div>
+        </form>
+    </div>
+    {{>ads}}
 </div>
