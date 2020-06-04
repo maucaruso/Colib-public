@@ -9,21 +9,26 @@
 
     {{>msg}}
 
-    <div class="content settings">
-       <h2>Editar meus dados</h2>
-        <form action="/user/settings/edit" method="POST">
-            <div class="left">
+    <div class="settings">
+        <form action="/user/settings/edit" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="nickname" value="{{user.nickname}}">
+            <div class="left content">
+                <h2>Atualizar foto de perfil</h2>
                 <div class="profile-picture style-input">
-                    <label>Foto do perfil</label>
+                    {{#if user.profile_picture}} 
+                        <img src="{{user.profile_picture}}" alt="{{user.nickname}}">
+                    {{/if}}
+                    <label>Selecionar foto<br/> do perfil</label>
                     <input type="file" id="profile_picture" name="profile_picture" placeholder="Thumbnail do artigo" accept="image/*">
                 </div> 
             </div>
-            <div class="right">
-                <input type="password" class="style-input" id="register_password" name="register_password" placeholder="Digite sua senha antiga" minlength="8" required>
-                <input type="password" class="style-input" id="register_password" name="register_password" placeholder="Digite sua nova senha" minlength="8" required>
-                <input type="password" class="style-input" id="register_password_confirmation" name="register_password_confirmation" placeholder="Repita sua nova senha" minlength="8" required>
-                <button class="style-button">Editar cadastro</button>
+            <div class="right content">
+                <h2>Atualizar senha</h2>
+                <input type="password" class="style-input" id="password" name="password" placeholder="Digite sua nova senha">
+                <input type="password" class="style-input" id="password_confirmation" name="password_confirmation" placeholder="Repita sua nova senha">
+                <small>*Preencha os campos acima somente se deseja mudar sua senha.</small>
             </div>
+            <button class="style-button" type="submit">Atualizar cadastro</button>
         </form>
     </div>
     {{>ads}}

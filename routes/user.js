@@ -18,6 +18,7 @@ const filterHashtags = require('../controller/filterHashtags');
 const returnSlug = require('../controller/returnSlug');
 const returnMetaDescription = require('../controller/returnMetaDescription');
 const filterFileName =  require('../controller/filterFileName');
+const validateRegisterEdit = require('../controller/validateRegisterEdit');
 const {isUser} = require('../helpers/isUser.js');
 // Login e Registro
     router.get('/login', (req, res) => {
@@ -68,12 +69,12 @@ const {isUser} = require('../helpers/isUser.js');
                         bctypt.genSalt(10, (error, salt) => {
                             bctypt.hash(newUser.password, salt, (error, hash) => {
                                 if(error){
-                                    req.flash('error_msg', 'Houve um erro durante o salvamento de seus dados, por favor, tente novamente');
+                                    req.flash('error_msg', 'Houve um erro ao salvar de seus dados, por favor, tente novamente');
                                     res.redirect('/user/login');
                                 } else {
                                    newUser.password = hash;
                                    new User(newUser).save().then(() => {
-                                        req.flash('success_msg', 'Cadastro realizado com sucesso!');
+                                        req.flash('success_msg', 'Cadastro realizado com sucesso! Você já pode acessar sua conta através do formulário "Já tenho conta"');
                                         res.redirect('/user/login');
                                     }).catch((err) => {
                                         req.flash('error_msg', 'Houve um erro interno, tente novamente.'+err);
@@ -108,6 +109,9 @@ const {isUser} = require('../helpers/isUser.js');
                     } else if(req.body.title){
                         // Se for artigo
                         cb(null, 'public/uploads/images/thumbnails'); 
+                    } else if(req.body.nickname){
+                        // Se for perfil
+                        cb(null, 'public/uploads/images/profile_pic'); 
                     }
                 } else {
                     cb(null, 'public/uploads/files');
@@ -122,6 +126,10 @@ const {isUser} = require('../helpers/isUser.js');
                     // Se for artigo
                     var nameCover = filterFileName(req.body.title);
                     cb(null, nameCover+'-'+Date.now()+path.extname(file.originalname));
+                } else if(req.body.nickname){
+                    // Se for Usuário
+                    var profile_pic = filterFileName(req.body.nickname);
+                    cb(null, profile_pic+'-'+Date.now()+path.extname(file.originalname));
                 }
             }
         }); 
@@ -403,9 +411,61 @@ const {isUser} = require('../helpers/isUser.js');
         });
     // Configurações
         router.get('/settings', isUser, (req, res) => {
-            User.findOne({_id:res.locals.user._id, nickname:res.locals.user.nickname}).then((user) => {
-                res.render('user/settings', {user: user}); 
+            User.findOne({_id:res.locals.user._id, nickname:res.locals.user.nickname}).lean().then((user) => {
+                if(user){
+                    res.render('user/settings', {user: user}); 
+                }
             });
+        });
+
+        router.post('/settings/edit', isUser, upload.any('files'), (req, res) => { 
+            var profile_picture = returnFile(req.files, 'img', 'profile_pic');
+            var errors = validateRegisterEdit(req.body, profile_picture);
+    
+            if(errors.length > 0){
+                req.flash('error_msg', errors); 
+                res.redirect('/user/settings');
+            } else { 
+                User.findOne({nickname:res.locals.user.nickname}).then((user) => {
+                    if(req.body.password){
+                        user.password = req.body.password;
+                    }
+                    if(profile_picture){
+                        deleteFile(user.profile_picture); 
+                        user.profile_picture = profile_picture;
+                    }
+                    if(req.body.password){
+                        bctypt.genSalt(10, (error, salt) => {
+                            bctypt.hash(user.password, salt, (error, hash) => {
+                                if(error){
+                                    req.flash('error_msg', 'Houve um erro ao salvar de seus dados, por favor, tente novamente');
+                                    res.redirect('/user/login');
+                                } else {
+                                    user.password = hash;
+                                    user.save().then(() => {
+                                        req.flash('success_msg', 'Perfil atualizado com sucesso!');
+                                        res.redirect('/user/settings');
+                                    }).catch((err) => {
+                                        req.flash('error_msg', 'Houve um erro interno, tente novamente.'+err);
+                                        res.redirect('/user/settings');
+                                    });
+                                }
+                            });
+                        });
+                    } else {
+                        user.save().then(() => {
+                            req.flash('success_msg', 'Perfil atualizado com sucesso!');
+                            res.redirect('/user/settings');
+                        }).catch((err) => {
+                            req.flash('error_msg', 'Houve um erro interno, tente novamente.'+err);
+                            res.redirect('/user/settings');
+                        });
+                    }
+                }).catch((err) => {
+                    req.flash(('error_msg', 'Houve um erro interno, por favor, tente novamente.'+err));
+                    res.redirect('/user/settings');
+                });
+            }
         });
 
 

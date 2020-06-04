@@ -25,7 +25,10 @@
                 <h2>Quero criar minha conta</h2>
                 <input type="text" class="style-input" id="register_nickname" name="register_nickname" placeholder="Apelido" minlength="3" required>
                 <input type="text" class="style-input" id="register_email" name="register_email" placeholder="E-mail" minlength="5" required>
-                <input type="password" class="style-input" id="register_password" name="register_password" placeholder="Senha" minlength="8" required>
+                <div class="input-wrapper">
+                    <input type="password" class="style-input" id="register_password" name="register_password" placeholder="Senha" minlength="8" required>
+                    <small>A senha deve conter mais de 8 caracteres</small>
+                </div>
                 <input type="password" class="style-input" id="register_password_confirmation" name="register_password_confirmation" placeholder="Repita sua senha" minlength="8" required>
                 <button class="style-button">Finalizar Cadastro</button>
             </form>

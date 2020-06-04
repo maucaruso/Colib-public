@@ -53,5 +53,14 @@ const Post = mongoose.model('posts');
             res.redirect('/artigos/');
         }); 
     });
+// Página do Usuário
+    router.get('/profile/:nickname', (req, res) => {
+        User.findOne({_id:req.params.id, slug:req.params.slug}).lean().then((post) => {
+            res.render('site/articles-details', {post: post}); 
+        }).catch((err) => {
+            req.flash('error_msg', 'Este livro não existe');
+            res.redirect('/artigos/');
+        }); 
+    });
 
 module.exports = router; 
