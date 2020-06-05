@@ -140,7 +140,7 @@ const {isUser} = require('../helpers/isUser.js');
         });
     // Biblioteca
         router.get('/library', isUser, (req, res) => {
-            Book.find({user: res.locals.user.nickname}).sort({date: 'desc'}).then((books) => {
+            Book.find({user: res.locals.user._id}).sort({date: 'desc'}).then((books) => {
                 res.render('user/library', {books: books.map(book => book.toJSON())}); 
             }).catch((err) =>{
                 req.flash('error_msg', 'Houve um erro ao listar os livros, por favor, tente novamente.'); 
@@ -179,7 +179,7 @@ const {isUser} = require('../helpers/isUser.js');
                     file_pdf: pdf, 
                     file_epub: epub,
                     file_mobi: mobi,
-                    user: res.locals.user.nickname
+                    user: res.locals.user._id
                 }
                 new Book(newBook).save().then(() => {
                     req.flash('success_msg', 'Livro cadastrado com sucesso!');
@@ -192,7 +192,7 @@ const {isUser} = require('../helpers/isUser.js');
         });
 
         router.get('/library/edit/:id', isUser, (req, res) => {
-            Book.findOne({_id:req.params.id, user:res.locals.user.nickname}).lean().then((book) => {
+            Book.findOne({_id:req.params.id, user:res.locals.user._id}).lean().then((book) => {
                 if(book){
                     res.render('user/library-edit', {book: book}); 
                 } else {
@@ -224,7 +224,7 @@ const {isUser} = require('../helpers/isUser.js');
                 req.flash('error_msg', errors); 
                 res.redirect('/user/library/edit/'+req.body.id);
             } else {
-                Book.findOne({_id:req.body.id, user:res.locals.user.nickname}).then((book) => {
+                Book.findOne({_id:req.body.id, user:res.locals.user._id}).then((book) => {
                     if(book){
                         book.name = req.body.name;
                         book.author = req.body.author;
@@ -265,7 +265,7 @@ const {isUser} = require('../helpers/isUser.js');
         });
 
         router.post('/library/delete', isUser, (req, res) => {
-            Book.findOne({_id:req.body.id, user:res.locals.user.nickname}).then((book) => {
+            Book.findOne({_id:req.body.id, user:res.locals.user._id}).then((book) => {
                 if(book){
                     // deletando arquivos de uploads
                     deleteFile(book.cover); 
@@ -289,7 +289,7 @@ const {isUser} = require('../helpers/isUser.js');
         });
     // Posts
         router.get('/articles', isUser, (req, res) => { 
-            Post.find({user: res.locals.user.nickname}).then((posts) => {
+            Post.find({user: res.locals.user._id}).then((posts) => {
                 res.render('user/articles', {posts: posts.map(post => post.toJSON())}); 
             }).catch((err) =>{
                 req.flash('error_msg', 'Houve um erro ao listar os artigos.'); 
@@ -319,7 +319,7 @@ const {isUser} = require('../helpers/isUser.js');
                     thumbnail: thumbnail,
                     description: metadescription,
                     content: req.body.content,
-                    user: res.locals.user.nickname
+                    user: res.locals.user._id
                 }
                 new Post(newPost).save().then(() => {
                     req.flash('success_msg', 'Artigo criado com sucesso!');
@@ -332,7 +332,7 @@ const {isUser} = require('../helpers/isUser.js');
         });
 
         router.get('/article/edit/:id', isUser, (req, res) => {
-            Post.findOne({_id:req.params.id, user:res.locals.user.nickname}).lean().then((post) => {
+            Post.findOne({_id:req.params.id, user:res.locals.user._id}).lean().then((post) => {
                 if(post){
                     res.render('user/articles-edit', {post: post}); 
                 } else {
@@ -356,7 +356,7 @@ const {isUser} = require('../helpers/isUser.js');
                 req.flash('error_msg', errors); 
                 res.redirect('/user/articles/edit/'+req.body.id);
             } else {
-                Post.findOne({_id:req.body.id, user:res.locals.user.nickname}).then((post) => {
+                Post.findOne({_id:req.body.id, user:res.locals.user._id}).then((post) => {
                     if(post){
                         post.title = req.body.title;
                         post.slug = slug;
@@ -386,7 +386,7 @@ const {isUser} = require('../helpers/isUser.js');
         });
 
         router.post('/articles/delete', isUser, (req, res) => {
-            Post.findOne({_id:req.body.id, user:res.locals.user.nickname}).then((post) => {
+            Post.findOne({_id:req.body.id, user:res.locals.user._id}).then((post) => {
                 if(post){
                     // deletando arquivos de uploads
                     deleteFile(post.thumbnail); 

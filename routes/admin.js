@@ -49,7 +49,7 @@ const {isAdmin} = require('../helpers/isAdmin.js');
     
 // Home
     router.get('/', isAdmin, (req, res) => {
-        res.render('admin/index'); 
+        res.redirect('/admin/library'); 
     });
 // Biblioteca
     router.get('/library', isAdmin, (req, res) => {
