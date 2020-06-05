@@ -2,12 +2,9 @@
     <div class="header-menu">
         <div class="register-mensage">
             <p>Quer compartilhar suas idéias ou colaborar com nossa biblioteca?</p>
-             {{>wellcome_msg}}
+             {{>widgets/wellcome_msg}}
         </div>
-        <form class="seach">
-            <input type="text" class="search-input style-input" placeholder="Pesquisar">
-            <button class="search-button"><img src="/img/svg/loupe.svg" alt="Pesquisar"></button>
-        </form>
+        {{>widgets/search_bar}}
     </div>
 
     {{>msg}}

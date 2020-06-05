@@ -1,0 +1,35 @@
+<div class="list-items">
+    {{#each books}}
+        {{#each ../users}}
+            {{#if_eq _id ../user}}
+                <article class="list-item">
+                    <div class="cover">
+                        <a href="/profile/{{nickname}}" class="profile-post"> 
+                            {{#if profile_picture}}
+                                <img class="profile_picture" src="{{profile_picture}}" alt="{{nickname}}" title="{{nickname}}">
+                            {{else}}
+                                <img class="not-profile_picture" src="/img/svg/galery-icon.svg" alt="{{nickname}}" title="{{nickname}}">
+                            {{/if}}
+                        </a>
+                        {{#if ../cover}}
+                            <img src="{{../cover}}" alt="{{../name}}">
+                        {{else}}
+                            <img class="not-cover" src="/img/svg/galery-icon.svg" alt="{{name}}">
+                        {{/if}}
+                    </div>
+                    <div class="desc">
+                        <h2 title="{{../name}}">{{../name}}</h2>
+                        <div class="short-desc">{{../description}}</div>
+                        <div class="more-infos">
+                            <div class="more-infos-box"><span class="author">Autor: <strong>{{../author}}</strong></span></div>
+                            <div class="more-infos-box"><span class="category">Hashtags: <strong>{{../hashtags}}</strong></span></div>
+                        </div>
+                        <a href="/biblioteca/{{../_id}}/{{../slug}}" class="download-btn style-button">Baixar livro</a>
+                    </div>
+                </article>
+            {{/if_eq}}
+        {{/each}}
+    {{else}}
+        <p>Ainda não existem livros cadastrados</p>
+    {{/each}}
+</div>

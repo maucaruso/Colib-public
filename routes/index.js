@@ -9,15 +9,19 @@ require('../models/User');
 const User = mongoose.model('users');
 // Home
     router.get('/', (req, res) => {
-        Book.find().sort({date: 'desc'}).limit(10).then((books) => {
-            Post.find().sort({date: 'desc'}).limit(10).then((posts) => { 
-                res.render('site/index', {books: books.map(book => book.toJSON()), posts: posts.map(post => post.toJSON())}); 
+        User.find().then((users) => {
+            Book.find().sort({date: 'desc'}).limit(10).then((books) => {
+                Post.find().sort({date: 'desc'}).limit(10).then((posts) => { 
+                    res.render('site/index', {users: users.map(user => user.toJSON()), books: books.map(book => book.toJSON()), posts: posts.map(post => post.toJSON())}); 
+                }).catch((err) =>{
+                    req.flash('error_msg', 'Houve um erro ao carregar a página, por favor, tente novamente'); 
+                });
             }).catch((err) =>{
                 req.flash('error_msg', 'Houve um erro ao carregar a página, por favor, tente novamente'); 
-            });
-        }).catch((err) =>{
+            }); 
+        }).catch((err) => {
             req.flash('error_msg', 'Houve um erro ao carregar a página, por favor, tente novamente'); 
-        }); 
+        });
     });
 
 // Biblioteca
