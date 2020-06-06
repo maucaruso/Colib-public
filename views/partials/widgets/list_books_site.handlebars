@@ -4,13 +4,7 @@
             {{#if_eq _id ../user}}
                 <article class="list-item">
                     <div class="cover">
-                        <a href="/profile/{{nickname}}" class="profile-post"> 
-                            {{#if profile_picture}}
-                                <img class="profile_picture" src="{{profile_picture}}" alt="{{nickname}}" title="{{nickname}}">
-                            {{else}}
-                                <img class="not-profile_picture" src="/img/svg/galery-icon.svg" alt="{{nickname}}" title="{{nickname}}">
-                            {{/if}}
-                        </a>
+                        {{>widgets/profile_icon}}
                         {{#if ../cover}}
                             <img src="{{../cover}}" alt="{{../name}}">
                         {{else}}
