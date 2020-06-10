@@ -1,0 +1,23 @@
+<div id="middle" class="search-page">
+    <div class="header-menu">
+        <div class="register-mensage">
+            <p>Seja bem vindo à maior biblioteca Libertária do Brasil!</p>
+            {{>widgets/wellcome_msg}}
+        </div>
+        {{>widgets/search_bar}}
+    </div>
+
+    {{>msg}}
+
+    <div class="box-cards">
+        <div class="content-cards side-by-side">
+            <h2 class="title-vitirne">Resultados da pesquisa</h2>
+            {{>widgets/list_books_site}}
+        </div>
+
+        <div class="content-cards">
+            {{>widgets/list_articles_site}}
+        </div>
+    </div>
+    {{>ads}}
+</div>

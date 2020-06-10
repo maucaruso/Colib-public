@@ -61,7 +61,12 @@ const User = mongoose.model('users');
 
     router.get('/artigos/:id/:slug', (req, res) => {
         Post.findOne({_id:req.params.id, slug:req.params.slug}).lean().then((post) => {
-            res.render('site/articles-details', {post: post}); 
+            User.findOne({_id:post.user}).lean().then((user_detail) => {
+                res.render('site/articles-details', {user_detail: user_detail, post: post}); 
+            }).catch((err) => {
+                req.flash('error_msg', 'Houve um erro ao carregar a página, por favor, tente novamente'); 
+                res.redirect('/');
+            });
         }).catch((err) => {
             req.flash('error_msg', 'Este livro não existe');
             res.redirect('/artigos/');
@@ -69,15 +74,46 @@ const User = mongoose.model('users');
     });
 // Página do Usuário
     router.get('/profile/:nickname', (req, res) => {
-        User.findOne({nickname:req.params.nickname}).lean().then((user) => {
-            if(user){
-                res.render('site/articles-details', {post: post});
+        User.findOne({nickname:req.params.nickname}).lean().then((user_detail) => {
+            if(user_detail){
+                Book.find({user: user_detail._id}).sort({date: 'desc'}).then((books) => {
+                    Post.find({user: user_detail._id}).sort({date: 'desc'}).then((posts) => { 
+                        res.render('site/profile-details', {user_detail: user_detail, books: books.map(book => book.toJSON()), posts: posts.map(post => post.toJSON())}); 
+                    }).catch((err) =>{
+                        req.flash('error_msg', 'Houve um erro ao carregar a página, por favor, tente novamente'); 
+                        res.redirect('/');
+                    });
+                }).catch((err) =>{
+                    req.flash('error_msg', 'Houve um erro ao carregar a página, por favor, tente novamente'); 
+                    res.redirect('/');
+                });
             } else {
                 req.flash('error_msg', 'Perfil não encontrado');
                 res.redirect('/');
-            }
+            } 
         }).catch((err) => {
             req.flash('error_msg', 'Perfil não encontrado');
+            res.redirect('/');
+        }); 
+    });
+
+// Pesquisa
+    router.get('/search/', (req, res) => {
+        var search_terms = req.query.find;
+        User.find().then((users) => {
+            Book.find({ $or:[ {'name':{$regex: search_terms, $options: "i"}}, {'author':{$regex: search_terms, $options: "i"}}, {'hashtags':{$regex: search_terms, $options: "i"}} ]}).sort({date: 'desc'}).then((books) => {
+                Post.find({ $or:[ {'title':{$regex: search_terms, $options: "i"}}, {'hashtags':{$regex: search_terms, $options: "i"}} ]}).sort({date: 'desc'}).then((posts) => {
+                    res.render('site/search-result', {books: books.map(book => book.toJSON()), posts: posts.map(post => post.toJSON())}); 
+                }).catch((err) =>{
+                    req.flash('error_msg', 'Houve um erro ao carregar a busca.'); 
+                    res.redirect('/');
+                }); 
+            }).catch((err) =>{
+                req.flash('error_msg', 'Houve um erro ao carregar a busca.'); 
+                res.redirect('/');
+            }); 
+        }).catch((err) => {
+            req.flash('error_msg', 'Houve um erro ao carregar a busca.'); 
             res.redirect('/');
         }); 
     });

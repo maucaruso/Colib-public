@@ -43,7 +43,7 @@
         .info
           font-size: 18px
         &.description
-          margin-bottom: 82px
+          margin-bottom: 40px
           .info
             width: 100%
             float: left
@@ -55,8 +55,6 @@
           p
             margin-bottom: 3px
         &.download-btns
-          position: absolute
-          bottom: 0
           margin: 0 0 5px
           a
             margin-bottom: 0
@@ -75,6 +73,17 @@
     margin-bottom: 20px
   .content.article
     padding: 20px 50px
+    .profile-post
+      margin: auto
+      width: 150px
+      height: 150px
+      border-radius: 50%
+      border: 3px solid #eaeaea
+      overflow: hidden
+      box-shadow: 0 0 5px rgba(0,0,0,0.6)
+      img
+        width: 100% 
+        height: auto
     h1.post-title
       display: block
       width: 100%
@@ -97,6 +106,45 @@
         font-size: 18px
         line-height: 24px
         letter-spacing: .5px
+  .content.profile-details
+    padding: 0
+    background: none
+    box-shadow: none
+    .author-box
+      display: flex
+      justify-content: center
+      flex-wrap: wrap
+      width: 100%
+      .img-profile
+        width: 150px
+        height: 150px
+        border-radius: 50%
+        overflow: hidden
+        box-shadow: 0 0 5px rgba(0,0,0,0.6)
+        img
+          width: 100%
+      .desc-profile
+        margin: 20px 0 0
+        width: 100%
+        text-align: center
+    .profile-content
+      width: 100%
+      .content-cards
+        margin: 0
+        width: 100%
+        .list-items
+          margin: 0
+        + .content-cards
+          margin-top: 20px
+  &.profile-details
+    .content-cards
+      margin: 0
+    .left-box
+      width: calc(100% - 340px)
+      float: left
+      .content.profile-details, .content-cards 
+        width: 100%
+      
 #middle
   .cover
     position: relative

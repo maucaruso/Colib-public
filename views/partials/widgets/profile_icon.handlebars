@@ -1,7 +1,17 @@
-<a href="/profile/{{nickname}}" class="profile-post"> 
-    {{#if profile_picture}}
-        <img class="profile_picture" src="{{profile_picture}}" alt="{{nickname}}" title="{{nickname}}">
-    {{else}}
-        <img class="not-profile_picture" src="/img/svg/no_picture.svg" alt="{{nickname}}" title="{{nickname}}">
-    {{/if}}
-</a>
+{{#if nickname}}
+    <a href="/profile/{{nickname}}" class="profile-post"> 
+        {{#if profile_picture}}
+            <img class="profile_picture" src="{{profile_picture}}" alt="{{nickname}}" title="{{nickname}}">
+        {{else}}
+            <img class="not-profile_picture" src="/img/svg/no_picture.svg" alt="{{nickname}}" title="{{nickname}}">
+        {{/if}}
+    </a>
+{{else}}
+    <a href="/profile/{{user_detail.nickname}}" class="profile-post"> 
+        {{#if user_detail.profile_picture}}
+            <img class="profile_picture" src="{{user_detail.profile_picture}}" alt="{{user_detail.nickname}}" title="{{user_detail.nickname}}">
+        {{else}}
+            <img class="not-profile_picture" src="/img/svg/no_picture.svg" alt="{{user_detail.nickname}}" title="{{user_detail.nickname}}">
+        {{/if}}
+    </a>
+{{/if}}

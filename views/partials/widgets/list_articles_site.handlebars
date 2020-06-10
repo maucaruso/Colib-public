@@ -1,29 +1,52 @@
 <div class="list-items">
     {{#each posts}}
-        {{#each ../users}}
-            {{#if_eq _id ../user}}
-                <article class="list-item">
-                    <div class="cover">
-                        {{>widgets/profile_icon}}
-                        {{#if ../thumbnail}}
-                            <img src="{{../thumbnail}}" alt="{{../title}}">
-                        {{else}}
-                            <img class="not-cover" src="/img/svg/galery-icon.svg" alt="{{../title}}">
-                        {{/if}}
-                    </div>
-                    <div class="desc">
-                        <h2 title="{{../title}}">{{../title}}</h2>
-                        <div class="short-desc">{{../description}}</div>
-                        <div class="more-infos">
-                            <div class="more-infos-box"><span class="author">Data: <strong>{{../date}}</strong></span></div>
-                            <div class="more-infos-box"><span class="category">Hashtags: <strong>{{../hashtags}}</strong></span></div>
+        {{#if ../users}}
+            {{!-- Listagens em geral --}}
+            {{#each ../users}}
+                {{#if_eq _id ../user}}
+                    <article class="list-item">
+                        <div class="cover">
+                            {{>widgets/profile_icon}}
+                            {{#if ../thumbnail}}
+                                <img src="{{../thumbnail}}" alt="{{../title}}">
+                            {{else}}
+                                <img class="not-cover" src="/img/svg/galery-icon.svg" alt="{{../title}}">
+                            {{/if}}
                         </div>
-                        <a href="/artigos/{{../_id}}/{{../slug}}" class="download-btn style-button">Visualizar artigo</a>
+                        <div class="desc">
+                            <h2 title="{{../title}}">{{../title}}</h2>
+                            <div class="short-desc">{{../description}}</div>
+                            <div class="more-infos">
+                                <div class="more-infos-box"><span class="author">Data: <strong>{{../date}}</strong></span></div>
+                                <div class="more-infos-box"><span class="category">Hashtags: <strong>{{../hashtags}}</strong></span></div>
+                            </div>
+                            <a href="/artigos/{{../_id}}/{{../slug}}" class="download-btn style-button">Visualizar artigo</a>
+                        </div>
+                    </article>
+                {{/if_eq}}
+            {{/each}}
+        {{else}}
+            {{!-- Caso seja detalhes do usuário --}}
+            <article class="list-item">
+                <div class="cover">
+                    {{#if thumbnail}}
+                        <img src="{{thumbnail}}" alt="{{title}}">
+                    {{else}}
+                        <img class="not-cover" src="/img/svg/galery-icon.svg" alt="{{title}}">
+                    {{/if}}
+                </div>
+                <div class="desc">
+                    <h2 title="{{title}}">{{title}}</h2>
+                    <div class="short-desc">{{description}}</div>
+                    <div class="more-infos">
+                        <div class="more-infos-box"><span class="author">Data: <strong>{{date}}</strong></span></div>
+                        <div class="more-infos-box"><span class="category">Hashtags: <strong>{{hashtags}}</strong></span></div>
                     </div>
-                </article>
-            {{/if_eq}}
-        {{/each}}
+                    <a href="/artigos/{{_id}}/{{slug}}" class="download-btn style-button">Visualizar artigo</a>
+                </div>
+            </article>
+        {{/if}}
     {{else}}
-        <p>Ainda não existem artigos cadastrados</p>
+        <p class="not-found">Ainda não existem artigos cadastrados</p>
     {{/each}}
 </div>

@@ -10,11 +10,12 @@
     {{>msg}}
 
     <div class="content article">
-       <h1 class="post-title">{{post.title}}</h1>
-       <p class="post-infos">Data: {{post.date}} | Hashtags: {{post.hashtags}}</p>
-       <div class="content-post">
+        {{>widgets/profile_icon}}
+        <h1 class="post-title">{{post.title}}</h1>
+        <p class="post-infos">Data: {{post.date}} | Hashtags: {{post.hashtags}}</p>
+        <div class="content-post">
             {{post.content}}
-       </div>
+        </div>
         
     </div>
     {{>ads}}

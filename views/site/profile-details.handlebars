@@ -1,0 +1,37 @@
+<div id="middle" class="profile-details">
+    <div class="header-menu">
+        <div class="register-mensage">
+            <a class="btn-new style-button" href="/biblioteca/">Voltar à Biblioteca</a>
+            {{>widgets/wellcome_msg}}
+        </div>
+        {{>widgets/search_bar}}
+    </div>
+    {{>msg}}
+    <div class="left-box">
+        <div class="content profile-details">
+            <div class="author-box">
+                <div class="img-profile">
+                    {{#if user_detail.profile_picture}}
+                        <img class="profile_picture" src="{{user_detail.profile_picture}}" alt="{{user_detail.nickname}}" title="{{user_detail.nickname}}">
+                    {{else}}
+                        <img class="not-profile_picture" src="/img/svg/no_picture.svg" alt="{{user_detail.nickname}}" title="{{user_detail.nickname}}">
+                    {{/if}}
+                </div>
+                <div class="desc-profile">
+                    <h2>{{user_detail.nickname}}</h2>
+                    <p></p>
+                </div>
+            </div>
+        </div>
+        <div class="content-cards side-by-side">
+            <h2 class="title-vitirne">Livros enviados</h2>
+            {{>widgets/list_books_site}}
+        </div>
+
+        <div class="content-cards">
+            <h2 class="title-vitirne">Artigos criados</h2>
+            {{>widgets/list_articles_site}}
+        </div>
+    </div>
+    {{>ads}}
+</div>
