@@ -1,24 +1,33 @@
-header.painel .menu ul li.logo
-    position: relative
-    img
-        margin-top: -20px
-    &::after
-        content: 'Colaboradores'
-        position: absolute
-        bottom: 28px
-        right: 0
-        left: 0
-        text-align: center 
-        font-style: italic
-        font-family: 'Courgette'
-        letter-spacing: 1px
-        font-size: 16px
-        font-weight: 600
+header.painel .menu ul li
+    &.logo
+        position: relative
+        img
+            margin-top: -20px
+        &::after
+            content: 'Administração'
+            position: absolute
+            bottom: 28px
+            right: 0
+            left: 0
+            text-align: center 
+            font-style: italic
+            font-family: 'Courgette'
+            letter-spacing: 1px
+            font-size: 16px
+            font-weight: 600
+    &.users
+        img
+            width: 45px
+            height: auto
 #middle 
     .view-content
         margin: 0 0 20px
         display: flex
         align-items: center
+        justify-content: space-between
+        background: white
+        padding: 20px
+        box-shadow: 0px 0px 8px rgba(0,0,0,0.1)
         .vr
             width: 1px 
             height: 15px
@@ -28,6 +37,27 @@ header.painel .menu ul li.logo
         a
             text-decoration: underline
             color: #007bff
+        .search-id
+            display: flex
+            justify-content: space-between
+            input
+                height: 42px
+                font-size: 16px
+            .search-button
+                cursor: pointer
+                box-sizing: border-box
+                margin-left: -10px
+                width: 42px
+                height: 42px
+                box-shadow: none
+                border-radius: 0
+                display: flex
+                align-items: center
+                justify-content: center
+                background: white
+                border: 1px solid black
+                img
+                    width: 20px
     .content
         .input-wrapper.button-select
             display: flex

@@ -1,7 +1,13 @@
 <div class="view-content">
-    <a href="?only=0" class="pending">Pendentes</a>
-    <span class="vr"></span>
-    <a href="?only=1" class="approved">Aprovados</a>
-    <span class="vr"></span>
-    <a href="?only=2" class="disapproved">Reprovados</a>
+    <div class="content-only">
+        <a href="?only=0" class="pending">Pendentes</a>
+        <span class="vr"></span>
+        <a href="?only=1" class="approved">Aprovados</a>
+        <span class="vr"></span>
+        <a href="?only=2" class="disapproved">Reprovados</a>
+    </div>
+    <div class="search-id">
+        <input type="text" class="search-input style-input" name="search_terms" placeholder="Pesquisar Por ID">
+        <a class="search-button" href="/admin/library/edit/" type="submit"><img src="/img/svg/loupe.svg" alt="Pesquisar"></a>
+    </div>
 </div>

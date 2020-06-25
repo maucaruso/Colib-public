@@ -55,4 +55,26 @@ window.onload = function(){
             document.querySelector('form textarea').innerHTML = getProfileDesc;
         });
     }
+
+    // Busca por ID no painel
+    var adminSearch =  document.querySelector('.view-content .search-id .search-input.style-input');
+    if (typeof(adminSearch) != 'undefined' && adminSearch != null){
+        var getUrl = window.location.href;
+        adminSearch.addEventListener('focusout', function(){
+            var getTerms = this.value;
+            if(getUrl.includes('articles')){
+                document.querySelector('.search-id .search-button').setAttribute('href', '/admin/article/edit/'+getTerms);
+            } else if(getUrl.includes('library')){
+                document.querySelector('.search-id .search-button').setAttribute('href', '/admin/library/edit/'+getTerms);
+            }
+        });
+        adminSearch.addEventListener('keyup', function(){
+            var getTerms = this.value;
+            if(getUrl.includes('articles')){
+                document.querySelector('.search-id .search-button').setAttribute('href', '/admin/article/edit/'+getTerms);
+            } else if(getUrl.includes('library')){
+                document.querySelector('.search-id .search-button').setAttribute('href', '/admin/library/edit/'+getTerms);
+            }
+        });
+    }
 }
