@@ -30,6 +30,11 @@ const Post = new Schema({
         type: String,
         required: true
     }, 
+    visibility_status: { 
+        type: String,
+        required: true,
+        default: 0
+    }, 
     date: {
         type: Date,
         default: Date.now()

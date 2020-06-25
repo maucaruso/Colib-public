@@ -19,7 +19,9 @@
                 </div>
                 <div class="desc-profile">
                     <h2>{{user_detail.nickname}}</h2>
-                    <p></p>
+                    {{#if user_detail.profile_desc}}
+                        <div class="desc-content"></div>
+                    {{/if}}
                 </div>
             </div>
         </div>
@@ -35,3 +37,12 @@
     </div>
     {{>ads}}
 </div>
+
+{{#if user_detail.profile_desc}}
+    <script>
+        var string = "{{user_detail.profile_desc}}",
+        results = document.querySelector(".desc-profile .desc-content");
+        results.innerHTML = string;
+        results.innerHTML = results.textContent;
+    </script>
+{{/if}}

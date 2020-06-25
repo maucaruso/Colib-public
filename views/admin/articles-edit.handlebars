@@ -38,7 +38,14 @@
                         <input type="file" id="cover" name="cover" placeholder="Thumbnail do artigo" accept="image/*">
                         <small>Formatos aceitos: jpg, png</small>
                     </div> 
-                    <button class="style-button">Editar artigo</button>
+                    <div class="input-wrapper button-select">
+                        <select name="visibility_status" id="visibility_status" class="style-input" value="{{post.visibility_status}}">
+                            <option value="0" {{#if_eq post.visibility_status 0}}selected{{/if_eq}}>Análise</option>
+                            <option value="1" {{#if_eq post.visibility_status 1}}selected{{/if_eq}}>Aprovar</option>
+                            <option value="2" {{#if_eq post.visibility_status 2}}selected{{/if_eq}}>Reprovar</option>
+                        </select>
+                        <button class="style-button">Editar artigo</button>
+                    </div>
                 </div>
             </form>
         </div>

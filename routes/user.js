@@ -434,6 +434,9 @@ const {isUser} = require('../helpers/isUser.js');
                         deleteFile(user.profile_picture); 
                         user.profile_picture = profile_picture;
                     }
+                    if(req.body.profile_desc){
+                        user.profile_desc = req.body.profile_desc;
+                    }
                     if(req.body.password){
                         bctypt.genSalt(10, (error, salt) => {
                             bctypt.hash(user.password, salt, (error, hash) => {
@@ -467,6 +470,5 @@ const {isUser} = require('../helpers/isUser.js');
                 });
             }
         });
-
 
 module.exports = router;

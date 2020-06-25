@@ -56,7 +56,14 @@
                         </div>
                     </div>
                 </div>
-                <button class="style-button">Editar livro</button>
+                <div class="input-wrapper button-select">
+                    <select name="visibility_status" id="visibility_status" class="style-input" value="{{book.visibility_status}}">
+                        <option value="0" {{#if_eq book.visibility_status 0}}selected{{/if_eq}}>Análise</option>
+                        <option value="1" {{#if_eq book.visibility_status 1}}selected{{/if_eq}}>Aprovar</option>
+                        <option value="2" {{#if_eq book.visibility_status 2}}selected{{/if_eq}}>Reprovar</option>
+                    </select>
+                    <button class="style-button">Editar livro</button>
+                </div>
             </form>
         </div>
     </div>

@@ -46,4 +46,13 @@ window.onload = function(){
         // Mover conteúdo do text para dentro do bloco de edição
         var getTextArticle = document.querySelector('#content').innerHTML;
     }
+
+    // Passar dados do formulário para o Textarea oculto do perfil
+    var checkIfSettings =  document.querySelector('#middle .settings');
+    if (typeof(checkIfSettings) != 'undefined' && checkIfSettings != null){
+        document.querySelector('form button.style-button').addEventListener('click', function(){
+            var getProfileDesc = document.querySelector('form .ql-editor').innerHTML;
+            document.querySelector('form textarea').innerHTML = getProfileDesc;
+        });
+    }
 }

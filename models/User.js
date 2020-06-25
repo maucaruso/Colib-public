@@ -25,6 +25,15 @@ const User = new Schema({
         type: String,
         required: false
     }, 
+    user_status: { 
+        type: String,
+        required: true,
+        default: 1
+    }, 
+    profile_desc: {
+        type: String,
+        required: false
+    },
     date: {
         type: Date,
         default: Date.now()

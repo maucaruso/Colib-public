@@ -10,30 +10,7 @@
     {{>msg}}
 
     <div class="content-cards side-by-side">
-        <div class="list-items">
-            {{#each books}}
-                <article class="list-item">
-                    <div class="cover">
-                        {{#if cover}}
-                            <img src="{{cover}}" alt="{{name}}">
-                        {{else}}
-                            <img class="not-cover" src="/img/svg/galery-icon.svg" alt="{{name}}">
-                        {{/if}}
-                    </div>
-                    <div class="desc">
-                        <h2 title="{{name}}">{{name}}</h2>
-                        <div class="short-desc">{{description}}</div>
-                        <div class="more-infos">
-                            <div class="more-infos-box"><span class="author">Autor: <strong>{{author}}</strong></span></div>
-                            <div class="more-infos-box"><span class="category">Hashtags: <strong>{{hashtags}}</strong></span></div>
-                        </div>
-                        <a href="/user/library/edit/{{_id}}" class="download-btn style-button">Editar livro</a>
-                    </div>
-                </article>
-            {{else}}
-                <p>Você ainda não enviou nenhum livro.</p>
-            {{/each}}
-        </div>
+        {{>widgets/list_books_painel}}
     </div>
     {{>ads}}
 </div>

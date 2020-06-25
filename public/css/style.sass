@@ -99,7 +99,7 @@
       ul, li
         list-style: inside
       ol li
-        list-style: decimal
+        list-style: decimal 
         margin-left: 18px
       p
         text-align: justify
@@ -108,8 +108,11 @@
         letter-spacing: .5px
   .content.profile-details
     padding: 0
-    background: none
     box-shadow: none
+    box-shadow: 0px 0px 8px rgba(0,0,0,0.1)
+    margin: 40px 0
+    padding: 40px 40px 25px
+    background: white
     .author-box
       display: flex
       justify-content: center
@@ -136,6 +139,14 @@
           margin: 0
         + .content-cards
           margin-top: 20px
+    .desc-profile
+      .desc-content
+        margin: 20px auto 40px
+        max-width: 900px
+        text-align: justify
+        font-size: 18px
+        line-height: 24px
+        letter-spacing: .5px
   &.profile-details
     .content-cards
       margin: 0

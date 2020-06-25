@@ -5,6 +5,10 @@ require('../models/Post');
 const Post = mongoose.model('posts');
 require('../models/Book');
 const Book = mongoose.model('books');
+require('../models/User');
+const User = mongoose.model('users');
+const bctypt = require('bcryptjs');
+const passport = require('passport');
 const validatePost = require('../controller/validatePost');
 const validateBook = require('../controller/validateBook');
 const returnFile = require('../controller/returnFile');
@@ -13,6 +17,7 @@ const filterHashtags = require('../controller/filterHashtags');
 const returnSlug = require('../controller/returnSlug');
 const returnMetaDescription = require('../controller/returnMetaDescription');
 const filterFileName =  require('../controller/filterFileName');
+const validateRegisterEdit = require('../controller/validateRegisterEdit');
 const {isAdmin} = require('../helpers/isAdmin.js');
 
 // Multer - Upload de arquivos
@@ -28,6 +33,9 @@ const {isAdmin} = require('../helpers/isAdmin.js');
                 } else if(req.body.title){
                     // Se for artigo
                     cb(null, 'public/uploads/images/thumbnails'); 
+                } else if(req.body.nickname){
+                    // Se for perfil
+                    cb(null, 'public/uploads/images/profile_pic'); 
                 }
             } else {
                 cb(null, 'public/uploads/files');
@@ -42,6 +50,10 @@ const {isAdmin} = require('../helpers/isAdmin.js');
                 // Se for artigo
                 var nameCover = filterFileName(req.body.title);
                 cb(null, nameCover+'-'+Date.now()+path.extname(file.originalname));
+            } else if(req.body.nickname){
+                // Se for Usuário
+                var profile_pic = filterFileName(req.body.nickname);
+                cb(null, profile_pic+'-'+Date.now()+path.extname(file.originalname));
             }
         }
     }); 
@@ -53,15 +65,46 @@ const {isAdmin} = require('../helpers/isAdmin.js');
     });
 // Biblioteca
     router.get('/library', isAdmin, (req, res) => {
-        Book.find().sort({date: 'desc'}).then((books) => {
-            res.render('admin/library', {books: books.map(book => book.toJSON())}); 
-        }).catch((err) =>{
-            req.flash('error_msg', 'Houve um erro ao listar os livros, por favor, tente novamente.'); 
-        }); 
+        var show_only = req.query.only;
+        if(show_only){
+            Book.find({visibility_status: show_only}).sort({date: 'desc'}).then((books) => {
+                res.render('admin/library', {books: books.map(book => book.toJSON())}); 
+            }).catch((err) =>{
+                req.flash('error_msg', 'Houve um erro ao listar os livros, por favor, tente novamente.'); 
+            }); 
+        } else {
+            Book.find().sort({date: 'desc'}).then((books) => {
+                res.render('admin/library', {books: books.map(book => book.toJSON())}); 
+            }).catch((err) =>{
+                req.flash('error_msg', 'Houve um erro ao listar os livros, por favor, tente novamente.'); 
+            }); 
+        }
     });
+
+    router.post('/library/visibility', isAdmin, (req, res) => {
+        Book.findOne({_id:req.body.id}).then((book) => {
+            // deletando arquivos de uploads
+            deleteFile(book.cover); 
+            deleteFile(book.file_pdf);  
+            deleteFile(book.file_epub); 
+            deleteFile(book.file_mobi); 
+            Book.remove({_id: req.body.id}).then(() => {
+                req.flash('success_msg', 'Livro excluído com sucesso!');
+                res.redirect('/admin/library/');
+            }).catch((err) => {
+                req.flash('error_msg', 'Houve um erro ao excluir o livro');
+                res.redirect('/admin/library/');
+            }); 
+        }).catch(() => {
+            req.flash('error_msg', 'Houve um erro ao excluir o os arquivos');
+            res.redirect('/admin/library/');
+        });
+    });
+    
     router.get('/library/new-file', isAdmin, (req, res) => {
         res.render('admin/library-add');  
     });
+
     router.post('/library/add', isAdmin, upload.any('files'),(req, res) => { 
         // Verificando quais arquivos foram enviados
         var filesToValidade = [];
@@ -137,6 +180,7 @@ const {isAdmin} = require('../helpers/isAdmin.js');
                 book.author = req.body.author;
                 book.hashtags = tags;
                 book.description = req.body.description; 
+                book.visibility_status = req.body.visibility_status;
                 if(cover){
                     // Deletando arquivo antigo antes de atruibuir novo valor na base de dados
                     deleteFile(book.cover); 
@@ -164,7 +208,7 @@ const {isAdmin} = require('../helpers/isAdmin.js');
             }).catch((err) => {
                 req.flash('error_msg', 'Houve um erro ao editar o livro');
                 res.redirect('/admin/library');
-            });
+            }); 
         }
     });
 
@@ -190,11 +234,20 @@ const {isAdmin} = require('../helpers/isAdmin.js');
     });
 // Posts
     router.get('/articles', isAdmin, (req, res) => { 
-        Post.find().then((posts) => {
-            res.render('admin/articles', {posts: posts.map(post => post.toJSON())}); 
-        }).catch((err) =>{
-            req.flash('error_msg', 'Houve um erro ao listar os artigos.'); 
-        });  
+        var show_only = req.query.only;
+        if(show_only){
+            Post.find({visibility_status: show_only}).then((posts) => {
+                res.render('admin/articles', {posts: posts.map(post => post.toJSON())}); 
+            }).catch((err) =>{
+                req.flash('error_msg', 'Houve um erro ao listar os artigos.'); 
+            });  
+        } else {
+            Post.find().then((posts) => {
+                res.render('admin/articles', {posts: posts.map(post => post.toJSON())}); 
+            }).catch((err) =>{
+                req.flash('error_msg', 'Houve um erro ao listar os artigos.'); 
+            });  
+        }
     });
 
     router.get('/articles/new-article', isAdmin, (req, res) => {
@@ -263,6 +316,7 @@ const {isAdmin} = require('../helpers/isAdmin.js');
                 }
                 post.description = metadescription;
                 post.content = req.body.content;
+                post.visibility_status = req.body.visibility_status;
                 post.save().then(() => {
                     req.flash('success_msg', 'Artigo editado com sucesso!');
                     res.redirect('/admin/articles');
@@ -299,7 +353,64 @@ const {isAdmin} = require('../helpers/isAdmin.js');
     });
 // Configurações
     router.get('/settings', isAdmin, (req, res) => {
-        res.render('admin/settings'); 
+        User.findOne({_id:res.locals.user._id, nickname:res.locals.user.nickname}).lean().then((user) => {
+            if(user){
+                res.render('admin/settings', {user: user}); 
+            }
+        });
+    });
+
+    router.post('/settings/edit', isAdmin, upload.any('files'), (req, res) => { 
+        var profile_picture = returnFile(req.files, 'img', 'profile_pic');
+        var errors = validateRegisterEdit(req.body, profile_picture);
+
+        if(errors.length > 0){
+            req.flash('error_msg', errors); 
+            res.redirect('/admin/settings');
+        } else {
+            User.findOne({nickname:res.locals.user.nickname}).then((user) => {
+                if(req.body.password){
+                    user.password = req.body.password;
+                }
+                if(profile_picture){
+                    deleteFile(user.profile_picture); 
+                    user.profile_picture = profile_picture;
+                }
+                if(req.body.profile_desc){
+                    user.profile_desc = req.body.profile_desc;
+                }
+                if(req.body.password){
+                    bctypt.genSalt(10, (error, salt) => {
+                        bctypt.hash(user.password, salt, (error, hash) => {
+                            if(error){
+                                req.flash('error_msg', 'Houve um erro ao salvar de seus dados, por favor, tente novamente');
+                                res.redirect('/admin/settings');
+                            } else {
+                                user.password = hash;
+                                user.save().then(() => {
+                                    req.flash('success_msg', 'Perfil atualizado com sucesso!');
+                                    res.redirect('/admin/settings');
+                                }).catch((err) => {
+                                    req.flash('error_msg', 'Houve um erro interno, tente novamente.'+err);
+                                    res.redirect('/admin/settings');
+                                });
+                            }
+                        });
+                    });
+                } else {
+                    user.save().then(() => {
+                        req.flash('success_msg', 'Perfil atualizado com sucesso!');
+                        res.redirect('/admin/settings');
+                    }).catch((err) => {
+                        req.flash('error_msg', 'Houve um erro interno, tente novamente.'+err);
+                        res.redirect('/admin/settings');
+                    });
+                }
+            }).catch((err) => {
+                req.flash(('error_msg', 'Houve um erro interno, por favor, tente novamente.'+err));
+                res.redirect('/admin/settings');
+            });
+        }
     });
 
 module.exports = router;
