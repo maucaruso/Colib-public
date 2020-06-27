@@ -412,5 +412,47 @@ const {isAdmin} = require('../helpers/isAdmin.js');
             });
         }
     });
+// Gerenciamento de Usuários
+    router.get('/users', isAdmin, (req, res) => { 
+        var onlyUser = req.query.find;
+        if(onlyUser){
+            User.find({nickname: onlyUser}).then((users) => {
+                res.render('admin/users', {users: users.map(user => user.toJSON())}); 
+            }).catch((err) =>{
+                req.flash('error_msg', 'Houve um erro ao listar os usuários.'); 
+            });  
+        } else {
+            User.find().then((users) => {
+                res.render('admin/users', {users: users.map(user => user.toJSON())}); 
+            }).catch((err) =>{
+                req.flash('error_msg', 'Houve um erro ao listar os usuários.'); 
+            });  
+        }
+    });
+
+    router.post('/users/edit', isAdmin, (req, res) => { 
+        User.findOne({_id:req.body._id}).then((user_edit) => {
+            // res.json(user_edit);
+            if(user_edit.nickname != 'maurici'){
+                if(req.body.access){
+                    user_edit.access = req.body.access;
+                }
+                if(req.body.user_status){
+                    user_edit.user_status = req.body.user_status;
+                }
+                user_edit.save().then(() => {
+                    req.flash('success_msg', 'Perfil atualizado com sucesso!');
+                    res.redirect('/admin/users');
+                }).catch((err) => {
+                    req.flash('error_msg', 'Houve um erro interno, tente novamente.'+err);
+                    res.redirect('/admin/users');
+                });
+            } else {
+                req.flash('error_msg', 'Ação não permitida');
+                res.redirect('/admin/users/');
+            }
+            // res.json(req.body);
+        });
+    });
 
 module.exports = router;

@@ -1,0 +1,46 @@
+<div id="middle">
+    <div class="header-menu">
+        <a class="btn-new style-button" href="/admin/library/">Voltar à Biblioteca</a> 
+        <form class="seach">
+            <input type="text" class="search-input style-input" placeholder="Pesquisar">
+            <button class="search-button"><img src="/img/svg/loupe.svg" alt="Pesquisar"></button>
+        </form>
+    </div>
+
+    {{>msg}}
+
+     <div class="content-cards page-users">
+        {{>widgets/view-content-admin}}
+
+        <div class="list-users content-cards-list">
+            {{#each users}}
+                <div class="list-users-item list-item">
+                    <form action="/admin/users/edit" method="POST">
+                        <input type="hidden" id="_id" name="_id" value="{{_id}}">
+                        <div class="input-wrapper">
+                            <label for="nickname">Nome de Usuário</label>
+                            <input type="text" id="nickname" name="nickname" placeholder="Nome de usuário" value="{{nickname}}" disabled>
+                        </div>
+                        <div class="input-wrapper">
+                            <label for="email">E-mail</label>
+                            <input type="text" id="email" name="email" placeholder="E-mail" value="{{email}}" disabled>
+                        </div>
+                        <div class="input-wrapper">
+                            <label for="access">Nível de Acesso:</label>
+                            <input type="text" id="access" name="access" placeholder="E-mail" value="{{access}}">
+                            <small>1: user / 2: adm</small>
+                        </div>
+                        <div class="input-wrapper">
+                            <label for="user_status">Status do Usuário</label>
+                            <input type="text" id="user_status" name="user_status" placeholder="Status do Usuário" value="{{user_status}}">
+                            <small>0: suspenso / 1: ativo</small>
+                        </div>
+                        <button type="submit" class="style-button button-blue">Atualizar</button>
+                    </form>
+                </div>
+            {{/each}}
+        </div>
+
+     </div>
+
+</div>
