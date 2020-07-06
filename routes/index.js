@@ -68,7 +68,10 @@ const User = mongoose.model('users');
         Post.findOne({_id:req.params.id, slug:req.params.slug, visibility_status: 1}).lean().then((post) => {
             User.findOne({_id:post.user, user_status: 1}).lean().then((user_detail) => {
                 if(user_detail){
-                    res.render('site/articles-details', {user_detail: user_detail, post: post}); 
+                    if(user_detail.wallets){
+                        var wallets = JSON.parse(user_detail.wallets);
+                    } 
+                    res.render('site/articles-details', {user_detail: user_detail, post: post, wallets: wallets}); 
                 } else {
                     req.flash('error_msg', 'Este artigo não existe');
                     res.redirect('/artigos/');
@@ -81,6 +84,53 @@ const User = mongoose.model('users');
             req.flash('error_msg', 'Este artigo não existe');
             res.redirect('/artigos/');
         }); 
+    });
+
+    router.post('/artigos/curtir', (req, res) => {
+        User.findOne({_id:req.body._id}).lean().then((user) => {
+            if(user){
+                Post.findOne({_id:req.body.post_id}).then((post) => {
+                    if(post){
+                        var getLikes = post.likes;
+                        var verify = false;
+                        if(getLikes != undefined || getLikes != null){
+                            verify = getLikes.includes(user._id);
+                        } else {
+                            getLikes = [];
+                        }
+                        if(verify == false){
+                            getLikes.push(user._id);
+                            post.likes = getLikes; 
+                        } else {
+                            for(var key in getLikes){
+                                if(getLikes[key] == user._id){
+                                    getLikes.splice(key, 1);
+                                }
+                            }
+                        }
+                        post.save().then(() => {
+                            var message = [];
+                            if(verify == true){
+                                message.push(false);
+                                res.json(message);
+                            } else {  
+                                message.push(true);
+                                res.json(message);
+                            }
+                        }).catch((err) => {
+                            req.flash('error_msg', 'Houve um erro interno, tente novamente.'+err);
+                            res.json(err);
+                        });
+                    }
+                }).catch((err) => {
+                    req.flash('error_msg', 'Houve um erro ao carregar a página, por favor, tente novamente'+err); 
+                    res.redirect('/');
+                });
+            }
+        }).catch((err) => {
+            req.flash('error_msg', 'Houve um erro ao carregar a página, por favor, tente novamente.'+err); 
+            res.redirect('/');
+        });
     });
 // Página do Usuário
     router.get('/profile/:nickname', (req, res) => {

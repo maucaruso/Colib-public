@@ -15,12 +15,13 @@ const validateBook = require('../controller/validateBook');
 const returnFile = require('../controller/returnFile');
 const deleteFile = require('../controller/deleteFile');
 const filterHashtags = require('../controller/filterHashtags');
+const filterWallets = require('../controller/filterWallets');
 const returnSlug = require('../controller/returnSlug');
 const returnMetaDescription = require('../controller/returnMetaDescription');
 const filterFileName =  require('../controller/filterFileName');
 const validateRegisterEdit = require('../controller/validateRegisterEdit');
 const {isUser} = require('../helpers/isUser.js');
-// Login e Registro
+// Login e Registro 
     router.get('/login', (req, res) => {
         res.render('user/login');
     });
@@ -413,12 +414,15 @@ const {isUser} = require('../helpers/isUser.js');
         router.get('/settings', isUser, (req, res) => {
             User.findOne({_id:res.locals.user._id, nickname:res.locals.user.nickname}).lean().then((user) => {
                 if(user){
-                    res.render('user/settings', {user: user}); 
+                    if(user.wallets.length > 0){
+                        var wallets = JSON.parse(user.wallets);
+                    }
+                    res.render('user/settings', {user: user, wallets: wallets}); 
                 }
             });
         });
 
-        router.post('/settings/edit', isUser, upload.any('files'), (req, res) => { 
+        router.post('/settings/edit', isUser, upload.any('files'), (req, res) => {
             var profile_picture = returnFile(req.files, 'img', 'profile_pic');
             var errors = validateRegisterEdit(req.body, profile_picture);
     
@@ -436,6 +440,10 @@ const {isUser} = require('../helpers/isUser.js');
                     }
                     if(req.body.profile_desc){
                         user.profile_desc = req.body.profile_desc;
+                    }
+                    if(req.body.crypto_name != '' && req.body.crypto_address != ''){
+                        var wallets = filterWallets(req.body.crypto_name, req.body.crypto_address);
+                        user.wallets = JSON.stringify(wallets);
                     }
                     if(req.body.password){
                         bctypt.genSalt(10, (error, salt) => {

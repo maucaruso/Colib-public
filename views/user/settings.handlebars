@@ -32,6 +32,31 @@
                 <input type="password" class="style-input" id="password_confirmation" name="password_confirmation" placeholder="Repita sua nova senha">
                 <small>*Preencha os campos acima somente se deseja mudar sua senha.</small>
             </div>
+            <div class="bottom content">
+                <h2>Minhas Carteiras</h2>
+                <h3>Coloque aqui os endereços de suas carteiras para que outros Libertários possam apoiar seu trabalho!</h3>
+                {{#if wallets}}
+                    {{#each wallets}}
+                        <div class="input-wrapper">
+                            <input type="text" name="crypto_name" placeholder="Nome da Moeda" class="style-input name" value="{{cryptoName}}">
+                            <input type="text" name="crypto_address" placeholder="Endereço de sua carteira" class="style-input address" value="{{cryptoAddress}}">
+                        </div>
+                    {{/each}}
+                {{else}}
+                    <div class="input-wrapper">
+                        <input type="text" name="crypto_name" placeholder="Nome da Moeda" class="style-input name">
+                        <input type="text" name="crypto_address" placeholder="Endereço de sua carteira" class="style-input address">
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="text" name="crypto_name" placeholder="Nome da Moeda" class="style-input name">
+                        <input type="text" name="crypto_address" placeholder="Endereço de sua carteira" class="style-input address">
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="text" name="crypto_name" placeholder="Nome da Moeda" class="style-input name">
+                        <input type="text" name="crypto_address" placeholder="Endereço de sua carteira" class="style-input address">
+                    </div>
+                {{/if}}
+            </div>
             <button class="style-button" type="submit">Atualizar cadastro</button>
         </form>
     </div>

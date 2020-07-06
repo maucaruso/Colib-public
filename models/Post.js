@@ -30,6 +30,10 @@ const Post = new Schema({
         type: String,
         required: true
     }, 
+    likes: [{
+        type: String,
+        required: false
+    }], 
     visibility_status: { 
         type: String,
         required: true,

@@ -11,12 +11,46 @@
 
     <div class="content article">
         {{>widgets/profile_icon}}
+        
+        <div class="likes-count"><span>{{post.likes.length}}</span> curtidas</div>
+        {{#if user}}
+            {{#each user}}
+                {{#if access}}
+                    <form action="/artigos/curtir" method="post" class="like-form">
+                        <input type="hidden" name="post_id" value="{{../post._id}}">
+                        <input type="hidden" name="_id" value="{{_id}}">
+                        <button type="submit" class="like-btn {{#if_eq_Array _id ../post.likes}}liked{{/if_eq_Array}}"><img src="/img/svg/like-active.svg" alt="Curtir" class="img-1"><img src="/img/svg/like.svg" alt="Curtir" class="img-2">Curtir</button>
+                    </form>
+                {{/if}}
+            {{/each}}
+        {{else}}
+            <a href="/user/login" class="like-btn open-modal"><img src="/img/svg/like.svg" alt="Curtir">Curtir</a>
+        {{/if}}
         <h1 class="post-title">{{post.title}}</h1>
         <p class="post-infos">Data: {{post.date}} | Hashtags: {{post.hashtags}}</p>
         <div class="content-post">
             {{post.content}}
         </div>
-        
+        <div class="author-detail">
+            <a href="/profile/{{user_detail.nickname}}" title="{{user_detail.nickname}}" class="author-name">Artigo escrito por <strong>{{user_detail.nickname}}</strong></p></a>
+            <div class="author-desc"></div>
+            {{#if wallets}}
+                <div class="author-wallets">
+                    <p class="title">Gostou do artigo? Apoie o autor doando criptomoedas para uma das carteiras abaixo:</p>
+                    <div class="author-wallets-content">
+                        {{#each wallets}}
+                            {{#if cryptoName}}
+                                {{#if cryptoName}}
+                                    {{#if cryptoAddress}}
+                                        <p class="wallet-item"><strong>{{cryptoName}}</strong>: {{cryptoAddress}}</p>
+                                    {{/if}}
+                                {{/if}}
+                            {{/if}}
+                        {{/each}}
+                    </div>
+                </div>
+            {{/if}}
+        </div>
     </div>
     {{>ads}}
 </div>
@@ -27,3 +61,12 @@
     results.innerHTML = string;
     results.innerHTML = results.textContent;
 </script>
+
+{{#if user_detail.profile_desc}}
+    <script>
+        var string = "{{user_detail.profile_desc}}",
+        results = document.querySelector(".author-desc");
+        results.innerHTML = string;
+        results.innerHTML = results.textContent;
+    </script>
+{{/if}}

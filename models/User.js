@@ -34,6 +34,10 @@ const User = new Schema({
         type: String,
         required: false
     },
+    wallets: [{
+        type: String,
+        required: false
+    }],
     date: {
         type: Date,
         default: Date.now()
