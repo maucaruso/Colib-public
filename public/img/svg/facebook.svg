@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 20">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="share-fb" transform="translate(-37.29)">
+    <path id="f_1_" class="cls-1" d="M43.781,20V10.878h2.947l.442-3.556H43.781V5.051c0-1.029.274-1.731,1.7-1.731H47.29V.139A23.664,23.664,0,0,0,44.649,0c-2.614,0-4.4,1.657-4.4,4.7V7.322H37.29v3.556h2.956V20Z"></path>
+  </g>
+</svg>

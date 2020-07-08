@@ -4,7 +4,8 @@
             {{!-- Listagens em geral --}}
             {{#each ../users}}
                 {{#if_eq _id ../user}}
-                    <article class="list-item">
+                    <article class="list-item teste">
+                        <a href="/artigos/{{../_id}}/{{../slug}}" class="cover-link"></a>
                         <div class="cover">
                             {{>widgets/profile_icon}}
                             {{#if ../thumbnail}}
@@ -20,7 +21,7 @@
                                 <div class="more-infos-box"><span class="author">Data: <strong>{{../date}}</strong></span></div>
                                 <div class="more-infos-box"><span class="category">Hashtags: <strong>{{../hashtags}}</strong></span></div>
                             </div>
-                            <a href="/artigos/{{../_id}}/{{../slug}}" class="download-btn style-button button-green">Visualizar artigo</a>
+                            <a href="/artigos/{{../_id}}/{{../slug}}" class="download-btn style-button button-blue">Visualizar artigo</a>
                         </div>
                     </article>
                 {{/if_eq}}
@@ -28,6 +29,7 @@
         {{else}}
             {{!-- Caso seja detalhes do usuário --}}
             <article class="list-item">
+                <a href="/artigos/{{_id}}/{{slug}}" class="cover-link"></a>
                 <div class="cover">
                     {{#if thumbnail}}
                         <img src="{{thumbnail}}" alt="{{title}}">
@@ -42,7 +44,7 @@
                         <div class="more-infos-box"><span class="author">Data: <strong>{{date}}</strong></span></div>
                         <div class="more-infos-box"><span class="category">Hashtags: <strong>{{hashtags}}</strong></span></div>
                     </div>
-                    <a href="/artigos/{{_id}}/{{slug}}" class="download-btn style-button button-green">Visualizar artigo</a>
+                    <a href="/artigos/{{_id}}/{{slug}}" class="download-btn style-button button-blue">Visualizar artigo</a>
                 </div>
             </article>
         {{/if}}

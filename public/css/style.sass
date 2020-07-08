@@ -58,6 +58,7 @@
           margin: 0 0 5px
           a
             margin-bottom: 0
+            padding: 15px
           a + a
             margin-left: 10px
 
@@ -229,6 +230,8 @@
     width: 50px
     display: block
     margin: 0 auto 10px
+  .img-2
+    opacity: .3 
   &:not(.liked) 
     .img-1
       display: none
@@ -239,9 +242,39 @@
       display: block
     .img-2
       display: none
-
-
-
+.share
+  text-align: center
+  position: absolute
+  top: 30px
+  left: 40px
+  width: max-content
+  .title
+    font-weight: 700
+  .share-items
+    text-align: center
+    display: flex
+    .item
+      background: red
+      width: 40px
+      height: 40px
+      margin: 10px 4px
+      a
+        display: flex
+        align-items: center
+        justify-content: center
+        height: 100%
+    .fb
+      background: #3c5a99
+      img
+        width: 10px
+    .ms
+      background: #0084ff
+      img
+        width: 20px
+    .wa
+      background: #25d366
+      img
+        width: 23px
 
 
 

@@ -84,43 +84,61 @@ window.onload = function(){
             });
         }
     // Requisição AJAX do botão curtir
-        document.querySelector('form.like-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            let formData = new FormData(this);
-            let parsedData = {};
-            for(let name of formData) {
-            if (typeof(parsedData[name[0]]) == "undefined") {
-                let tempdata = formData.getAll(name[0]);
-                if (tempdata.length > 1) {
-                parsedData[name[0]] = tempdata;
-                } else {
-                parsedData[name[0]] = tempdata[0];
+        var checkIfArticle =  document.querySelector('form.like-form');
+        if (typeof(checkIfArticle) != 'undefined' && checkIfArticle != null){
+            document.querySelector('form.like-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                let formData = new FormData(this);
+                let parsedData = {};
+                for(let name of formData) {
+                if (typeof(parsedData[name[0]]) == "undefined") {
+                    let tempdata = formData.getAll(name[0]);
+                    if (tempdata.length > 1) {
+                    parsedData[name[0]] = tempdata;
+                    } else {
+                    parsedData[name[0]] = tempdata[0];
+                    }
                 }
-            }
-            }
-        
-            let options = {};
-            switch (this.method.toLowerCase()) {
-            case 'post':
-                options.body = JSON.stringify(parsedData);
-            case 'get':
-                options.method = this.method;
-                options.headers = {'Content-Type': 'application/json'};
-            break;
-            }
-        
-            fetch(this.action, options).then(r => r.json()).then(data => {
-                var getLikes = document.querySelector('.likes-count span').textContent;
-                var calculateLikes;
-                if(data[0] == true){
-                    document.querySelector('.like-btn').classList.add("liked");
-                    calculateLikes = Number(getLikes) + 1;
-                    document.querySelector('.likes-count span').textContent = calculateLikes;
-                } else {
-                    document.querySelector('.like-btn').classList.remove("liked");
-                    calculateLikes = Number(getLikes) - 1;
-                    document.querySelector('.likes-count span').textContent = calculateLikes;
                 }
+            
+                let options = {};
+                switch (this.method.toLowerCase()) {
+                case 'post':
+                    options.body = JSON.stringify(parsedData);
+                case 'get':
+                    options.method = this.method;
+                    options.headers = {'Content-Type': 'application/json'};
+                break;
+                }
+            
+                fetch(this.action, options).then(r => r.json()).then(data => {
+                    var getLikes = document.querySelector('.likes-count span').textContent;
+                    var calculateLikes;
+                    if(data[0] == true){
+                        document.querySelector('.like-btn').classList.add("liked");
+                        calculateLikes = Number(getLikes) + 1;
+                        document.querySelector('.likes-count span').textContent = calculateLikes;
+                    } else {
+                        document.querySelector('.like-btn').classList.remove("liked");
+                        calculateLikes = Number(getLikes) - 1;
+                        document.querySelector('.likes-count span').textContent = calculateLikes;
+                    }
+                });
             });
+        }
+    // MENU MOBILE
+    if(screen.width < 700){
+        document.querySelector('.hamburger').addEventListener('click', function(){
+            document.querySelector('.painel-mobile .menu').classList.add('atv');
+            document.querySelector('.bg-menu').classList.add('atv');
         });
+        document.querySelector('.bg-menu').addEventListener('click', function(){
+            document.querySelector('.painel-mobile .menu').classList.remove('atv');
+            document.querySelector('.bg-menu').classList.remove('atv');
+        });
+        document.querySelector('.close-btn').addEventListener('click', function(){
+            document.querySelector('.painel-mobile .menu').classList.remove('atv');
+            document.querySelector('.bg-menu').classList.remove('atv');
+        });
+    }
 }

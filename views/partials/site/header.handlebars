@@ -1,37 +1,29 @@
-<header class="painel">
-    <nav class="menu">
-        <ul>
-            <li class="item logo">
-                <a title="Visão geral" href="/"><img src="/img/svg/colib-black.svg" alt="Colib"></a>
-            </li>
-            <li class="item library">
-                <a title="Biblioteca" href="/biblioteca"><span><img src="/img/svg/open-book.svg" alt="Biblioteca"></span>Biblioteca</a>
-            </li>
-            <li class="item articles">
-                <a title="Artigos" href="/artigos"><span><img src="/img/svg/newspaper.svg" alt="Artigos"></span>Artigos</a>
-            </li>
-            <li class="item groups">
-                <a title="Comunidades" href="/comunidades"><span><img src="/img/svg/groups.svg" alt="Comunidades"></span>Comunidades</a>
-            </li>
-            {{!-- <li class="item medias">
-                <a title="Mídias" href="/midias"><span><img src="/img/svg/clapperboard.svg" alt="Mídias"></span>Mídias</a>
-            </li>  --}}
-            <li class="item painel-usuario">
-                {{#if user}}
-                    {{#each user}}
-                        {{#if access}}
-                            {{#if_eq 2 access}}
-                                <a title="Minha Conta" href="/admin/library"><span><img src="/img/svg/social.svg" alt="Minha Conta"></span>Minha Conta</a>
-                            {{else}}
-                                <a title="Minha Conta" href="/user/"><span><img src="/img/svg/social.svg" alt="Minha Conta"></span>Minha Conta</a>
-                            {{/if_eq}}
-                        {{/if}}
-                    {{/each}}
-                {{else}}
-                    <a title="Minha Conta" href="/user/login"><span><img src="/img/svg/social.svg" alt="Minha Conta"></span>Minha Conta</a>
+{{!-- MOBILE --}}
+<header class="painel-mobile">
+    <div class="items-header">
+        <div class="hamburger"></div>
+        <a class="logo" href="/"><img src="/img/svg/colib-black.svg" alt="Colib"></a>
+        {{#if user}}
+            {{#each user}}
+                {{#if access}}
+                    {{#if_eq 2 access}}
+                        <a class="painel-usr" href="/admin/library"><img src="/img/svg/social.svg" alt="Minha Conta"></a>
+                    {{else}}
+                        <a class="painel-usr" href="/user/"><img src="/img/svg/social.svg" alt="Minha Conta"></a>
+                    {{/if_eq}}
                 {{/if}}
-                
-            </li>
-        </ul>
-    </nav>
+            {{/each}}
+        {{else}}
+            <a class="painel-usr" href="/user/login"><img src="/img/svg/social.svg" alt="Minha Conta"></a>
+        {{/if}}
+        {{>widgets/menu/site/menu}}
+    </div>
+    <div class="search-box">
+        {{>widgets/search_bar}}
+    </div>
+</header> 
+
+{{!-- DESKTOP --}}
+<header class="painel">
+    {{>widgets/menu/site/menu}}
 </header> 

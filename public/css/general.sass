@@ -532,7 +532,7 @@ header.painel
           -webkit-box-orient: vertical
           overflow: hidden
           text-overflow: ellipsis
-          height: 60px
+          height: 50px
           margin-bottom: 2px
         .more-infos
           width: 100%
@@ -592,7 +592,7 @@ header.painel
             -webkit-line-clamp: 2
           .short-desc
             -webkit-line-clamp: 2
-            height: 38px
+            height: 35px
           .more-infos 
             .more-infos-box
               text-align: left
@@ -642,7 +642,7 @@ header.painel
     margin-bottom: 10px
     margin-right: 15px
     font-weight: 600
-  .style-button
+  .style-button  
     padding: 5px
 .ads
   text-align: center
@@ -650,6 +650,24 @@ header.painel
   .title
     font-weight: 700
     margin-bottom: 20px
+header.painel-mobile
+  display: none
+.menu .close-btn
+  display: none
+.list-item
+  position: relative
+  .cover-link
+      z-index: 1
+      position: absolute
+      top: 0
+      right: 0
+      width: 100%
+      height: 100%
+  .profile-post
+    z-index: 2
+  .download-btn
+    position: relative
+    z-index: 2
 // responsive
 @media (max-width: 1600px) and (min-width: 701px)
   #middle 

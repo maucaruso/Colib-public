@@ -136,8 +136,8 @@ const User = mongoose.model('users');
     router.get('/profile/:nickname', (req, res) => {
         User.findOne({nickname:req.params.nickname, access: 1, user_status: 1}).lean().then((user_detail) => {
             if(user_detail){
-                Book.find({user: user_detail._id}).sort({date: 'desc'}).then((books) => {
-                    Post.find({user: user_detail._id}).sort({date: 'desc'}).then((posts) => { 
+                Book.find({user: user_detail._id, visibility_status: 1}).sort({date: 'desc'}).then((books) => {
+                    Post.find({user: user_detail._id, visibility_status: 1}).sort({date: 'desc'}).then((posts) => { 
                         res.render('site/profile-details', {user_detail: user_detail, books: books.map(book => book.toJSON()), posts: posts.map(post => post.toJSON())}); 
                     }).catch((err) =>{
                         req.flash('error_msg', 'Houve um erro ao carregar a página, por favor, tente novamente'); 
@@ -161,8 +161,8 @@ const User = mongoose.model('users');
     router.get('/search/', (req, res) => {
         var search_terms = req.query.find;
         User.find({user_status: 1}).then((users) => {
-            Book.find({ $or:[ {'name':{$regex: search_terms, $options: "i"}}, {'author':{$regex: search_terms, $options: "i"}}, {'hashtags':{$regex: search_terms, $options: "i"}} ]}).sort({date: 'desc'}).then((books) => {
-                Post.find({ $or:[ {'title':{$regex: search_terms, $options: "i"}}, {'hashtags':{$regex: search_terms, $options: "i"}} ]}).sort({date: 'desc'}).then((posts) => {
+            Book.find({ $or:[ {'name':{$regex: search_terms, $options: "i"}}, {'author':{$regex: search_terms, $options: "i"}}, {'hashtags':{$regex: search_terms, $options: "i"}} ], visibility_status: 1}).sort({date: 'desc'}).then((books) => {
+                Post.find({ $or:[ {'title':{$regex: search_terms, $options: "i"}}, {'hashtags':{$regex: search_terms, $options: "i"}} ], visibility_status: 1}).sort({date: 'desc'}).then((posts) => {
                     res.render('site/search-result', {books: books.map(book => book.toJSON()), posts: posts.map(post => post.toJSON())}); 
                 }).catch((err) =>{
                     req.flash('error_msg', 'Houve um erro ao carregar a busca.'); 

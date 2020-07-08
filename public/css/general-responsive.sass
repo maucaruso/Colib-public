@@ -1,0 +1,377 @@
+@media (max-width: 700px)
+    #middle .header-menu
+        display: none
+    header
+        &.painel
+            display: none
+        &.painel-mobile
+            display: block
+            padding: 15px 20px 20px
+            background: white
+            box-shadow: 0px 0px 8px rgba(0,0,0,0.1)
+            .items-header
+                display: flex
+                justify-content: space-between
+                align-items: center
+                .hamburger
+                    width: 30px
+                    height: 4px
+                    background: black
+                    border-radius: 2px
+                    &:before, &::after
+                        content: ''
+                        width: 100%
+                        height: 4px
+                        background: black
+                        display: block
+                        position: relative
+                        border-radius: 2px
+                    &::before
+                        top: -9px
+                    &::after
+                        top: 5px
+
+                    &:before
+
+                    &:after
+                .logo
+                    width: 90px
+                    margin-top: 2px
+                    border-bottom: 4px solid yellow
+                    img
+                        width: 100%
+                .painel-usr
+                    width: 33px
+                    height: 33px
+            .search-box
+                margin-top: 10px
+                .seach
+                    width: 100%
+                    flex-wrap: wrap
+                    justify-content: space-between
+                    display: flex
+                    input
+                        width: calc(100% - 40px)
+                        height: 40px
+                    .search-button
+                        width: 40px
+                        height: 40px
+                        display: inline-block
+                        border: 1px solid black
+                        padding: 8px
+                        border-left: 0
+                        img
+                            width: 100%
+            .bg-menu
+                position: fixed
+                top: 0
+                right: 0
+                width: 100%
+                height: 100%
+                background: rgba(0,0,0,.5)
+                z-index: 3
+                &:not(.atv)
+                    right: -100%
+            .close-btn
+                position: absolute
+                top: 5px
+                line-height: 1
+                right: 15px
+                font-size: 32px
+                transform: rotate(45deg)
+                font-weight: 700
+                display: block
+            .menu
+                position: fixed
+                top: 0
+                left: 0
+                background: white
+                z-index: 4
+                width: 80%
+                height: 100%
+                padding: 45px 30px 30px
+                transition: .3s ease
+                box-shadow: 0px 0px 8px rgba(0,0,0,0.1)
+                &:not(.atv)
+                    left: -100%
+                .item.logo
+                    display: none
+                li
+                    a
+                        display: flex
+                        align-items: center
+                        font-weight: 600
+                        img
+                            width: 30px
+                            margin-right: 10px
+                            display: block
+                    + li:not(:nth-child(2)):not(:last-child)
+                        border-top: 1px solid lightgray
+                        margin-top: 10px
+                        padding-top: 10px
+                    &:last-child
+                        position: absolute
+                        bottom: 0
+                        width: 100%
+                        left: 0
+                        border-top: 1px solid lightgray
+                        margin-top: 0
+                        padding-top: 0
+                        a
+                            justify-content: center
+                            padding: 10px
+                            img
+                                width: 25px
+    #middle
+        width: 100%
+        padding: 15px
+        .ads
+            width: 100%
+            margin-top: 0
+            height: auto  
+        .content
+            width: 100%
+            &.article
+                padding: 20px 25px
+                margin-top: 10px
+                margin-bottom: 20px
+                .author-detail
+                    margin-bottom: 0
+                h1.post-title
+                    font-size: 21px
+                .profile-post
+                    width: 80px
+                    height: 80px
+                .like-box
+                    zoom: .8
+                .like-btn
+                    top: 25px
+                    right: 25px
+                .likes-count
+                    right: 9px
+                    top: 105px
+                .content-post
+                    width: 100%
+                    p, a
+                        display: inline-block
+                        font-size: 18px
+                        line-height: 28px
+                .profile-post
+                    order: -1
+                .share
+                    position: relative
+                    width: 100%
+                    left: 0
+                    top: 0
+                    margin: 20px 0 0
+                    .share-items
+                        justify-content: center
+        .cover .profile-post
+            width: 40px
+            height: 40px
+            right: 5px
+            top: 6px
+        .box-cards            
+            width: 100%
+            margin-top: 10px
+            .list-items
+                display: block
+        .content-cards
+            width: 100%
+        .content-cards:not(.side-by-side)
+            .list-items 
+                display: grid
+                grid-template-columns: 1fr 1fr
+                column-gap: 8px
+                .list-item 
+                    margin-bottom: 10px
+                    height: max-content
+                    .cover
+                        height: 125px
+                    .desc 
+                        width: 100%
+                        padding: 10px 10px 5px
+                        h2
+                            font-size: 14px
+                            height: 35px
+                            margin-bottom: 5px
+                            -webkit-line-clamp: 2
+                        .short-desc
+                            display: none
+                        .download-btn
+                            display: none
+                        .more-infos 
+                            .more-infos-box
+                                width: 100%
+                                height: auto
+                            .category
+                                strong
+                                    width: 120px
+        .content-cards
+            margin-top: 10px
+            .list-items
+                display: block
+        .content.library-details
+            margin-top: 10px
+            margin-bottom: 20px
+            .book-details 
+                .left
+                    width: 100%
+                    height: auto
+                    .cover
+                        height: 200px
+                .right
+                    width: 100%
+                    padding: 0
+                    padding-top: 20px
+                    h1
+                        font-size: 24px
+                    .line.description
+                        margin-bottom: 20px
+                    .download-btn
+                        width: 100%
+                        margin: 0
+                        text-align: center
+                        + a
+                            margin-top: 10px
+    #middle.profile-details
+        .left-box
+            width: 100%
+            margin-bottom: 10px
+        .content.profile-details
+            margin-top: 10px
+            padding: 25px
+            margin-bottom: 20px
+            .desc-content
+                font-size: 16px
+                margin-bottom: 0    
+    #middle .box-cards + .ads
+        margin-top: 10px
+    #middle.user-middle
+        .header-menu
+            display: block
+            background: unset
+            box-shadow: unset
+            padding: 10px 20px 5px
+            .seach
+                display: none
+            .btn-new
+                display: block
+                text-align: center
+                background: white
+        .content-cards
+            > h2
+                text-align: center
+                margin-bottom: 20px
+    .header-user.painel-mobile
+        .search-box
+            display: none 
+        .items-header 
+            .logo
+                width: min-content
+                text-align: center
+                img
+                    width: 90px
+                &::after
+                    content: 'Colaboradores'
+                    font-weight: 600
+                    display: block
+    #middle .content-cards:not(.side-by-side) + .ads
+        margin-top: 20px
+    #middle .content-cards.side-by-side + .ads
+        margin-top: 10px
+    #middle
+        &.user-middle
+            .content.full
+                margin-top: 20px
+            h2
+                text-align: center
+        .form-add.library 
+            form 
+                textarea#description
+                    height: 150px
+                .left
+                    width: 100%
+                    .input-wrapper
+                        small
+                            font-size: 12px
+                            text-align: justify 
+                .right
+                    width: 100%
+                    padding: 0
+                    margin-top: 7px
+                    .cover.style-input
+                        width: 100%
+                        height: 200px
+                        &:after
+                            font-size: 10px
+                            bottom: 5px
+                            text-align: center
+                    .alert-upload
+                        position: relative
+                        top: 0
+                        font-size: 12px
+                        text-align: justify
+                        order: 1
+                    .books
+                        width: 100%
+                        padding: 0
+                        >div.file
+                            padding: 30px 20px 30px 100px
+                            &:last-child
+                                margin-bottom: 0
+                            &::after
+                                font-size: 10px
+                                white-space: nowrap
+                                width: 130px
+                                overflow: hidden
+                                left: 100px
+                .style-button
+                    width: 100%
+    #middle
+        .content.full
+            .form-add.article
+                .left
+                    width: 100%
+                    padding: 0
+                    margin-bottom: 35px
+                    min-height: 200px
+    .content-cards.side-by-side .list-items .list-item .desc .short-desc
+        height: 34px
+        margin-bottom: 10px
+    #middle.user-middle
+        .settings
+            width: 100%
+            form
+                margin-top: 20px
+                margin-bottom: 25px
+                .left
+                    width: 100%
+                    .profile-picture
+                        margin: 0 auto 20px
+                    .profile-desc
+                        width: 100%
+                        height: auto
+                        margin-bottom: 0
+                .right
+                    width: 100%
+                    margin-top: 20px
+                .bottom
+                    margin-top: 20px
+                    .input-wrapper
+                        margin-top: 15px
+                        padding-top: 0
+                        flex-wrap: wrap
+                        + .input-wrapper
+                            margin-top: 15px
+                            padding-top: 15px
+                        input
+                            width: 100%
+                            + input
+                                margin-top: 10px
+        
+
+
+
+
+

@@ -1,6 +1,13 @@
 <div class="list-items">
     {{#each books}}
         <article class="list-item">
+            {{#if_adm}}
+                <a href="/admin/library/edit/{{_id}}" class="cover-link"></a>
+            {{/if_adm}}
+            {{#if_user}}
+                <a href="/user/library/edit/{{_id}}" class="cover-link"></a>
+            {{/if_user}}
+           
             <div class="cover">
                 {{#if cover}}
                     <img src="{{cover}}" alt="{{name}}">

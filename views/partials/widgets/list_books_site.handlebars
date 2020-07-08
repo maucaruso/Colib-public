@@ -4,6 +4,7 @@
             {{#each ../users}}
                 {{#if_eq _id ../user}}
                     <article class="list-item">
+                        <a href="/biblioteca/{{../_id}}/{{../slug}}" class="cover-link"></a>
                         <div class="cover">
                             {{>widgets/profile_icon}}
                             {{#if ../cover}}
@@ -19,13 +20,14 @@
                                 <div class="more-infos-box"><span class="author">Autor: <strong>{{../author}}</strong></span></div>
                                 <div class="more-infos-box"><span class="category">Hashtags: <strong>{{../hashtags}}</strong></span></div>
                             </div>
-                            <a href="/biblioteca/{{../_id}}/{{../slug}}" class="download-btn style-button button-green">Baixar livro</a>
+                            <a href="/biblioteca/{{../_id}}/{{../slug}}" class="download-btn style-button button-blue">Baixar livro</a>
                         </div>
                     </article>
                 {{/if_eq}}
             {{/each}}
         {{else}}
              <article class="list-item">
+                <a href="/biblioteca/{{_id}}/{{slug}}" class="cover-link"></a>
                 <div class="cover">
                     {{#if cover}}
                         <img src="{{cover}}" alt="{{name}}">
@@ -40,7 +42,7 @@
                         <div class="more-infos-box"><span class="author">Autor: <strong>{{author}}</strong></span></div>
                         <div class="more-infos-box"><span class="category">Hashtags: <strong>{{hashtags}}</strong></span></div>
                     </div>
-                    <a href="/biblioteca/{{_id}}/{{slug}}" class="download-btn style-button button-green">Baixar livro</a>
+                    <a href="/biblioteca/{{_id}}/{{slug}}" class="download-btn style-button button-blue">Baixar livro</a>
                 </div>
             </article>
         {{/if}}

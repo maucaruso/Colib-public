@@ -1,31 +1,42 @@
 <div id="middle">
     <div class="header-menu">
         <div class="register-mensage">
-            <a class="btn-new style-button" href="/artigos/">Voltar aos Artigos</a>
+            <a class="btn-new style-button button-blue" href="/artigos/">Voltar aos Artigos</a>
             {{>widgets/wellcome_msg}}
         </div>
         {{>widgets/search_bar}}
     </div>
 
     {{>msg}}
-
+        
     <div class="content article">
+        <div class="share">
+            <p class="title">Compartilhar:</p>
+            <ul class="share-items">
+                <li class="item fb"><a href="http://facebook.com/share.php?{{CurrentUrl}}" target="_blank" title="Compartilhar no Facebook"><img src="/img/svg/facebook.svg" alt="Facebook"></a></li>
+                <li class="item ms"><a href="https://api.addthis.com/oexchange/0.8/forward/messenger/offer?url={{CurrentUrl}}" target="_blank" title="Compartilhar no Messenger"><img src="/img/svg/messenger.svg" alt="Messenger"></a></li>
+                <li class="item wa"><a href="https://api.whatsapp.com/send?text={{CurrentUrl}}" target="_blank" title="Compartilhar no WhatsApp"><img src="/img/svg/whats.svg" alt="Whats"></a></li>
+            </ul>
+        </div>
+
         {{>widgets/profile_icon}}
         
-        <div class="likes-count"><span>{{post.likes.length}}</span> curtidas</div>
-        {{#if user}}
-            {{#each user}}
-                {{#if access}}
-                    <form action="/artigos/curtir" method="post" class="like-form">
-                        <input type="hidden" name="post_id" value="{{../post._id}}">
-                        <input type="hidden" name="_id" value="{{_id}}">
-                        <button type="submit" class="like-btn {{#if_eq_Array _id ../post.likes}}liked{{/if_eq_Array}}"><img src="/img/svg/like-active.svg" alt="Curtir" class="img-1"><img src="/img/svg/like.svg" alt="Curtir" class="img-2">Curtir</button>
-                    </form>
-                {{/if}}
-            {{/each}}
-        {{else}}
-            <a href="/user/login" class="like-btn open-modal"><img src="/img/svg/like.svg" alt="Curtir">Curtir</a>
-        {{/if}}
+        <div class="like-box">
+            <div class="likes-count"><span>{{post.likes.length}}</span> curtidas</div>
+            {{#if user}}
+                {{#each user}}
+                    {{#if access}}
+                        <form action="/artigos/curtir" method="post" class="like-form">
+                            <input type="hidden" name="post_id" value="{{../post._id}}">
+                            <input type="hidden" name="_id" value="{{_id}}">
+                            <button type="submit" class="like-btn {{#if_eq_Array _id ../post.likes}}liked{{/if_eq_Array}}"><span class="img-1"><img src="/img/svg/like-active.svg" alt="Curtir">Curtir</span><span class="img-2"><img src="/img/svg/like.svg" alt="Curtir">Curtir</span></button>
+                        </form>
+                    {{/if}}
+                {{/each}}
+            {{else}}
+                <a href="/user/login" class="like-btn open-modal"><img src="/img/svg/like.svg" alt="Curtir">Curtir</a>
+            {{/if}}
+        </div>
         <h1 class="post-title">{{post.title}}</h1>
         <p class="post-infos">Data: {{post.date}} | Hashtags: {{post.hashtags}}</p>
         <div class="content-post">

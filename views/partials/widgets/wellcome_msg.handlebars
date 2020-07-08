@@ -3,13 +3,13 @@
         {{#if access}}
             <div class="user">
                 {{#if_eq 2 access}}
-                    <a class="hello" title="Minha Conta" href="/admin/library"><span></span>Olá, {{nickname}}!</a>
-                    <a class="style-button" title="Minha Conta" href="/admin/library"><span></span>Minha conta</a>
+                    <a class="hello" title="Minha Conta" href="/admin/settings"><span></span>Olá, <strong>{{nickname}}</strong>!</a>
+                    <a class="style-button button-blue" title="Minha Conta" href="/admin/settings"><span></span>Minha conta</a>
                 {{else}}
-                    <a class="hello" title="Minha Conta" href="/user"><span></span>Olá, {{nickname}}!</a>
-                    <a class="style-button" title="Minha Conta" href="/user"><span></span>Minha conta</a>
+                    <a class="hello" title="Minha Conta" href="/user/settings"><span></span>Olá, <strong>{{nickname}}</strong>!</a>
+                    <a class="style-button button-blue" title="Minha Conta" href="/user/settings"><span></span>Minha conta</a>
                 {{/if_eq}}
-                <a class="style-button" title="Sair" href="/user/logout"><span></span>Sair</a>
+                <a class="style-button button-red" title="Sair" href="/user/logout"><span></span>Sair</a>
             </div>
         {{/if}}
     {{/each}}

@@ -1,4 +1,4 @@
-<div id="middle">
+<div id="middle" class="user-middle">
     <div class="header-menu">
         <div class="header-btns">
             <a class="btn-new style-button" href="/user/articles/new-article">Criar artigo</a>
@@ -12,9 +12,11 @@
     {{>msg}}
 
     <div class="content-cards">
+        <h2>Meus artigos</h2>
         <div class="list-items">
             {{#each posts}}
                 <article class="list-item">
+                    <a href="/user/article/edit/{{_id}}" class="cover-link"></a>
                     <div class="cover">
                         {{#if thumbnail}}
                             <img src="{{thumbnail}}" alt="{{title}}">
