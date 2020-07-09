@@ -10,7 +10,6 @@ window.onload = function(){
             searchInput.addEventListener('keyup', function(e){
                 if (e.keyCode === 13) {
                     var getTerms = this.value;
-                    console.log('teste');
                     window.location.href = '/search?find='+getTerms;
                 }
             });
@@ -143,4 +142,14 @@ window.onload = function(){
             document.querySelector('.bg-menu').classList.remove('atv');
         });
     }
+
+    // POP-UP DE CONFIRMAÇÃO DE EXCLUSÃO
+    document.querySelectorAll('.page-users .fake-button.button-red').forEach(item => {
+        var getUser = item;
+        if (typeof(getUser) != 'undefined' && getUser != null){
+            getUser.addEventListener('click', function(){
+                //var getPop = this.parentElement
+            });
+        }
+    });
 }

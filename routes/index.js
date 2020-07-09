@@ -10,8 +10,8 @@ const User = mongoose.model('users');
 // Home
     router.get('/', (req, res) => {
         User.find({user_status: 1}).then((users) => {
-            Book.find({visibility_status: 1}).sort({date: 'desc'}).limit(10).then((books) => {
-                Post.find({visibility_status: 1}).sort({date: 'desc'}).limit(10).then((posts) => { 
+            Book.find({visibility_status: 1}).sort({date: 'desc'}).limit(12).then((books) => {
+                Post.find({visibility_status: 1}).sort({date: 'desc'}).limit(12).then((posts) => { 
                     res.render('site/index', {users: users.map(user => user.toJSON()), books: books.map(book => book.toJSON()), posts: posts.map(post => post.toJSON())}); 
                 }).catch((err) =>{
                     req.flash('error_msg', 'Houve um erro ao carregar a página, por favor, tente novamente'); 

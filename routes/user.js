@@ -50,7 +50,7 @@ const {isUser} = require('../helpers/isUser.js');
         } else { 
             var errorsUnique = [];
             User.findOne({email: req.body.register_email}).then((email) => {
-                User.findOne({nickname: req.body.register_nickname}).then((nickname) => {
+                User.findOne({nickname: returnSlug(req.body.register_nickname)}).then((nickname) => {
                     if(email){
                         errorsUnique.push({text: 'O e-mail '+email.email+' já foi cadastrado, por favor, escolha outro.'});
                     }
@@ -62,7 +62,7 @@ const {isUser} = require('../helpers/isUser.js');
                         res.redirect('/user/login');
                     } else {
                         const newUser = {
-                            nickname: req.body.register_nickname,
+                            nickname: returnSlug(req.body.register_nickname),
                             email: req.body.register_email,
                             password: req.body.register_password
                         }
@@ -121,15 +121,15 @@ const {isUser} = require('../helpers/isUser.js');
             filename: (req, file, cb) => {
                 if(req.body.name){
                     // Se for livro
-                    var nameBook = filterFileName(req.body.name);
+                    var nameBook = returnSlug(filterFileName(req.body.name));
                     cb(null, nameBook+'-'+Date.now()+path.extname(file.originalname));
                 } else if(req.body.title){
                     // Se for artigo
-                    var nameCover = filterFileName(req.body.title);
+                    var nameCover = returnSlug(filterFileName(req.body.title));
                     cb(null, nameCover+'-'+Date.now()+path.extname(file.originalname));
                 } else if(req.body.nickname){
                     // Se for Usuário
-                    var profile_pic = filterFileName(req.body.nickname);
+                    var profile_pic = returnSlug(filterFileName(req.body.nickname));
                     cb(null, profile_pic+'-'+Date.now()+path.extname(file.originalname));
                 }
             }

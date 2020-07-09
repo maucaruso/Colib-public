@@ -37,6 +37,17 @@
                         </div>
                         <button type="submit" class="style-button button-blue">Atualizar</button>
                     </form>
+                    <form action="/admin/users/delete" method="POST" class="delete-user">
+                        <input type="hidden" name="remove_id" value="{{_id}}">
+                        <div class="fake-button style-button button-red">Remover usuário</div>
+                        <div class="pop-remove" style="display: none;">
+                            <div class="bg-pop"></div>
+                            <div class="content-pop">
+                                <p>Você tem certeza que deseja excluir este usuário? Todos os dados associados a ele serão removidos</p>
+                                <button type="submit" class="style-button button-red">Remover usuário</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             {{/each}}
         </div>

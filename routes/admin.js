@@ -46,15 +46,15 @@ const {isAdmin} = require('../helpers/isAdmin.js');
         filename: (req, file, cb) => {
             if(req.body.name){
                 // Se for livro
-                var nameBook = filterFileName(req.body.name);
+                var nameBook = returnSlug(filterFileName(req.body.name));
                 cb(null, nameBook+'-'+Date.now()+path.extname(file.originalname));
             } else if(req.body.title){
                 // Se for artigo
-                var nameCover = filterFileName(req.body.title);
+                var nameCover = returnSlug(filterFileName(req.body.title));
                 cb(null, nameCover+'-'+Date.now()+path.extname(file.originalname));
             } else if(req.body.nickname){
                 // Se for Usuário
-                var profile_pic = filterFileName(req.body.nickname);
+                var profile_pic = returnSlug(filterFileName(req.body.nickname));
                 cb(null, profile_pic+'-'+Date.now()+path.extname(file.originalname));
             }
         }
@@ -83,25 +83,25 @@ const {isAdmin} = require('../helpers/isAdmin.js');
         }
     });
 
-    router.post('/library/visibility', isAdmin, (req, res) => {
-        Book.findOne({_id:req.body.id}).then((book) => {
-            // deletando arquivos de uploads
-            deleteFile(book.cover); 
-            deleteFile(book.file_pdf);  
-            deleteFile(book.file_epub); 
-            deleteFile(book.file_mobi); 
-            Book.remove({_id: req.body.id}).then(() => {
-                req.flash('success_msg', 'Livro excluído com sucesso!');
-                res.redirect('/admin/library/');
-            }).catch((err) => {
-                req.flash('error_msg', 'Houve um erro ao excluir o livro');
-                res.redirect('/admin/library/');
-            }); 
-        }).catch(() => {
-            req.flash('error_msg', 'Houve um erro ao excluir o os arquivos');
-            res.redirect('/admin/library/');
-        });
-    });
+    // router.post('/library/visibility', isAdmin, (req, res) => {
+    //     Book.findOne({_id:req.body.id}).then((book) => {
+    //         // deletando arquivos de uploads
+    //         deleteFile(book.cover); 
+    //         deleteFile(book.file_pdf);  
+    //         deleteFile(book.file_epub); 
+    //         deleteFile(book.file_mobi); 
+    //         Book.remove({_id: req.body.id}).then(() => {
+    //             req.flash('success_msg', 'Livro excluído com sucesso!');
+    //             res.redirect('/admin/library/');
+    //         }).catch((err) => {
+    //             req.flash('error_msg', 'Houve um erro ao excluir o livro');
+    //             res.redirect('/admin/library/');
+    //         }); 
+    //     }).catch(() => {
+    //         req.flash('error_msg', 'Houve um erro ao excluir o os arquivos');
+    //         res.redirect('/admin/library/');
+    //     });
+    // });
     
     router.get('/library/new-file', isAdmin, (req, res) => {
         res.render('admin/library-add');  
@@ -455,6 +455,59 @@ const {isAdmin} = require('../helpers/isAdmin.js');
             }
             // res.json(req.body);
         });
+    });
+
+    router.post('/users/delete', isAdmin, (req, res) => { 
+        if(req.body.remove_id != '5ed26d68e0ef6f47f0c2dc0a'){
+            User.findOne({_id: req.body.remove_id}).then((user) => {
+                if(user){
+                    // Ao deletar o usuário, primeiro são removidos todos os artigos associados, após os livros e por fim o usuário
+                    Post.find({user: req.body.remove_id}).then((posts) => {
+                        for(var key in posts){
+                            deleteFile(posts[key].thumbnail); 
+                        }
+                        Post.deleteMany({user: req.body.remove_id}).then(() => {
+                            // Deletando livros
+                            Book.find({user: req.body.remove_id}).then((books) => {
+                                for(var key in books){
+                                    // deletando arquivos de uploads
+                                    deleteFile(books[key].cover); 
+                                    deleteFile(books[key].file_pdf);  
+                                    deleteFile(books[key].file_epub); 
+                                    deleteFile(books[key].file_mobi); 
+                                }
+                                Book.deleteMany({user: req.body.remove_id}).then(() => {
+                                    User.remove({_id: req.body.remove_id}).then(() => {
+                                        req.flash('success_msg', 'Usuário removido com sucesso!');
+                                        res.redirect('/admin/users/');
+                                    }).catch((err) => {
+                                        req.flash('error_msg', 'Houve um erro ao excluír o usuário');
+                                        res.redirect('/admin/users/');
+                                    })
+                                }).catch((err) => {
+                                    req.flash('error_msg', 'Houve um erro ao excluir os livros');
+                                    res.redirect('/admin/users/');
+                                }); 
+                            }).catch(() => {
+                                req.flash('error_msg', 'Houve um erro ao excluir os livros');
+                                res.redirect('/admin/users/');
+                            });
+                        }).catch(() => {
+                            req.flash('error_msg', 'Houve um erro ao excluir os artigos');
+                            res.redirect('/admin/users/');
+                        });
+                    }).catch((err) => {
+                        req.flash('error_msg', 'Houve um erro ao excluir os artigos');
+                        res.redirect('/admin/users/');
+                    });
+                }
+            }).catch((err) =>{
+                req.flash('error_msg', 'Houve um erro ao remover o usuario.'); 
+            });  
+        } else {
+            req.flash('error_msg', 'Este usuário não pode ser removido.'); 
+            res.redirect('/admin/users');
+        }
     });
 
 // Comunidades
