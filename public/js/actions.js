@@ -1,19 +1,21 @@
 window.onload = function(){ 
     // Passar Termos da busca para o botão de busca
-        var searchInput = document.querySelector('.search-input.style-input');
+    document.querySelectorAll('.search-input.style-input').forEach(item => {
+        var searchInput = item;
         if (typeof(searchInput) != 'undefined' && searchInput != null){
             searchInput.addEventListener('focusout', function(){
                 var getTerms = this.value;
                 document.querySelector('.search-button').setAttribute('href', '/search?find='+getTerms);
             });
-            searchInput.addEventListener('keyup', function(){
-                if (event.keyCode === 13) {
+            searchInput.addEventListener('keyup', function(e){
+                if (e.keyCode === 13) {
                     var getTerms = this.value;
+                    console.log('teste');
                     window.location.href = '/search?find='+getTerms;
                 }
             });
         }
-
+    });
     // Obter nome do arquivo library
         var checkIfLib =  document.querySelector('.form-add.library');
         if (typeof(checkIfLib) != 'undefined' && checkIfLib != null){

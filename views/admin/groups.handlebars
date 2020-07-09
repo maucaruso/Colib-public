@@ -1,7 +1,7 @@
 <div id="middle">
     <div class="header-menu">
         <div class="header-btns">
-            <a class="btn-new style-button" href="/admin/articles/new-article">Criar artigo</a>
+            <a class="btn-new style-button" href="/admin/groups/new-group">Cadastrar Comunidade</a>
         </div>
         <form class="seach">
             <input type="text" class="search-input  style-input" placeholder="Pesquisar">
@@ -15,7 +15,7 @@
        {{>widgets/view-content-admin}}
 
         <div class="list-items">
-            {{#each posts}}
+            {{!-- {{#each posts}}
                 <article class="list-item">
                     <a href="/admin/article/edit/{{_id}}" class="cover-link"></a>
                     <div class="cover">
@@ -36,8 +36,8 @@
                     </div>
                 </article>
             {{else}}
-                <p>Você ainda não criou nenhum artigo.</p>
-            {{/each}}
+                <p>Você ainda não cadastrou nenhum grupo.</p>
+            {{/each}} --}}
         </div>
     </div>
     {{>ads}}

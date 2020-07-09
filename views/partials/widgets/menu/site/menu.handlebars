@@ -11,9 +11,9 @@
         <li class="item articles">
             <a title="Artigos" href="/artigos"><span><img src="/img/svg/newspaper.svg" alt="Artigos"></span>Artigos</a>
         </li>
-        {{!-- <li class="item groups">
+        <li class="item groups">
             <a title="Comunidades" href="/comunidades"><span><img src="/img/svg/groups.svg" alt="Comunidades"></span>Comunidades</a>
-        </li> --}}
+        </li>
         {{!-- <li class="item medias">
             <a title="Mídias" href="/midias"><span><img src="/img/svg/clapperboard.svg" alt="Mídias"></span>Mídias</a>
         </li>  --}}
@@ -22,9 +22,11 @@
                 {{#each user}}
                     {{#if access}}
                         {{#if_eq 2 access}}
-                            <a title="Minha Conta" href="/admin/library"><span><img src="/img/svg/social.svg" alt="Minha Conta"></span>Minha Conta</a>
+                            <a title="Minha Conta" href="/admin/settings"><span><img src="/img/svg/social.svg" alt="Minha Conta"></span>Minha Conta</a>
+                            <a class="logout" title="Sair" href="/user/logout">Sair</a>
                         {{else}}
-                            <a title="Minha Conta" href="/user/"><span><img src="/img/svg/social.svg" alt="Minha Conta"></span>Minha Conta</a>
+                            <a title="Minha Conta" href="/user/settings"><span><img src="/img/svg/social.svg" alt="Minha Conta"></span>Minha Conta</a>
+                            <a class="logout" title="Sair" href="/user/logout">Sair</a>
                         {{/if_eq}}
                     {{/if}}
                 {{/each}}

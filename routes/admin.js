@@ -7,6 +7,8 @@ require('../models/Book');
 const Book = mongoose.model('books');
 require('../models/User');
 const User = mongoose.model('users');
+require('../models/Group');
+const Group = mongoose.model('groups');
 const bctypt = require('bcryptjs');
 const passport = require('passport');
 const validatePost = require('../controller/validatePost');
@@ -453,6 +455,27 @@ const {isAdmin} = require('../helpers/isAdmin.js');
             }
             // res.json(req.body);
         });
+    });
+
+// Comunidades
+    router.get('/groups', isAdmin, (req, res) => { 
+        var show_only = req.query.only;
+        if(show_only){
+            Group.find({visibility_status: show_only}).then((groups) => {
+                res.render('admin/groups', {groups: groups.map(group => post.toJSON())}); 
+            }).catch((err) =>{
+                req.flash('error_msg', 'Houve um erro ao listar os grupos.'); 
+            });  
+        } else {
+            Group.find().then((groups) => {
+                res.render('admin/groups', {groups: groups.map(group => group.toJSON())}); 
+            }).catch((err) =>{
+                req.flash('error_msg', 'Houve um erro ao listar os grupos.'); 
+            });  
+        }
+    });
+    router.get('/groups/new-group', isAdmin, (req, res) => {
+        res.render('admin/groups-add');  
     });
 
 module.exports = router;

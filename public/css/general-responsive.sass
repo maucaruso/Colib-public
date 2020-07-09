@@ -339,7 +339,7 @@
     .content-cards.side-by-side .list-items .list-item .desc .short-desc
         height: 34px
         margin-bottom: 10px
-    #middle.user-middle
+    #middle
         .settings
             width: 100%
             form
@@ -347,6 +347,7 @@
                 margin-bottom: 25px
                 .left
                     width: 100%
+                    margin-top: 0
                     .profile-picture
                         margin: 0 auto 20px
                     .profile-desc
@@ -369,9 +370,50 @@
                             width: 100%
                             + input
                                 margin-top: 10px
-        
+    #middle.user-middle 
+        .header-menu 
+            .btn-new
+                + .btn-new
+                    margin: 10px 0 5px
 
+    .logout
+        border-top: 1px solid lightgray
+    
+    #middle.login-route
+        .content
+            margin-top: 10px
+            .left, .right
+                width: 100%
+                padding: 25px 35px
+                margin-bottom: 20px
 
-
-
-
+    .view-content
+        flex-wrap: wrap
+        .content-only
+            width: 100%
+            display: flex
+            justify-content: space-between
+            margin-bottom: 10px
+        .search-id
+            width: 100%
+    #middle .content.library.full
+        margin-top: 20px
+    #middle .content.full
+        margin-top: 20px
+    .content-cards.page-users
+        .content-only
+            display: none
+        .list-users.content-cards-list
+            .list-users-item.list-item
+                form
+                    flex-wrap: wrap
+                .input-wrapper
+                    width: 100%
+                    margin-bottom: 10px
+                    display: flex
+                    justify-content: space-between
+                    flex-wrap: wrap
+                .style-button.button-blue
+                    width: 100%
+                    padding: 10px
+                    font-size: 16px

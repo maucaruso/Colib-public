@@ -48,6 +48,7 @@ header.painel
           font-weight: 600    
           padding: 22px 0
           box-sizing: border-box
+          text-align: center
           span
             width: 100%
             text-align: center
@@ -82,21 +83,20 @@ header.painel
             color: black 
             &:after
               display: none
-          &:hover
-            a
-              position: relative
-              &:before
-                content: ''
-                position: absolute
-                height: 5px
-                width: 50%
-                top: 0
-                display: block
-                background: black
-                left: 0
-                right: 0
-                margin: 0 auto
-                z-index: 1
+          a:hover
+            position: relative
+            &:before
+              content: ''
+              position: absolute
+              height: 5px
+              width: 50%
+              top: 0
+              display: block
+              background: black
+              left: 0
+              right: 0
+              margin: 0 auto
+              z-index: 1
 #middle
   width: calc(100% - 180px)
   float: right 
@@ -668,6 +668,44 @@ header.painel-mobile
   .download-btn
     position: relative
     z-index: 2
+header.painel 
+  .menu 
+    ul 
+      li:last-child
+        height: auto
+        a.logout
+          padding: 0 0 20px
+          text-decoration: underline
+          font-size: 14px
+          &::before
+            display: none
+      li a[title="Minhas Comunidades"]
+        span
+          margin-top: -5px
+          margin-bottom: 5px
+.books
+  .download-file
+    float: left
+    width: 100%
+    text-decoration: underline
+    color: blue
+    font-size: 14px
+.download-file
+  margin-top: 5px
+.cover-image
+  margin: auto
+  position: absolute
+  top: 0
+  bottom: 0
+  opacity: .6
+  width: 95px
+#middle .form-add.library form .right .books
+  >div.file
+    margin-bottom: 0
+  .download-file + .file
+    margin-top: 10px
+  .file + .file
+    margin-top: 20px
 // responsive
 @media (max-width: 1600px) and (min-width: 701px)
   #middle 
