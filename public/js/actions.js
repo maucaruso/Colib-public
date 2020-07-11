@@ -144,12 +144,18 @@ window.onload = function(){
     }
 
     // POP-UP DE CONFIRMAÇÃO DE EXCLUSÃO
-    document.querySelectorAll('.page-users .fake-button.button-red').forEach(item => {
-        var getUser = item;
-        if (typeof(getUser) != 'undefined' && getUser != null){
-            getUser.addEventListener('click', function(){
-                //var getPop = this.parentElement
-            });
-        }
-    });
+        document.querySelectorAll('.page-users .fake-button.button-red').forEach(item => {
+            var getUser = item;
+            if (typeof(getUser) != 'undefined' && getUser != null){
+                getUser.addEventListener('click', function(){
+                    var getPop = this.parentElement.querySelector('.pop-remove');
+                    getPop.style.display = 'block';
+                    
+                    getPop.querySelector('.bg-pop').addEventListener('click', function(){
+                        getPop.style.display = 'none';
+                    });
+                    this.parentElement.querySelector('.pop-remove');
+                });
+            }
+        });
 }
