@@ -1,0 +1,8 @@
+{{#if token}}
+    <form action="/user/activation" method="POST" class="form-activation">
+        <input type="hidden" name="token" value="{{token}}">
+    </form>
+    <script>
+        document.querySelector(".form-activation").submit();
+    </script>
+{{/if}}

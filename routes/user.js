@@ -64,7 +64,9 @@ const {isUser} = require('../helpers/isUser.js');
                         const newUser = {
                             nickname: returnSlug(req.body.register_nickname),
                             email: req.body.register_email,
-                            password: req.body.register_password
+                            password: req.body.register_password,
+                            verified: 0,
+                            token: Date.now()+(Math.random()*99999999).toFixed(0)
                         }
 
                         bctypt.genSalt(10, (error, salt) => {
@@ -95,6 +97,7 @@ const {isUser} = require('../helpers/isUser.js');
             });
         }
     });
+   
 // Telas do painel de Usuário
 
     // Multer - Upload de arquivos
@@ -478,5 +481,31 @@ const {isUser} = require('../helpers/isUser.js');
                 });
             }
         });
-
+// Ativação de conta
+    router.get('/activation', (req, res) => {
+        var token = req.query.token;
+        if(token){
+            User.findOne({token: token}).then((user) => {
+                if(user){
+                    user.verified = 1;
+                    user.save().then(() => {
+                        req.flash('success_msg', 'Sua conta foi ativada com sucesso, você já pode se logar normalmente!');
+                        res.redirect('/user/login');
+                    }).catch((err) => {
+                        req.flash('error_msg', 'Houve um erro ao ativar sua conta.'+err);
+                        res.redirect('/user/login');
+                    });
+                } else {
+                    req.flash('error_msg', 'Houve um erro ao ativar sua conta.');
+                    res.redirect('/user/login');
+                }
+            }).catch((err) => {
+                req.flash('error_msg', 'Houve um erro ao ativar sua conta.'+err);
+                res.redirect('/user/login')
+            });
+        } else {
+            req.flash('error_msg', 'Houve um erro ao ativar sua conta.');
+            res.redirect('/user/login');
+        }
+    });
 module.exports = router;

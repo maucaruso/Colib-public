@@ -38,6 +38,15 @@ const User = new Schema({
         type: String,
         required: false
     }],
+    verified: {
+        type: String,
+        required: true,
+        default: 0
+    },
+    token: {
+        type: String,
+        required: true
+    },
     date: {
         type: Date,
         default: Date.now()
