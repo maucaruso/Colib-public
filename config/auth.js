@@ -9,17 +9,21 @@ const bcrypt = require('bcryptjs');
 module.exports = function(passport){
     passport.use(new localStrategy({usernameField: 'email', passwordField: 'password'}, (email, password, done) => {
         User.findOne({email: email}).then((user) => {
-            if(!user){
-                return done(null, false, {message: 'E-mail ou senha incorretos.'});
+            if(user.verified == '1'){
+                if(!user){
+                    return done(null, false, {message: 'E-mail ou senha incorretos.'});
+                } else {
+                    bcrypt.compare(password, user.password, (error, sucess) => {
+                        if(sucess){
+                            return done(null, user);
+                        } else {
+                            return done(null, false, {message: 'E-mail ou senha incorretos.'}); 
+                        }
+                    });
+                }
             } else {
-                bcrypt.compare(password, user.password, (error, sucess) => {
-                    if(sucess){
-                        return done(null, user);
-                    } else {
-                        return done(null, false, {message: 'E-mail ou senha incorretos.'}); 
-                    }
-                });
-            }
+                return done(null, false, {message: 'Você precisa verificar sua conta através do e-mail que te enviamos para acessar o painel.'});
+            }     
         });
     }));
 
