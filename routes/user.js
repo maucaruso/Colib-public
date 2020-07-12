@@ -208,7 +208,7 @@ let transporter = nodemailer.createTransport({
                     user: res.locals.user._id
                 }
                 new Book(newBook).save().then(() => {
-                    req.flash('success_msg', 'Livro cadastrado com sucesso!');
+                    req.flash('success_msg', 'Seu livro será processado e em breve estará disponível na plataforma.');
                     res.redirect('/user/library');
                 }).catch((err) => {
                     req.flash('error_msg', 'Houve um erro cadastrar o livro, tente novamente.');
@@ -348,7 +348,7 @@ let transporter = nodemailer.createTransport({
                     user: res.locals.user._id
                 }
                 new Post(newPost).save().then(() => {
-                    req.flash('success_msg', 'Artigo criado com sucesso!');
+                    req.flash('success_msg', 'Seu artigo será processado e em breve estará disponível na plataforma.');
                     res.redirect('/user/articles');
                 }).catch((err) => {
                     req.flash('error_msg', 'Houve um erro ao salvar o artigo, tente novamente.'+err);
