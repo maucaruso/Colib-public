@@ -21,8 +21,33 @@ const returnMetaDescription = require('../controller/returnMetaDescription');
 const filterFileName =  require('../controller/filterFileName');
 const validateRegisterEdit = require('../controller/validateRegisterEdit');
 const {isUser} = require('../helpers/isUser.js');
+const nodemailer = require('nodemailer');
+let transporter = nodemailer.createTransport({
+    host: 'smtp.umbler.com',
+    port: 587,
+    secure: false,
+    auth: {
+        user: 'contato@colib.site',
+        pass: 'Irv.8P6D@vE'
+    }
+});
 // Login e Registro 
     router.get('/login', (req, res) => {
+        transporter.sendMail({
+            from: 'Contato <contato@colib.site>',
+            to: 'carusojr@outlook.com',
+            subject: 'Colib Ativação da conta',
+            text: 'Olá segue o link para ativar sua conta',
+            html: 'Olá <strong>Junior</strong><br/> este é o link par ativar sua conta'
+        }).then(message => {
+            console.log(message);
+            // req.flash('success_msg', 'Clique no link que enviamos para o seu e-mail para verificar sua conta.');
+            // res.redirect('/');
+        }).catch(err => {
+            console.log(err);
+            // req.flash('error_msg', 'Houve um erro inesperado em seu cadastro, por favor, tente novamente.');
+            // res.redirect('/');
+        });
         res.render('user/login');
     });
 
