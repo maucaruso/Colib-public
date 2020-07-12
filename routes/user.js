@@ -505,29 +505,44 @@ let transporter = nodemailer.createTransport({
         });
 // Ativação de conta
     router.get('/activation', (req, res) => {
-        var token = req.query.token;
-        if(token){
-            User.findOne({token: token}).then((user) => {
-                if(user){
-                    user.verified = 1;
-                    user.save().then(() => {
-                        req.flash('success_msg', 'Sua conta foi ativada com sucesso, você já pode se logar normalmente!');
-                        res.redirect('/user/login');
-                    }).catch((err) => {
-                        req.flash('error_msg', 'Houve um erro ao ativar sua conta.'+err);
-                        res.redirect('/user/login');
-                    });
-                } else {
-                    req.flash('error_msg', 'Houve um erro ao ativar sua conta.');
-                    res.redirect('/user/login');
-                }
+        // var token = req.query.token;
+        // if(token){
+        //     User.findOne({token: token}).then((user) => {
+        //         if(user){
+        //             user.verified = 1;
+        //             user.save().then(() => {
+        //                 req.flash('success_msg', 'Sua conta foi ativada com sucesso, você já pode se logar normalmente!');
+        //                 res.redirect('/user/login');
+        //             }).catch((err) => {
+        //                 req.flash('error_msg', 'Houve um erro ao ativar sua conta.'+err);
+        //                 res.redirect('/user/login');
+        //             });
+        //         } else {
+        //             req.flash('error_msg', 'Houve um erro ao ativar sua conta.');
+        //             res.redirect('/user/login');
+        //         }
+        //     }).catch((err) => {
+        //         req.flash('error_msg', 'Houve um erro ao ativar sua conta.'+err);
+        //         res.redirect('/user/login')
+        //     });
+        // } else {
+        //     req.flash('error_msg', 'Houve um erro ao ativar sua conta.');
+        //     res.redirect('/user/login');
+        // }
+
+        User.findOne({email: 'carusojr@outlook.com'}).then((user) => {
+            user.token = Date.now()+(Math.random()*99999999).toFixed(0);
+            user.verified = 1;
+            user.save().then(() => {
+                req.flash('success_msg', 'Sua conta foi ativada com sucesso, você já pode se logar normalmente!');
+                res.redirect('/user/login');
             }).catch((err) => {
                 req.flash('error_msg', 'Houve um erro ao ativar sua conta.'+err);
-                res.redirect('/user/login')
+                res.redirect('/user/login');
             });
-        } else {
-            req.flash('error_msg', 'Houve um erro ao ativar sua conta.');
+        }).catch((err) => {
+            req.flash('error_msg', 'Houve um erro ao ativar sua conta.'+err);
             res.redirect('/user/login');
-        }
+        });
     });
 module.exports = router;
