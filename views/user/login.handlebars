@@ -13,7 +13,7 @@
 
     <div class="content">
         <div class="left login">
-            <form action="/user/login/" method="POST">
+            <form action="/user/login{{#if redirect}}?redirect={{redirect}}{{/if}}" method="POST">
                 <h2>Já tenho conta</h2>
                 <input type="text" class="style-input" id="email" name="email" placeholder="E-mail" minlength="5" required>
                 <input type="password" class="style-input" id="password" name="password" placeholder="Senha" minlength="8" required>

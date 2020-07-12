@@ -33,15 +33,25 @@ let transporter = nodemailer.createTransport({
 });
 // Login e Registro 
     router.get('/login', (req, res) => {
-        res.render('user/login');
+        var redirect = req.query.redirect;
+        res.render('user/login', {redirect: redirect});
     });
 
     router.post('/login', (req, res, next) => {
-        passport.authenticate('local', {
-            successRedirect: '/',
-            failureRedirect: '/user/login',
-            failureFlash: true
-        })(req, res, next);
+        var redirect = req.query.redirect;
+        if(redirect){
+            passport.authenticate('local', {
+                successRedirect: redirect,
+                failureRedirect: '/user/login?redirect='+redirect,
+                failureFlash: true
+            })(req, res, next);
+        } else {
+            passport.authenticate('local', {
+                successRedirect: '/',
+                failureRedirect: '/user/login',
+                failureFlash: true
+            })(req, res, next);
+        }
     });
 
     router.get('/logout', (req, res) => {
