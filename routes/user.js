@@ -33,21 +33,6 @@ let transporter = nodemailer.createTransport({
 });
 // Login e Registro 
     router.get('/login', (req, res) => {
-        transporter.sendMail({
-            from: 'Contato <contato@colib.site>',
-            to: 'carusojr@outlook.com',
-            subject: 'Colib Ativação da conta',
-            text: 'Olá segue o link para ativar sua conta',
-            html: 'Olá <strong>Junior</strong><br/> este é o link par ativar sua conta'
-        }).then(message => {
-            console.log(message);
-            // req.flash('success_msg', 'Clique no link que enviamos para o seu e-mail para verificar sua conta.');
-            // res.redirect('/');
-        }).catch(err => {
-            console.log(err);
-            // req.flash('error_msg', 'Houve um erro inesperado em seu cadastro, por favor, tente novamente.');
-            // res.redirect('/');
-        });
         res.render('user/login');
     });
 
@@ -86,12 +71,13 @@ let transporter = nodemailer.createTransport({
                         req.flash('error_msg', errorsUnique);
                         res.redirect('/user/login');
                     } else {
+                        var token = Date.now()+(Math.random()*99999999).toFixed(0);
                         const newUser = {
                             nickname: returnSlug(req.body.register_nickname),
                             email: req.body.register_email,
                             password: req.body.register_password,
                             verified: 0,
-                            token: Date.now()+(Math.random()*99999999).toFixed(0)
+                            token: token
                         }
 
                         bctypt.genSalt(10, (error, salt) => {
@@ -102,8 +88,19 @@ let transporter = nodemailer.createTransport({
                                 } else {
                                    newUser.password = hash;
                                    new User(newUser).save().then(() => {
-                                        req.flash('success_msg', 'Cadastro realizado com sucesso! Você já pode acessar sua conta através do formulário "Já tenho conta"');
-                                        res.redirect('/user/login');
+                                        transporter.sendMail({
+                                            from: 'Contato Colib <contato@colib.site>',
+                                            to: req.body.register_email,
+                                            subject: 'Colib - Verificação de conta',
+                                            text: '',
+                                            html: 'Olá <strong>'+returnSlug(req.body.register_nickname)+'</strong><br/><br/> Clique no link abaixo para ativar sua conta<br/><br/><a href="https://www.colib.site/user/activation?token='+token+'">https://www.colib.site/user/activation?token='+token+'</a>'
+                                        }).then(message => { 
+                                            req.flash('success_msg', 'Clique no link que enviamos para o seu e-mail para ativar sua conta.');
+                                            res.redirect('/user/login');
+                                        }).catch(err => {
+                                            req.flash('error_msg', 'Houve um erro interno, tente novamente.'+err);
+                                            res.redirect('/user/login');
+                                        });
                                     }).catch((err) => {
                                         req.flash('error_msg', 'Houve um erro interno, tente novamente.'+err);
                                         res.redirect('/user/login');
