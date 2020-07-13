@@ -1,4 +1,0 @@
-This is a Brave Rewards publisher verification file.
-
-Domain: colib.site
-Token: 770fe9eb8e0d11d99f03f6706768018ee582b9c9957d106fa0e999351faf2a96
