@@ -77,7 +77,7 @@ const User = mongoose.model('users');
                     res.redirect('/artigos/');
                 }  
             }).catch((err) => {
-                req.flash('error_msg', 'Houve um erro ao carregar a página, por favor, tente novamente'); 
+                req.flash('error_msg', 'Houve um erro ao carregar a página, por favor, tente novamente'+err); 
                 res.redirect('/');
             }); 
         }).catch((err) => {
