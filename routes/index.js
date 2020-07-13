@@ -68,8 +68,9 @@ const User = mongoose.model('users');
         Post.findOne({_id:req.params.id, slug:req.params.slug, visibility_status: 1}).lean().then((post) => {
             User.findOne({_id:post.user, user_status: 1}).lean().then((user_detail) => {
                 if(user_detail){
-                    if(user_detail.wallets){
-                        var wallets = JSON.parse(user_detail.wallets);
+                    var wallets;
+                    if(user_detail.wallets != null && user_detail.wallets != undefined && user_detail.wallets != ''){
+                        wallets = JSON.parse(user_detail.wallets);
                     } 
                     res.render('site/articles-details', {user_detail: user_detail, post: post, wallets: wallets}); 
                 } else {
