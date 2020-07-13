@@ -105,6 +105,7 @@ let transporter = nodemailer.createTransport({
                                             text: '',
                                             html: 'Olá <strong>'+returnSlug(req.body.register_nickname)+'</strong><br/><br/> Clique no link abaixo para ativar sua conta<br/><br/><a href="https://www.colib.site/user/activation?token='+token+'">https://www.colib.site/user/activation?token='+token+'</a>'
                                         }).then(message => { 
+                                            console.log(message);
                                             req.flash('success_msg', 'Clique no link que enviamos para o seu e-mail para ativar sua conta.');
                                             res.redirect('/user/login');
                                         }).catch(err => {
