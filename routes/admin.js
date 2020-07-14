@@ -25,6 +25,7 @@ const {isAdmin} = require('../helpers/isAdmin.js');
 // Multer - Upload de arquivos
     const path = require('path');
     const multer = require('multer');
+    const { delete } = require('./user');
 
     const storage = multer.diskStorage({
         destination: (req, file, cb) => {
@@ -103,6 +104,10 @@ const {isAdmin} = require('../helpers/isAdmin.js');
         var errors = validateBook(req.body, cover, filesToValidade, true);
         
         if(errors.length > 0){
+            deleteFile(cover);
+            deleteFile(pdf);
+            deleteFile(epub);
+            deleteFile(mobi);
             req.flash('error_msg', errors); 
             res.redirect('/admin/library/new-file/'); 
         } else {
@@ -123,6 +128,10 @@ const {isAdmin} = require('../helpers/isAdmin.js');
                 req.flash('success_msg', 'Livro cadastrado com sucesso!');
                 res.redirect('/admin/library');
             }).catch((err) => {
+                deleteFile(cover);
+                deleteFile(pdf);
+                deleteFile(epub);
+                deleteFile(mobi);
                 req.flash('error_msg', 'Houve um erro cadastrar o livro, tente novamente.'+err);
                 res.redirect('/admin/library/new-file');
             });
@@ -155,6 +164,10 @@ const {isAdmin} = require('../helpers/isAdmin.js');
         var errors = validateBook(req.body, cover, filesToValidade, false); 
     
         if(errors.length > 0){
+            deleteFile(pdf);
+            deleteFile(epub);
+            deleteFile(mobi);
+            deleteFile(cover);
             req.flash('error_msg', errors); 
             res.redirect('/admin/library/edit/'+req.body.id);
         } else {
@@ -185,10 +198,18 @@ const {isAdmin} = require('../helpers/isAdmin.js');
                     req.flash('success_msg', 'Livro editado com sucesso!');
                     res.redirect('/admin/library/edit/'+req.body.id);
                 }).catch((err) => {
+                    deleteFile(pdf);
+                    deleteFile(epub);
+                    deleteFile(mobi);
+                    deleteFile(cover);
                     req.flash('error_msg', 'Houve um erro interno ao editar o livro');
                     res.redirect('/admin/library/edit'+req.body.id);
                 });
             }).catch((err) => {
+                deleteFile(pdf);
+                deleteFile(epub);
+                deleteFile(mobi);
+                deleteFile(cover);
                 req.flash('error_msg', 'Houve um erro ao editar o livro');
                 res.redirect('/admin/library');
             }); 
