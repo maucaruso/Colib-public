@@ -459,8 +459,11 @@ const {isAdmin} = require('../helpers/isAdmin.js');
 
     router.post('/users/delete', isAdmin, (req, res) => { 
         if(req.body.remove_id != '5ed26d68e0ef6f47f0c2dc0a'){
-            User.findOne({_id: req.body.remove_id}).then((user) => {
+            User.findOne({_id: req.body.remove_id}).then((user) => { 
                 if(user){
+                    if(user.profile_picture != '' && user.profile_picture != null && user.profile_picture != undefined){
+                        deleteFile(user.profile_picture);
+                    }
                     // Ao deletar o usuário, primeiro são removidos todos os artigos associados, após os livros e por fim o usuário
                     Post.find({user: req.body.remove_id}).then((posts) => {
                         for(var key in posts){
