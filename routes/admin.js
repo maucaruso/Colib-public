@@ -116,7 +116,8 @@ const {isAdmin} = require('../helpers/isAdmin.js');
                 cover: cover, 
                 file_pdf: pdf, 
                 file_epub: epub,
-                file_mobi: mobi
+                file_mobi: mobi,
+                user: res.locals.user._id
             }
             new Book(newBook).save().then(() => {
                 req.flash('success_msg', 'Livro cadastrado com sucesso!');
