@@ -97,22 +97,23 @@ let transporter = nodemailer.createTransport({
                                     res.redirect('/user/login');
                                 } else {
                                    newUser.password = hash;
-                                   new User(newUser).save().then(() => {
-                                        transporter.sendMail({
-                                            from: 'Contato Colib <contato@colib.site>',
-                                            to: req.body.register_email,
-                                            subject: 'Colib - Verificação de conta',
-                                            text: '',
-                                            html: 'Olá <strong>'+returnSlug(req.body.register_nickname)+'</strong><br/><br/> Clique no link abaixo para ativar sua conta<br/><br/><a href="https://www.colib.site/user/activation?token='+token+'">https://www.colib.site/user/activation?token='+token+'</a>'
-                                        }).then(message => { 
-                                            console.log(message);
+
+                                    transporter.sendMail({
+                                        from: 'Contato Colib <contato@colib.site>',
+                                        to: req.body.register_email,
+                                        subject: 'Colib - Verificação de conta',
+                                        text: '',
+                                        html: 'Olá <strong>'+returnSlug(req.body.register_nickname)+'</strong><br/><br/> Clique no link abaixo para ativar sua conta<br/><br/><a href="https://www.colib.site/user/activation?token='+token+'">https://www.colib.site/user/activation?token='+token+'</a>'
+                                    }).then(message => { 
+                                        console.log(message);
+                                        new User(newUser).save().then(() => {
                                             req.flash('success_msg', 'Clique no link que enviamos para o seu e-mail para ativar sua conta.');
                                             res.redirect('/user/login');
-                                        }).catch(err => {
+                                        }).catch((err) => {
                                             req.flash('error_msg', 'Houve um erro interno, tente novamente.'+err);
                                             res.redirect('/user/login');
                                         });
-                                    }).catch((err) => {
+                                    }).catch(err => {
                                         req.flash('error_msg', 'Houve um erro interno, tente novamente.'+err);
                                         res.redirect('/user/login');
                                     });
