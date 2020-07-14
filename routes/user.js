@@ -203,6 +203,10 @@ let transporter = nodemailer.createTransport({
             var errors = validateBook(req.body, cover, filesToValidade, true);
             
             if(errors.length > 0){
+                deleteFile(cover);
+                deleteFile(pdf);
+                deleteFile(epub);
+                deleteFile(mobi);
                 req.flash('error_msg', errors); 
                 res.redirect('/user/library/new-file/'); 
             } else {
@@ -223,6 +227,10 @@ let transporter = nodemailer.createTransport({
                     req.flash('success_msg', 'Seu livro será processado e em breve estará disponível na plataforma.');
                     res.redirect('/user/library');
                 }).catch((err) => {
+                    deleteFile(cover);
+                    deleteFile(pdf);
+                    deleteFile(epub);
+                    deleteFile(mobi);
                     req.flash('error_msg', 'Houve um erro cadastrar o livro, tente novamente.');
                     res.redirect('/user/library/new-file');
                 });
@@ -259,6 +267,10 @@ let transporter = nodemailer.createTransport({
             var errors = validateBook(req.body, cover, filesToValidade, false); 
 
             if(errors.length > 0){
+                deleteFile(pdf); 
+                deleteFile(epub); 
+                deleteFile(mobi); 
+                deleteFile(cover); 
                 req.flash('error_msg', errors); 
                 res.redirect('/user/library/edit/'+req.body.id);
             } else {
@@ -296,6 +308,10 @@ let transporter = nodemailer.createTransport({
                         res.redirect('/user/library');
                     }
                 }).catch((err) => {
+                    deleteFile(pdf); 
+                    deleteFile(epub); 
+                    deleteFile(mobi); 
+                    deleteFile(cover); 
                     req.flash('error_msg', 'Houve um erro ao editar o livro');
                     res.redirect('/user/library');
                 });
@@ -347,6 +363,7 @@ let transporter = nodemailer.createTransport({
             var errors = validatePost(req.body, thumbnail, false);
 
             if(errors.length > 0){
+                deleteFile(thumbnail);
                 req.flash('error_msg', errors); 
                 res.redirect('/user/articles/new-article/');
             } else { 
@@ -363,6 +380,7 @@ let transporter = nodemailer.createTransport({
                     req.flash('success_msg', 'Seu artigo será processado e em breve estará disponível na plataforma.');
                     res.redirect('/user/articles');
                 }).catch((err) => {
+                    deleteFile(thumbnail);
                     req.flash('error_msg', 'Houve um erro ao salvar o artigo, tente novamente.'+err);
                     res.redirect('/user/articles/new-article');
                 });
@@ -391,6 +409,7 @@ let transporter = nodemailer.createTransport({
 
             var errors = validatePost(req.body, thumbnail, false);
             if(errors.length > 0){
+                deleteFile(thumbnail);
                 req.flash('error_msg', errors); 
                 res.redirect('/user/articles/edit/'+req.body.id);
             } else {
@@ -410,6 +429,7 @@ let transporter = nodemailer.createTransport({
                             req.flash('success_msg', 'Artigo editado com sucesso!');
                             res.redirect('/user/articles');
                         }).catch((err) => {
+                            deleteFile(thumbnail);
                             req.flash('error_msg', 'Houve um erro interno ao salvar o artigo');
                             res.redirect('/user/articles');
                         });
@@ -417,6 +437,7 @@ let transporter = nodemailer.createTransport({
                         res.redirect('/user/articles');
                     }
                 }).catch((err) => {
+                    deleteFile(thumbnail);
                     req.flash('error_msg', 'Houve um erro ao editar o artigo');
                     res.redirect('/user/articles');
                 });
@@ -464,6 +485,7 @@ let transporter = nodemailer.createTransport({
             var errors = validateRegisterEdit(req.body, profile_picture);
     
             if(errors.length > 0){
+                deleteFile(profile_picture);
                 req.flash('error_msg', errors); 
                 res.redirect('/user/settings');
             } else { 
@@ -486,6 +508,7 @@ let transporter = nodemailer.createTransport({
                         bctypt.genSalt(10, (error, salt) => {
                             bctypt.hash(user.password, salt, (error, hash) => {
                                 if(error){
+                                    deleteFile(profile_picture);
                                     req.flash('error_msg', 'Houve um erro ao salvar de seus dados, por favor, tente novamente');
                                     res.redirect('/user/login');
                                 } else {
@@ -494,6 +517,7 @@ let transporter = nodemailer.createTransport({
                                         req.flash('success_msg', 'Perfil atualizado com sucesso!');
                                         res.redirect('/user/settings');
                                     }).catch((err) => {
+                                        deleteFile(profile_picture);
                                         req.flash('error_msg', 'Houve um erro interno, tente novamente.'+err);
                                         res.redirect('/user/settings');
                                     });
@@ -505,11 +529,13 @@ let transporter = nodemailer.createTransport({
                             req.flash('success_msg', 'Perfil atualizado com sucesso!');
                             res.redirect('/user/settings');
                         }).catch((err) => {
+                            deleteFile(profile_picture);
                             req.flash('error_msg', 'Houve um erro interno, tente novamente.'+err);
                             res.redirect('/user/settings');
                         });
                     }
                 }).catch((err) => {
+                    deleteFile(profile_picture);
                     req.flash(('error_msg', 'Houve um erro interno, por favor, tente novamente.'+err));
                     res.redirect('/user/settings');
                 });

@@ -82,26 +82,6 @@ const {isAdmin} = require('../helpers/isAdmin.js');
             }); 
         }
     });
-
-    // router.post('/library/visibility', isAdmin, (req, res) => {
-    //     Book.findOne({_id:req.body.id}).then((book) => {
-    //         // deletando arquivos de uploads
-    //         deleteFile(book.cover); 
-    //         deleteFile(book.file_pdf);  
-    //         deleteFile(book.file_epub); 
-    //         deleteFile(book.file_mobi); 
-    //         Book.remove({_id: req.body.id}).then(() => {
-    //             req.flash('success_msg', 'Livro excluído com sucesso!');
-    //             res.redirect('/admin/library/');
-    //         }).catch((err) => {
-    //             req.flash('error_msg', 'Houve um erro ao excluir o livro');
-    //             res.redirect('/admin/library/');
-    //         }); 
-    //     }).catch(() => {
-    //         req.flash('error_msg', 'Houve um erro ao excluir o os arquivos');
-    //         res.redirect('/admin/library/');
-    //     });
-    // });
     
     router.get('/library/new-file', isAdmin, (req, res) => {
         res.render('admin/library-add');  
@@ -142,7 +122,7 @@ const {isAdmin} = require('../helpers/isAdmin.js');
                 req.flash('success_msg', 'Livro cadastrado com sucesso!');
                 res.redirect('/admin/library');
             }).catch((err) => {
-                req.flash('error_msg', 'Houve um erro cadastrar o livro, tente novamente.');
+                req.flash('error_msg', 'Houve um erro cadastrar o livro, tente novamente.'+err);
                 res.redirect('/admin/library/new-file');
             });
         }
@@ -265,6 +245,7 @@ const {isAdmin} = require('../helpers/isAdmin.js');
         var errors = validatePost(req.body, thumbnail, false);
 
         if(errors.length > 0){
+            deleteFile(thumbnail);
             req.flash('error_msg', errors); 
             res.redirect('/admin/articles/new-article/');
         } else { 
@@ -274,12 +255,14 @@ const {isAdmin} = require('../helpers/isAdmin.js');
                 hashtags: tags,
                 thumbnail: thumbnail,
                 description: metadescription,
-                content: req.body.content
+                content: req.body.content,
+                user: res.locals.user._id
             }
             new Post(newPost).save().then(() => {
                 req.flash('success_msg', 'Artigo criado com sucesso!');
                 res.redirect('/admin/articles');
             }).catch((err) => {
+                deleteFile(thumbnail);
                 req.flash('error_msg', 'Houve um erro ao salvar o artigo, tente novamente.'+err);
                 res.redirect('/admin/articles/new-article');
             });
@@ -304,6 +287,7 @@ const {isAdmin} = require('../helpers/isAdmin.js');
 
         var errors = validatePost(req.body, thumbnail, false);
         if(errors.length > 0){
+            deleteFile(thumbnail);
             req.flash('error_msg', errors); 
             res.redirect('/admin/articles/edit/'+req.body.id);
         } else {
@@ -323,10 +307,12 @@ const {isAdmin} = require('../helpers/isAdmin.js');
                     req.flash('success_msg', 'Artigo editado com sucesso!');
                     res.redirect('/admin/articles');
                 }).catch((err) => {
+                    deleteFile(thumbnail);
                     req.flash('error_msg', 'Houve um erro interno ao salvar o artigo');
                     res.redirect('/admin/articles');
                 });
             }).catch((err) => {
+                deleteFile(thumbnail);
                 req.flash('error_msg', 'Houve um erro ao editar o artigo');
                 res.redirect('/admin/articles');
             });
@@ -367,6 +353,7 @@ const {isAdmin} = require('../helpers/isAdmin.js');
         var errors = validateRegisterEdit(req.body, profile_picture);
 
         if(errors.length > 0){
+            deleteFile(profile_picture);
             req.flash('error_msg', errors); 
             res.redirect('/admin/settings');
         } else {
@@ -385,6 +372,7 @@ const {isAdmin} = require('../helpers/isAdmin.js');
                     bctypt.genSalt(10, (error, salt) => {
                         bctypt.hash(user.password, salt, (error, hash) => {
                             if(error){
+                                deleteFile(profile_picture);
                                 req.flash('error_msg', 'Houve um erro ao salvar de seus dados, por favor, tente novamente');
                                 res.redirect('/admin/settings');
                             } else {
@@ -393,6 +381,7 @@ const {isAdmin} = require('../helpers/isAdmin.js');
                                     req.flash('success_msg', 'Perfil atualizado com sucesso!');
                                     res.redirect('/admin/settings');
                                 }).catch((err) => {
+                                    deleteFile(profile_picture);
                                     req.flash('error_msg', 'Houve um erro interno, tente novamente.'+err);
                                     res.redirect('/admin/settings');
                                 });
@@ -404,11 +393,13 @@ const {isAdmin} = require('../helpers/isAdmin.js');
                         req.flash('success_msg', 'Perfil atualizado com sucesso!');
                         res.redirect('/admin/settings');
                     }).catch((err) => {
+                        deleteFile(profile_picture);
                         req.flash('error_msg', 'Houve um erro interno, tente novamente.'+err);
                         res.redirect('/admin/settings');
                     });
                 }
             }).catch((err) => {
+                deleteFile(profile_picture);
                 req.flash(('error_msg', 'Houve um erro interno, por favor, tente novamente.'+err));
                 res.redirect('/admin/settings');
             });
@@ -453,7 +444,6 @@ const {isAdmin} = require('../helpers/isAdmin.js');
                 req.flash('error_msg', 'Ação não permitida');
                 res.redirect('/admin/users/');
             }
-            // res.json(req.body);
         });
     });
 
