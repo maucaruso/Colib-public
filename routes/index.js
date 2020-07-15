@@ -27,7 +27,7 @@ const User = mongoose.model('users');
 // Biblioteca
     router.get('/biblioteca', (req, res) => {
         User.find({user_status: 1}).then((users) => {
-            Book.find({visibility_status: 1}).sort({date:-1}).then((books) => {
+            Book.find({visibility_status: 1}).sort({date: 'ascending'}).then((books) => {
                 res.render('site/library', {users: users.map(user => user.toJSON()), books: books.map(book => book.toJSON()), pageInfo: 'library'}); 
             }).catch((err) =>{
                 req.flash('error_msg', 'Houve um erro ao listar os livros, por favor, tente novamente'); 
