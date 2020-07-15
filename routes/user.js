@@ -34,7 +34,7 @@ let transporter = nodemailer.createTransport({
 // Login e Registro 
     router.get('/login', (req, res) => {
         var redirect = req.query.redirect;
-        res.render('user/login', {redirect: redirect});
+        res.render('user/login', {redirect: redirect, pageInfo: 'login'});
     });
 
     router.post('/login', (req, res, next) => {

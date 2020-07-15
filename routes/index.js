@@ -12,7 +12,7 @@ const User = mongoose.model('users');
         User.find({user_status: 1}).then((users) => {
             Book.find({visibility_status: 1}).sort({date: 'desc'}).limit(12).then((books) => {
                 Post.find({visibility_status: 1}).sort({date: 'desc'}).limit(12).then((posts) => { 
-                    res.render('site/index', {users: users.map(user => user.toJSON()), books: books.map(book => book.toJSON()), posts: posts.map(post => post.toJSON())}); 
+                    res.render('site/index', {users: users.map(user => user.toJSON()), books: books.map(book => book.toJSON()), posts: posts.map(post => post.toJSON()), pageInfo: 'home'}); 
                 }).catch((err) =>{
                     req.flash('error_msg', 'Houve um erro ao carregar a página, por favor, tente novamente'); 
                 });
@@ -26,10 +26,9 @@ const User = mongoose.model('users');
 
 // Biblioteca
     router.get('/biblioteca', (req, res) => {
-        console.log(res);
         User.find({user_status: 1}).then((users) => {
             Book.find({visibility_status: 1}).sort({date: 'desc'}).then((books) => {
-                res.render('site/library', {users: users.map(user => user.toJSON()), books: books.map(book => book.toJSON())}); 
+                res.render('site/library', {users: users.map(user => user.toJSON()), books: books.map(book => book.toJSON()), pageInfo: 'library'}); 
             }).catch((err) =>{
                 req.flash('error_msg', 'Houve um erro ao listar os livros, por favor, tente novamente'); 
             }); 
@@ -41,7 +40,7 @@ const User = mongoose.model('users');
     router.get('/biblioteca/:id/:slug', (req, res) => {
         Book.findOne({_id:req.params.id, slug:req.params.slug, visibility_status: 1}).lean().then((book) => {
             if(book){
-                res.render('site/library-details', {book: book}); 
+                res.render('site/library-details', {book: book, pageInfo: 'library-details'}); 
             } else {
                 req.flash('error_msg', 'Este livro não existe');
                 res.redirect('/biblioteca/');
@@ -56,7 +55,7 @@ const User = mongoose.model('users');
     router.get('/artigos', (req, res) => {
         User.find({user_status: 1}).then((users) => {
             Post.find({visibility_status: 1}).sort({date: 'desc'}).then((posts) => {
-                res.render('site/articles', {users: users.map(user => user.toJSON()), posts: posts.map(post => post.toJSON())}); 
+                res.render('site/articles', {users: users.map(user => user.toJSON()), posts: posts.map(post => post.toJSON()), pageInfo: 'articles'}); 
             }).catch((err) =>{
                 req.flash('error_msg', 'Houve um erro ao listar os artigos, por favor, recarregue a página.'); 
             }); 
@@ -73,7 +72,7 @@ const User = mongoose.model('users');
                     if(user_detail.wallets != null && user_detail.wallets != undefined && user_detail.wallets != ''){
                         wallets = JSON.parse(user_detail.wallets);
                     } 
-                    res.render('site/articles-details', {user_detail: user_detail, post: post, wallets: wallets}); 
+                    res.render('site/articles-details', {user_detail: user_detail, post: post, wallets: wallets, pageInfo: 'articles-details'}); 
                 } else {
                     req.flash('error_msg', 'Este artigo não existe');
                     res.redirect('/artigos/');
@@ -140,7 +139,7 @@ const User = mongoose.model('users');
             if(user_detail){
                 Book.find({user: user_detail._id, visibility_status: 1}).sort({date: 'desc'}).then((books) => {
                     Post.find({user: user_detail._id, visibility_status: 1}).sort({date: 'desc'}).then((posts) => { 
-                        res.render('site/profile-details', {user_detail: user_detail, books: books.map(book => book.toJSON()), posts: posts.map(post => post.toJSON())}); 
+                        res.render('site/profile-details', {user_detail: user_detail, books: books.map(book => book.toJSON()), posts: posts.map(post => post.toJSON()), pageInfo: 'profile-details'}); 
                     }).catch((err) =>{
                         req.flash('error_msg', 'Houve um erro ao carregar a página, por favor, tente novamente'); 
                         res.redirect('/');
@@ -165,7 +164,7 @@ const User = mongoose.model('users');
         User.find({user_status: 1}).then((users) => {
             Book.find({ $or:[ {'name':{$regex: search_terms, $options: "i"}}, {'author':{$regex: search_terms, $options: "i"}}, {'hashtags':{$regex: search_terms, $options: "i"}} ], visibility_status: 1}).sort({date: 'desc'}).then((books) => {
                 Post.find({ $or:[ {'title':{$regex: search_terms, $options: "i"}}, {'hashtags':{$regex: search_terms, $options: "i"}} ], visibility_status: 1}).sort({date: 'desc'}).then((posts) => {
-                    res.render('site/search-result', {books: books.map(book => book.toJSON()), posts: posts.map(post => post.toJSON())}); 
+                    res.render('site/search-result', {books: books.map(book => book.toJSON()), posts: posts.map(post => post.toJSON()), pageInfo: 'search-result'}); 
                 }).catch((err) =>{
                     req.flash('error_msg', 'Houve um erro ao carregar a busca.'); 
                     res.redirect('/');
