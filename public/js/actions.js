@@ -158,4 +158,35 @@ window.onload = function(){
                 });
             }
         });
+    // POP DE APOIO LATERAL
+        document.querySelectorAll('.wallets-list > .item').forEach(item => {
+            var getWallet = item;
+            var getPop = getWallet.querySelector('.pop-wallet');
+            if (typeof(getWallet) != 'undefined' && getWallet != null){
+                var getBtnOpen = getWallet.querySelector('.wallet');
+                if (typeof(getBtnOpen) != 'undefined' && getBtnOpen != null){
+                    getBtnOpen.addEventListener('click', function(){
+                        getPop.style.display = 'block';
+                    });
+                }
+            }
+            if (typeof(getPop) != 'undefined' && getPop != null){
+                getPop.querySelector('.bg-pop').addEventListener('click', function(){
+                    getPop.style.display = 'none';
+                    getPop.querySelector('.msg-copy').style.opacity = '0';
+                });
+                getPop.querySelector('.close-btn').addEventListener('click', function(){
+                    getPop.style.display = 'none';
+                    getPop.querySelector('.msg-copy').style.opacity = '0';
+                });
+                getPopBtn = getPop.querySelector('button').addEventListener('click', function(){
+                    var copyWallet = getPop.querySelector('input.hidden-wallet');
+                    copyWallet.focus();
+                    copyWallet.select();
+                    document.execCommand('copy');
+                    getPop.querySelector('.msg-copy').style.opacity = '1';
+
+                });
+            }
+        });
 }

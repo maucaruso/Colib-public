@@ -514,6 +514,7 @@ header.painel
           &.not-cover
             width: 80px
       .desc
+        width: 100%
         padding: 20px
         float: left
         h2
@@ -795,6 +796,71 @@ form.delete-user .button-red
     width: 40px
     img
       width: 100%
+.wallets-list
+  .pop-wallet
+    display: none
+    position: fixed
+    width: 100%
+    height: 100%
+    top: 0
+    right: 0
+    z-index: 9
+    .bg-pop
+      position: fixed
+      top: 0
+      right: 0
+      width: 100%
+      height: 100%
+      background: rgba(0,0,0,.5)
+    .content-pop
+      width: 400px
+      max-width: 90%
+      height: 200px
+      background: white
+      position: absolute
+      right: 0
+      left: 0
+      bottom: 0
+      top: 0
+      margin: auto
+      display: flex
+      align-items: center
+      justify-content: center 
+      padding: 0 40px
+      .close-btn
+        position: absolute
+        top: 0
+        right: 6px
+        line-height: 1
+        font-size: 32px
+        font-weight: 700 
+        cursor: pointer
+      .content-pop-text
+        width: 100%
+        padding-top: 10px
+        .msg-copy
+          width: 100%
+          opacity: 0
+          display: block
+          margin-top: 10px
+          font-size: 14px
+          color: #28a745
+          text-transform: lowercase
+        input
+          width: 100%
+          height: 35px
+          margin-top: 15px
+          margin-bottom: 15px
+        .hidden-wallet
+          opacity: 0
+          position: absolute
+          z-index: -1
+        button
+          padding: 10px
+          cursor: pointer
+          &:hover
+            top: 2px
+            position: relative
 @media (max-width: 1579px) and (min-width: 1024px)
   body
     zoom: .9
