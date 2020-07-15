@@ -185,7 +185,7 @@ window.onload = function(){
                     copyWallet.select();
                     document.execCommand('copy');
                     getPop.querySelector('.msg-copy').style.opacity = '1';
-
+                    document.activeElement.blur();
                 });
             }
         });
