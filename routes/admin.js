@@ -25,7 +25,6 @@ const {isAdmin} = require('../helpers/isAdmin.js');
 // Multer - Upload de arquivos
     const path = require('path');
     const multer = require('multer');
-    const { delete } = require('./user');
 
     const storage = multer.diskStorage({
         destination: (req, file, cb) => {
