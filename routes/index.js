@@ -7,6 +7,13 @@ require('../models/Post');
 const Post = mongoose.model('posts');
 require('../models/User');
 const User = mongoose.model('users');
+
+// Sitemap XML
+    router.get('/sitemap.xml', (req, res) => {
+        res.header('Content-Type', 'application/xml');
+        res.sendFile('https://www.colib.site/sitemap.xml');
+    });
+
 // Home
     router.get('/', (req, res) => {
         User.find({user_status: 1}).then((users) => {
