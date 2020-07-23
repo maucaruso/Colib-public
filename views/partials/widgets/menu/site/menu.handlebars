@@ -3,6 +3,9 @@
     <div class="close-btn">+</div>
     <ul>
         <li class="item logo">
+            {{#if_not pageInfo "articles-details, library-details, profile-details"}}
+                <h1 class="default-h1">Colib a Biblioteca Libertária</h1>
+            {{/if_not}}
             <a title="Visão geral" href="/"><img src="/img/svg/colib-black.svg" alt="Colib"></a>
         </li>
         <li class="item library">
