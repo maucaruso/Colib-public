@@ -13,20 +13,28 @@
     {{#if_eq pageInfo 'articles-details'}}
         <title>{{post.title}} - Colib | A Biblioteca Libertária</title>
         <meta property="og:image" content="https://www.colib.site{{post.thumbnail}}">
+        <meta name="description" content="{{trimString post.content}}">
     {{/if_eq}}
     {{#if_eq pageInfo 'library-details'}}
         <title>{{book.name}} - {{book.author}} - Colib | A Biblioteca Libertária</title>
         <meta property="og:image" content="https://www.colib.site{{book.cover}}">
+        <meta name="description" content="{{trimString book.description}}">
+        <meta name="author" content="{{book.author}}">
     {{/if_eq}}
     {{#if_eq pageInfo 'profile-details'}}
         <title>{{user_detail.nickname}} - Colib | A Biblioteca Libertária</title>
         <meta property="og:image" content="https://www.colib.site{{user_detail.profile_picture}}">
+        <meta name="description" content="{{trimString user_detail.profile_desc}}">
     {{/if_eq}}
     {{#if_eq pageInfo 'login'}}
         <title>Login - Colib | A Biblioteca Libertária</title>
     {{/if_eq}}
     {{#if_not pageInfo "library, articles, articles-details, library-details, profile-details, login"}}
         <title>Colib | A Biblioteca Libertária</title>
+    {{/if_not}}
+
+    {{#if_not pageInfo "articles-details, library-details, profile-details"}}
+        <meta name="description" content="A muito tempo venho acompanhando diversos grupos Libertários nas redes sociais e pude conhecer muita gente realmente engajada, produzindo e compartilhando conteúdos de qualidade.">
     {{/if_not}}
 
     <link type="image/x-icon" rel="shortcut icon" href="/img/fav.ico">
