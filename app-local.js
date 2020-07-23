@@ -124,7 +124,7 @@ const nodemailer = require('nodemailer');
             });
         // Helper truncate strings
             hbs.handlebars.registerHelper('trimString', function(passedString) {
-                var theString = passedString.replace(/<[^>]*>/g, '').substring(0,150);
+                var theString = passedString.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, '').substring(0,150);
                 return new hbs.handlebars.SafeString(theString)
             });
 // Mongoose
