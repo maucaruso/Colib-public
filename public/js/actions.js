@@ -190,6 +190,7 @@ window.onload = function(){
             }
         });
     // Configurando leitura de artigos
+        speechSynthesis.cancel();
         document.querySelector('.listen').addEventListener('click', () => {
             if(speechSynthesis.paused == false && speechSynthesis.speaking == false){
                 var msg = new SpeechSynthesisUtterance();
