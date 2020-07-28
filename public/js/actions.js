@@ -191,6 +191,9 @@ window.onload = function(){
         });
     // Configurando leitura de artigos
         speechSynthesis.cancel();
+        window.addEventListener("beforeunload", function(e){
+            speechSynthesis.cancel();
+         }, false);
         document.querySelector('.listen').addEventListener('click', () => {
             if(speechSynthesis.paused == false && speechSynthesis.speaking == false){
                 var msg = new SpeechSynthesisUtterance();
