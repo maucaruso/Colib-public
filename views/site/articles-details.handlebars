@@ -39,7 +39,15 @@
             {{/if}}
         </div>
         <div class="title-block"><h1 class="post-title">{{post.title}}</h1></div>
-        <p class="post-infos">Data: {{post.date}} | Hashtags: {{post.hashtags}}</p>
+        <p class="post-infos">
+            Data: {{post.date}} | Hashtags: {{post.hashtags}} <br/>
+            <span class="listen-content-box">
+                <span class="listen">Ouvir artigo</span>
+                <span class="resume">Resumir leitura artigo</span>
+                <span class="pause">Pausar leitura</span>
+                <span class="stop">Cancelar leirura</span>
+            </span>
+            </p>
         <div class="content-post">
             {{post.content}}
         </div>

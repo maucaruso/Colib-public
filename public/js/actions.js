@@ -189,4 +189,26 @@ window.onload = function(){
                 });
             }
         });
+    // Configurando leitura de artigos
+        document.querySelector('.listen').addEventListener('click', () => {
+            var msg = new SpeechSynthesisUtterance();
+            var voices = window.speechSynthesis.getVoices();
+            msg.voice = voices[10]; 
+            msg.volume = 1; // From 0 to 1
+            msg.rate = 1.45; // From 0.1 to 10
+            msg.pitch = 1.5; // From 0 to 2
+            msg.text = document.querySelector('.content-post').textContent;
+            msg.lang = 'pt-br';
+            speechSynthesis.speak(msg); 
+        });   
+        document.querySelector('.resume').addEventListener('click', () => {
+            speechSynthesis.resume();
+        });  
+        document.querySelector('.pause').addEventListener('click', () => {
+            speechSynthesis.pause();
+        });  
+        document.querySelector('.stop').addEventListener('click', () => {
+            speechSynthesis.cancel();
+        });  
+
 }
