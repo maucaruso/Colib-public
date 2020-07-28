@@ -190,29 +190,28 @@ window.onload = function(){
             }
         });
     // Configurando leitura de artigos
-        speechSynthesis.cancel();
-        window.addEventListener("beforeunload", function(e){
-            speechSynthesis.cancel();
-         }, false);
         document.querySelector('.listen').addEventListener('click', () => {
-            if(speechSynthesis.paused == false && speechSynthesis.speaking == false){
-                var msg = new SpeechSynthesisUtterance();
-                var voices = window.speechSynthesis.getVoices();
-                msg.voice = voices[10]; 
-                msg.volume = 1; // From 0 to 1
-                msg.rate = 1.45; // From 0.1 to 10
-                msg.pitch = 1.5; // From 0 to 2
-                msg.text = document.querySelector('.content-post').textContent;
-                msg.lang = 'pt-br';
-                speechSynthesis.speak(msg); 
-            } else if(speechSynthesis.speaking == true && speechSynthesis.paused == false) {
-                speechSynthesis.pause();
-            } else if(speechSynthesis.paused == true){
-                speechSynthesis.resume();
+            var msg = new SpeechSynthesisUtterance();
+            var voices = window.speechSynthesis.getVoices();
+            msg.voice = voices[10]; 
+            msg.volume = 1; // From 0 to 1
+            msg.rate = 1.45; // From 0.1 to 10
+            msg.pitch = 1.5; // From 0 to 2
+            msg.text = document.querySelector('.content-post').textContent;
+            msg.lang = 'pt-br';
+            if(window.speechSynthesis.paused == false && window.speechSynthesis.speaking == false){
+                window.speechSynthesis.speak(msg); 
+            } else if(window.speechSynthesis.speaking == true && window.speechSynthesis.paused == false) {
+                window.speechSynthesis.pause();
+            } else if(window.speechSynthesis.paused == true){
+                window.speechSynthesis.resume();
             }
         });      
         document.querySelector('.stop').addEventListener('click', () => {
-            speechSynthesis.cancel();
+            window.speechSynthesis.cancel();
         });  
-
+        window.speechSynthesis.cancel();
+        window.addEventListener("beforeunload", function(e){
+            window.speechSynthesis.cancel();
+         }, false);
 }
