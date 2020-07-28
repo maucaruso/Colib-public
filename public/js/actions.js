@@ -201,7 +201,7 @@ window.onload = function(){
                 msg.text = document.querySelector('.content-post').textContent;
                 msg.lang = 'pt-br';
                 speechSynthesis.speak(msg); 
-            } else if(speechSynthesis.speaking == true) {
+            } else if(speechSynthesis.speaking == true && speechSynthesis.paused == false) {
                 speechSynthesis.pause();
             } else if(speechSynthesis.paused == true){
                 speechSynthesis.resume();
