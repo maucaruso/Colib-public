@@ -190,8 +190,8 @@ window.onload = function(){
             }
         });
     // Configurando leitura de artigos
-        var checkIfPost =  document.querySelector('.form-add.article');
-        if (typeof(checkIfPost) != 'undefined' && checkIfPost != null){
+        var checkIfArticle =  document.querySelector('.content.article'); 
+        if (typeof(checkIfArticle) != 'undefined' && checkIfArticle != null){
             document.querySelector('.listen').addEventListener('click', () => {
                 var msg = new SpeechSynthesisUtterance();
                 var voices = window.speechSynthesis.getVoices();
