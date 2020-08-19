@@ -190,28 +190,31 @@ window.onload = function(){
             }
         });
     // Configurando leitura de artigos
-        document.querySelector('.listen').addEventListener('click', () => {
-            var msg = new SpeechSynthesisUtterance();
-            var voices = window.speechSynthesis.getVoices();
-            msg.voice = voices[10]; 
-            msg.volume = 1; // From 0 to 1
-            msg.rate = 1.45; // From 0.1 to 10
-            msg.pitch = 1.5; // From 0 to 2
-            msg.text = document.querySelector('.content-post').textContent;
-            msg.lang = 'pt-br';
-            if(window.speechSynthesis.paused == false && window.speechSynthesis.speaking == false){
-                window.speechSynthesis.speak(msg); 
-            } else if(window.speechSynthesis.speaking == true && window.speechSynthesis.paused == false) {
-                window.speechSynthesis.pause();
-            } else if(window.speechSynthesis.paused == true){
-                window.speechSynthesis.resume();
-            }
-        });      
-        document.querySelector('.stop').addEventListener('click', () => {
+        var checkIfPost =  document.querySelector('.form-add.article');
+        if (typeof(checkIfPost) != 'undefined' && checkIfPost != null){
+            document.querySelector('.listen').addEventListener('click', () => {
+                var msg = new SpeechSynthesisUtterance();
+                var voices = window.speechSynthesis.getVoices();
+                msg.voice = voices[10]; 
+                msg.volume = 1; // From 0 to 1
+                msg.rate = 1.45; // From 0.1 to 10
+                msg.pitch = 1.5; // From 0 to 2
+                msg.text = document.querySelector('.content-post').textContent;
+                msg.lang = 'pt-br';
+                if(window.speechSynthesis.paused == false && window.speechSynthesis.speaking == false){
+                    window.speechSynthesis.speak(msg); 
+                } else if(window.speechSynthesis.speaking == true && window.speechSynthesis.paused == false) {
+                    window.speechSynthesis.pause();
+                } else if(window.speechSynthesis.paused == true){
+                    window.speechSynthesis.resume();
+                }
+            });      
+            document.querySelector('.stop').addEventListener('click', () => {
+                window.speechSynthesis.cancel();
+            });  
             window.speechSynthesis.cancel();
-        });  
-        window.speechSynthesis.cancel();
-        window.addEventListener("beforeunload", function(e){
-            window.speechSynthesis.cancel();
-         }, false);
+            window.addEventListener("beforeunload", function(e){
+                window.speechSynthesis.cancel();
+            }, false);
+        }
 }
