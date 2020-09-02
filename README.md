@@ -24,6 +24,8 @@ MongoDB
 HTML
 CSS
 Javascript
+
+
 Bibliotecas:
 
 bcryptjs
