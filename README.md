@@ -1,5 +1,5 @@
 # Colib
-Libertarian Collaborative Library
+Collaborative Library
 
 Sobre o projeto:
 
